@@ -6785,19 +6785,24 @@
           "deprecated_since": null,
           "new_in_43": true,
           "description_en": "Pavement with a bituminous surfacing and a base layer with or without a hydrocarbon binder.",
-          "description_fr": "Chaussée souple, à surface bitumineuse et couche de base avec ou sans liant hydrocarboné.",
+          "description_fr": "Chaussée souple, à surface bitumineuse (enrobé) et couche de base avec ou sans liant hydrocarboné.",
           "synonyms": {
             "fr": [
-              "chaussée souple"
+              "chaussée souple",
+              "chaussée en enrobé",
+              "chaussée bitumineuse"
             ],
             "en": [
-              "flexible pavement"
+              "flexible pavement",
+              "asphalt pavement"
             ],
             "it": [
-              "pavimentazione flessibile"
+              "pavimentazione flessibile",
+              "pavimentazione bituminosa"
             ],
             "de": [
-              "Flexibler Fahrbahnbelag"
+              "Flexibler Fahrbahnbelag",
+              "Asphaltbelag"
             ]
           }
         },
@@ -7826,20 +7831,26 @@
           "since": "4.3",
           "deprecated_since": null,
           "new_in_43": true,
-          "description_en": "A layer within a pavement structure that forms a paved area or road.",
-          "description_fr": "Couche de chaussée formant une aire pavée ou une route.",
+          "description_en": "A layer within a pavement structure that forms a paved area or road (e.g. an asphalt layer).",
+          "description_fr": "Couche de chaussée formant une aire pavée ou une route — c'est ici que se classe un enrobé (couche d'enrobé bitumineux), cité en exemple dans la définition officielle du type IfcCourse.",
           "synonyms": {
             "fr": [
-              "couche de chaussée"
+              "couche de chaussée",
+              "enrobé",
+              "couche d'enrobé",
+              "enrobé bitumineux"
             ],
             "en": [
-              "pavement course"
+              "pavement course",
+              "asphalt layer"
             ],
             "it": [
-              "strato di pavimentazione"
+              "strato di pavimentazione",
+              "strato di conglomerato bituminoso"
             ],
             "de": [
-              "Fahrbahnschicht"
+              "Fahrbahnschicht",
+              "Asphaltschicht"
             ]
           }
         },

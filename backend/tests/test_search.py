@@ -195,6 +195,15 @@ def test_earthworks_cut_and_fill(reference):
     assert top_class_pdt(search("remblai", reference=reference)) == ("IfcEarthworksFill", "EMBANKMENT")
 
 
+def test_enrobe_asphalt_layer_vs_flexible_pavement(reference):
+    # "Enrobé" n'a pas de classe IFC dédiée ; le terme se classe soit comme
+    # couche (IfcCourse.PAVEMENT, dont la définition officielle cite
+    # explicitement "Asphalt layers" en exemple) soit, pour la structure de
+    # chaussée complète, comme IfcPavement.FLEXIBLE.
+    assert top_class_pdt(search("enrobé", reference=reference)) == ("IfcCourse", "PAVEMENT")
+    assert top_class_pdt(search("chaussée en enrobé", reference=reference)) == ("IfcPavement", "FLEXIBLE")
+
+
 def test_rail_guardrail_vs_railing_guardrail_homonym(reference):
     # Homonymie intentionnelle : IfcRail.GUARDRAIL (contre-rail ferroviaire)
     # et IfcRailing.GUARDRAIL (garde-corps de bâtiment) partagent le même mot
