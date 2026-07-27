@@ -1,0 +1,3869 @@
+{
+  "schema_version": "IFC4X3_ADD2",
+  "classes": [
+    {
+      "class": "IfcWall",
+      "class_fr": "Mur",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Murs"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A wall is a vertically-oriented element used to enclose or subdivide spaces.",
+      "definition_fr": "Élément vertical utilisé pour enclore ou subdiviser un espace.",
+      "psets_common": [
+        "Pset_WallCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "mur",
+          "voile",
+          "paroi"
+        ],
+        "en": [
+          "wall"
+        ],
+        "it": [
+          "muro",
+          "parete"
+        ],
+        "de": [
+          "Wand"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "STANDARD",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A standard wall.",
+          "description_fr": "Mur standard, à section constante.",
+          "synonyms": {
+            "fr": [
+              "mur standard",
+              "mur droit"
+            ],
+            "en": [
+              "standard wall"
+            ],
+            "it": [
+              "muro standard"
+            ],
+            "de": [
+              "Standardwand"
+            ]
+          }
+        },
+        {
+          "value": "SHEAR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A wall meant to structurally resist lateral (shear) forces.",
+          "description_fr": "Mur de contreventement (voile porteur) résistant aux efforts horizontaux.",
+          "synonyms": {
+            "fr": [
+              "voile de contreventement",
+              "voile béton",
+              "mur de refend"
+            ],
+            "en": [
+              "shear wall"
+            ],
+            "it": [
+              "muro di controventamento"
+            ],
+            "de": [
+              "Aussteifungswand",
+              "Schubwand"
+            ]
+          }
+        },
+        {
+          "value": "PARAPET",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A low protective wall (e.g. at a roof edge or balcony).",
+          "description_fr": "Muret de protection en bordure de toiture ou de balcon.",
+          "synonyms": {
+            "fr": [
+              "parapet",
+              "muret"
+            ],
+            "en": [
+              "parapet wall"
+            ],
+            "it": [
+              "parapetto"
+            ],
+            "de": [
+              "Brüstung"
+            ]
+          }
+        },
+        {
+          "value": "PARTITIONING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A non load-bearing dividing wall.",
+          "description_fr": "Cloison de distribution, non porteuse.",
+          "synonyms": {
+            "fr": [
+              "cloison"
+            ],
+            "en": [
+              "partition wall"
+            ],
+            "it": [
+              "parete divisoria"
+            ],
+            "de": [
+              "Trennwand"
+            ]
+          }
+        },
+        {
+          "value": "ELEMENTEDWALL",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A wall assembled from prefabricated elements.",
+          "description_fr": "Mur composé d'éléments préfabriqués assemblés.",
+          "synonyms": {
+            "fr": [
+              "mur élémenté",
+              "mur préfabriqué"
+            ],
+            "en": [
+              "elemented wall"
+            ],
+            "it": [
+              "muro prefabbricato"
+            ],
+            "de": [
+              "Elementwand"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "Si le mur est un simple habillage sans fonction porteuse ni cloisonnement (ex. mur rideau autoportant), envisager IfcCurtainWall. Pour un mur générique modélisé en géométrie brute (proxy), voir IfcBuildingElementProxy.",
+      "version_notes": "",
+      "children": [
+        "IfcWallStandardCase"
+      ]
+    },
+    {
+      "class": "IfcWallStandardCase",
+      "class_fr": "Mur (cas standard, historique)",
+      "parent": "IfcWall",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Murs"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.0",
+        "deprecated": "4.0"
+      },
+      "definition_en": "Standard case of IfcWall where the wall has a constant thickness defined by a swept solid, and is represented by an axis and material layer set.",
+      "definition_fr": "Cas particulier de mur à épaisseur constante, défini par un axe et un empilement de couches (utilisé massivement en IFC2x3, notamment par Revit).",
+      "psets_common": [
+        "Pset_WallCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "mur standard case",
+          "mur ifc2x3"
+        ],
+        "en": [
+          "wall standard case"
+        ],
+        "it": [],
+        "de": []
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined predefined type.",
+          "description_fr": "Type non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "Classe historique très fréquente dans les exports Revit/cadwork en IFC2x3. Dépréciée depuis IFC4 (l'attribut PredefinedType a été déplacé sur IfcWall lui-même) : à la conversion IFC2x3→IFC4, remplacer par IfcWall avec PredefinedType='STANDARD'.",
+      "version_notes": "Déprécié en IFC4 au profit de IfcWall.PredefinedType ; conservé pour compatibilité ascendante uniquement.",
+      "children": []
+    },
+    {
+      "class": "IfcColumn",
+      "class_fr": "Poteau / Colonne",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Ossature verticale"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A vertical structural member which transmits loads from other parts of the structure to the foundations.",
+      "definition_fr": "Élément vertical porteur transmettant les charges vers les fondations.",
+      "psets_common": [
+        "Pset_ColumnCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "poteau",
+          "colonne",
+          "pilier"
+        ],
+        "en": [
+          "column",
+          "pillar"
+        ],
+        "it": [
+          "pilastro",
+          "colonna"
+        ],
+        "de": [
+          "Stütze",
+          "Säule"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "COLUMN",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A standard column.",
+          "description_fr": "Poteau standard.",
+          "synonyms": {
+            "fr": [
+              "poteau standard"
+            ],
+            "en": [
+              "standard column"
+            ],
+            "it": [
+              "pilastro standard"
+            ],
+            "de": [
+              "Standardstütze"
+            ]
+          }
+        },
+        {
+          "value": "PILASTER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A column integrated into a wall, projecting slightly.",
+          "description_fr": "Pilastre engagé dans un mur, en léger relief.",
+          "synonyms": {
+            "fr": [
+              "pilastre"
+            ],
+            "en": [
+              "pilaster"
+            ],
+            "it": [
+              "lesena",
+              "pilastro murato"
+            ],
+            "de": [
+              "Pilaster",
+              "Wandpfeiler"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "Un poteau purement décoratif en façade (sans fonction porteuse réelle) reste néanmoins classé IfcColumn si l'intention de conception est structurelle ; sinon envisager IfcBuildingElementProxy.",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcBeam",
+      "class_fr": "Poutre",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Ossature horizontale"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A horizontal, or nearly horizontal, structural member that carries loads primarily by bending.",
+      "definition_fr": "Élément horizontal (ou quasi) travaillant principalement en flexion.",
+      "psets_common": [
+        "Pset_BeamCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "poutre",
+          "sommier"
+        ],
+        "en": [
+          "beam"
+        ],
+        "it": [
+          "trave"
+        ],
+        "de": [
+          "Balken",
+          "Träger"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "BEAM",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A standard beam.",
+          "description_fr": "Poutre standard.",
+          "synonyms": {
+            "fr": [
+              "poutre standard"
+            ],
+            "en": [
+              "standard beam"
+            ],
+            "it": [
+              "trave standard"
+            ],
+            "de": [
+              "Standardbalken"
+            ]
+          }
+        },
+        {
+          "value": "JOIST",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A small beam supporting a floor or roof deck.",
+          "description_fr": "Solive supportant un plancher ou une couverture.",
+          "synonyms": {
+            "fr": [
+              "solive"
+            ],
+            "en": [
+              "joist"
+            ],
+            "it": [
+              "travetto"
+            ],
+            "de": [
+              "Deckenbalken"
+            ]
+          }
+        },
+        {
+          "value": "LINTEL",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A beam spanning an opening (door/window).",
+          "description_fr": "Linteau au-dessus d'une baie (porte, fenêtre).",
+          "synonyms": {
+            "fr": [
+              "linteau"
+            ],
+            "en": [
+              "lintel"
+            ],
+            "it": [
+              "architrave"
+            ],
+            "de": [
+              "Sturz"
+            ]
+          }
+        },
+        {
+          "value": "GIRDER_SEGMENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A segment of a large primary beam (e.g. a bridge girder).",
+          "description_fr": "Tronçon de poutre maîtresse, notamment pour ouvrages d'art (ponts).",
+          "synonyms": {
+            "fr": [
+              "poutre maîtresse",
+              "tronçon de poutre de pont"
+            ],
+            "en": [
+              "girder segment"
+            ],
+            "it": [
+              "segmento di trave principale"
+            ],
+            "de": [
+              "Trägersegment"
+            ]
+          }
+        },
+        {
+          "value": "DIAPHRAGM",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A transverse beam stiffening a bridge deck structure.",
+          "description_fr": "Entretoise transversale raidissant un tablier de pont.",
+          "synonyms": {
+            "fr": [
+              "entretoise de pont"
+            ],
+            "en": [
+              "diaphragm beam"
+            ],
+            "it": [
+              "diaframma trasversale"
+            ],
+            "de": [
+              "Querträger"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "Attention à la confusion avec IfcMember : IfcBeam désigne un élément fléchi principal (structure primaire), IfcMember couvre les éléments linéaires secondaires (raidisseurs, entretoises légères, montants).",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcMember",
+      "class_fr": "Membrure / Élément linéaire",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Charpente et éléments linéaires"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A 1-dimensional structural member, often part of a structural frame, not otherwise classified as beam or column (e.g. brace, purlin, stiffener).",
+      "definition_fr": "Élément linéaire structurel secondaire, non classé comme poutre ou poteau (contreventement, panne, raidisseur, montant...).",
+      "psets_common": [
+        "Pset_MemberCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "membrure",
+          "élément linéaire",
+          "barre"
+        ],
+        "en": [
+          "member"
+        ],
+        "it": [
+          "asta",
+          "elemento lineare"
+        ],
+        "de": [
+          "Bauteilstab"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "STIFFENING_MEMBER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A slender member added to prevent buckling or increase local stiffness of a plated or framed structure.",
+          "description_fr": "Élément linéaire destiné à empêcher le flambement ou à renforcer localement la rigidité d'une structure (plaque, profilé, âme de poutre) : un raidisseur.",
+          "synonyms": {
+            "fr": [
+              "raidisseur",
+              "raidisseur d'âme",
+              "nervure de raidissage"
+            ],
+            "en": [
+              "stiffener",
+              "stiffening member"
+            ],
+            "it": [
+              "irrigidimento",
+              "traversa di irrigidimento",
+              "nervatura di rinforzo"
+            ],
+            "de": [
+              "Aussteifungsstab",
+              "Steife",
+              "Versteifungsrippe",
+              "Aussteifung"
+            ]
+          }
+        },
+        {
+          "value": "BRACE",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A member providing diagonal bracing/stability.",
+          "description_fr": "Barre de contreventement diagonal.",
+          "synonyms": {
+            "fr": [
+              "contreventement",
+              "diagonale",
+              "barre de stabilisation"
+            ],
+            "en": [
+              "brace",
+              "bracing member"
+            ],
+            "it": [
+              "controvento",
+              "diagonale"
+            ],
+            "de": [
+              "Verband",
+              "Diagonalstab"
+            ]
+          }
+        },
+        {
+          "value": "PURLIN",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A horizontal member supporting roof cladding between rafters.",
+          "description_fr": "Panne supportant la couverture de toiture entre chevrons/fermes.",
+          "synonyms": {
+            "fr": [
+              "panne"
+            ],
+            "en": [
+              "purlin"
+            ],
+            "it": [
+              "arcareccio"
+            ],
+            "de": [
+              "Pfette"
+            ]
+          }
+        },
+        {
+          "value": "RAFTER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "An inclined member supporting a roof.",
+          "description_fr": "Chevron ou arbalétrier de charpente de toiture.",
+          "synonyms": {
+            "fr": [
+              "chevron",
+              "arbalétrier"
+            ],
+            "en": [
+              "rafter"
+            ],
+            "it": [
+              "puntone",
+              "corrente"
+            ],
+            "de": [
+              "Sparren"
+            ]
+          }
+        },
+        {
+          "value": "MULLION",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A vertical member dividing a window/curtain wall panel.",
+          "description_fr": "Meneau vertical divisant une baie ou un mur rideau.",
+          "synonyms": {
+            "fr": [
+              "meneau"
+            ],
+            "en": [
+              "mullion"
+            ],
+            "it": [
+              "montante"
+            ],
+            "de": [
+              "Pfosten"
+            ]
+          }
+        },
+        {
+          "value": "STUD",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A vertical light-frame member (e.g. in a stud wall).",
+          "description_fr": "Montant vertical d'ossature légère (bois ou métal).",
+          "synonyms": {
+            "fr": [
+              "montant d'ossature",
+              "montant"
+            ],
+            "en": [
+              "stud"
+            ],
+            "it": [
+              "montante di parete"
+            ],
+            "de": [
+              "Ständer"
+            ]
+          }
+        },
+        {
+          "value": "COLLAR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A horizontal tie member near the ridge of a roof truss.",
+          "description_fr": "Entrait retroussé reliant deux arbalétriers d'une ferme.",
+          "synonyms": {
+            "fr": [
+              "entrait retroussé"
+            ],
+            "en": [
+              "collar tie"
+            ],
+            "it": [
+              "catena alta"
+            ],
+            "de": [
+              "Kehlbalken"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "Cas ambigu fréquent : un « raidisseur » modélisé sans détail de profilé réel (juste une boîte englobante) est parfois classé IfcBuildingElementProxy par les logiciels de charpente métallique. Si l'analyse structurelle est le but, préférer IfcMember + STIFFENING_MEMBER, qui porte l'information sémantique correcte.",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcSlab",
+      "class_fr": "Dalle / Plancher",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Dallage"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A slab is a component of the construction that covers a horizontal area, e.g. floor, roof or landing slab.",
+      "definition_fr": "Élément couvrant une surface horizontale : plancher, toiture-terrasse, palier, radier...",
+      "psets_common": [
+        "Pset_SlabCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "dalle",
+          "plancher"
+        ],
+        "en": [
+          "slab"
+        ],
+        "it": [
+          "soletta",
+          "solaio"
+        ],
+        "de": [
+          "Platte",
+          "Decke"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "FLOOR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A slab used as a floor.",
+          "description_fr": "Dalle de plancher courant.",
+          "synonyms": {
+            "fr": [
+              "dalle de plancher",
+              "plancher"
+            ],
+            "en": [
+              "floor slab"
+            ],
+            "it": [
+              "solaio di piano"
+            ],
+            "de": [
+              "Geschossdecke"
+            ]
+          }
+        },
+        {
+          "value": "ROOF",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A slab used as a (flat) roof.",
+          "description_fr": "Dalle de toiture-terrasse.",
+          "synonyms": {
+            "fr": [
+              "dalle de toiture",
+              "toiture-terrasse"
+            ],
+            "en": [
+              "roof slab"
+            ],
+            "it": [
+              "soletta di copertura"
+            ],
+            "de": [
+              "Dachplatte"
+            ]
+          }
+        },
+        {
+          "value": "LANDING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A slab forming a landing between stair flights.",
+          "description_fr": "Palier de circulation entre volées d'escalier.",
+          "synonyms": {
+            "fr": [
+              "palier"
+            ],
+            "en": [
+              "landing slab"
+            ],
+            "it": [
+              "pianerottolo"
+            ],
+            "de": [
+              "Podest"
+            ]
+          }
+        },
+        {
+          "value": "BASESLAB",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A slab in contact with the ground (raft/mat foundation).",
+          "description_fr": "Radier ou dalle sur terre-plein en contact avec le sol.",
+          "synonyms": {
+            "fr": [
+              "radier",
+              "dalle sur sol",
+              "dalle de fondation"
+            ],
+            "en": [
+              "base slab",
+              "mat foundation"
+            ],
+            "it": [
+              "platea di fondazione"
+            ],
+            "de": [
+              "Bodenplatte"
+            ]
+          }
+        },
+        {
+          "value": "PAVING",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "An outdoor paving slab.",
+          "description_fr": "Dalle de revêtement extérieur (pavage).",
+          "synonyms": {
+            "fr": [
+              "dalle de pavage",
+              "dallage extérieur"
+            ],
+            "en": [
+              "paving slab"
+            ],
+            "it": [
+              "lastra di pavimentazione"
+            ],
+            "de": [
+              "Pflasterplatte"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "Une chape mince rapportée sur une dalle structurelle n'est pas une IfcSlab mais un IfcCovering (PredefinedType=SCREED).",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcFooting",
+      "class_fr": "Semelle de fondation",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Fondations"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A footing, also called spread footing, isolated footing or pad footing, is a part of, usually, a shallow foundation.",
+      "definition_fr": "Élément de fondation superficielle transmettant les charges au sol.",
+      "psets_common": [
+        "Pset_FootingCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "semelle",
+          "fondation superficielle"
+        ],
+        "en": [
+          "footing"
+        ],
+        "it": [
+          "fondazione",
+          "plinto"
+        ],
+        "de": [
+          "Fundament"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "PAD_FOOTING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "An isolated pad footing under a column.",
+          "description_fr": "Semelle isolée sous poteau.",
+          "synonyms": {
+            "fr": [
+              "semelle isolée",
+              "plot de fondation"
+            ],
+            "en": [
+              "pad footing"
+            ],
+            "it": [
+              "plinto isolato"
+            ],
+            "de": [
+              "Einzelfundament"
+            ]
+          }
+        },
+        {
+          "value": "STRIP_FOOTING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A continuous strip footing under a wall.",
+          "description_fr": "Semelle filante sous mur.",
+          "synonyms": {
+            "fr": [
+              "semelle filante"
+            ],
+            "en": [
+              "strip footing"
+            ],
+            "it": [
+              "fondazione a nastro"
+            ],
+            "de": [
+              "Streifenfundament"
+            ]
+          }
+        },
+        {
+          "value": "PILE_CAP",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A footing distributing loads onto a group of piles.",
+          "description_fr": "Semelle de répartition sur groupe de pieux.",
+          "synonyms": {
+            "fr": [
+              "semelle sur pieux"
+            ],
+            "en": [
+              "pile cap"
+            ],
+            "it": [
+              "plinto su pali"
+            ],
+            "de": [
+              "Pfahlkopfplatte"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcPile",
+      "class_fr": "Pieu",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Fondations"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A slender timber, concrete, or steel structural element driven, drilled or otherwise embedded into the ground for use as a foundation.",
+      "definition_fr": "Élément élancé (bois, béton, acier) foncé ou foré dans le sol pour servir de fondation profonde.",
+      "psets_common": [
+        "Pset_PileCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "pieu"
+        ],
+        "en": [
+          "pile"
+        ],
+        "it": [
+          "palo di fondazione"
+        ],
+        "de": [
+          "Pfahl"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "BORED",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A pile installed by drilling/boring.",
+          "description_fr": "Pieu foré.",
+          "synonyms": {
+            "fr": [
+              "pieu foré"
+            ],
+            "en": [
+              "bored pile"
+            ],
+            "it": [
+              "palo trivellato"
+            ],
+            "de": [
+              "Bohrpfahl"
+            ]
+          }
+        },
+        {
+          "value": "DRIVEN",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A pile installed by driving (hammering).",
+          "description_fr": "Pieu battu.",
+          "synonyms": {
+            "fr": [
+              "pieu battu"
+            ],
+            "en": [
+              "driven pile"
+            ],
+            "it": [
+              "palo battuto"
+            ],
+            "de": [
+              "Rammpfahl"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcPlate",
+      "class_fr": "Platine / Plaque",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Éléments plans structurels"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A plate is a planar and often flat part with constant thickness.",
+      "definition_fr": "Élément plan, souvent plat et de faible épaisseur constante.",
+      "psets_common": [
+        "Pset_PlateCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "platine",
+          "plaque"
+        ],
+        "en": [
+          "plate"
+        ],
+        "it": [
+          "piastra"
+        ],
+        "de": [
+          "Platte"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "CURTAIN_PANEL",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A panel infill of a curtain wall.",
+          "description_fr": "Panneau de remplissage d'un mur rideau.",
+          "synonyms": {
+            "fr": [
+              "panneau de mur rideau"
+            ],
+            "en": [
+              "curtain wall panel"
+            ],
+            "it": [
+              "pannello di facciata continua"
+            ],
+            "de": [
+              "Fassadenpaneel"
+            ]
+          }
+        },
+        {
+          "value": "SHEET",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A thin sheet plate (e.g. gusset plate).",
+          "description_fr": "Plaque mince, ex. gousset d'assemblage métallique.",
+          "synonyms": {
+            "fr": [
+              "gousset",
+              "plaque d'assemblage"
+            ],
+            "en": [
+              "gusset plate"
+            ],
+            "it": [
+              "piastra di collegamento"
+            ],
+            "de": [
+              "Knotenblech"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcRoof",
+      "class_fr": "Toiture (ouvrage de charpente)",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Toiture"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "The roof is the covering of the top part of a building, acting as an aggregate container for all functional parts that make up the roof.",
+      "definition_fr": "Ouvrage de couverture d'un bâtiment, agrégeant l'ensemble des éléments qui composent la toiture (souvent un conteneur regroupant dalles, membrures, couverture...).",
+      "psets_common": [
+        "Pset_RoofCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "toiture",
+          "toit"
+        ],
+        "en": [
+          "roof"
+        ],
+        "it": [
+          "tetto",
+          "copertura"
+        ],
+        "de": [
+          "Dach"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "FLAT_ROOF",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A flat roof.",
+          "description_fr": "Toiture plate/terrasse.",
+          "synonyms": {
+            "fr": [
+              "toiture plate",
+              "toit plat"
+            ],
+            "en": [
+              "flat roof"
+            ],
+            "it": [
+              "tetto piano"
+            ],
+            "de": [
+              "Flachdach"
+            ]
+          }
+        },
+        {
+          "value": "GABLE_ROOF",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A roof with two sloping sides meeting at a ridge.",
+          "description_fr": "Toiture à deux pans (pignon).",
+          "synonyms": {
+            "fr": [
+              "toit à deux pans",
+              "toiture à pignon"
+            ],
+            "en": [
+              "gable roof"
+            ],
+            "it": [
+              "tetto a due falde"
+            ],
+            "de": [
+              "Satteldach"
+            ]
+          }
+        },
+        {
+          "value": "HIP_ROOF",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A roof with sloping sides on all faces.",
+          "description_fr": "Toiture à quatre pans (croupe).",
+          "synonyms": {
+            "fr": [
+              "toit à quatre pans",
+              "toiture en croupe"
+            ],
+            "en": [
+              "hip roof"
+            ],
+            "it": [
+              "tetto a padiglione"
+            ],
+            "de": [
+              "Walmdach"
+            ]
+          }
+        },
+        {
+          "value": "SHED_ROOF",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A single-sloped roof.",
+          "description_fr": "Toiture à un seul pan (appentis).",
+          "synonyms": {
+            "fr": [
+              "toit en appentis",
+              "monopente"
+            ],
+            "en": [
+              "shed roof",
+              "lean-to roof"
+            ],
+            "it": [
+              "tetto a una falda"
+            ],
+            "de": [
+              "Pultdach"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "IfcRoof sert souvent de conteneur logique ; les surfaces de couverture proprement dites peuvent être modélisées comme IfcSlab (ROOF) et/ou IfcCovering (ROOFING).",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcReinforcingBar",
+      "class_fr": "Armature (barre)",
+      "parent": "IfcElementComponent",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Armatures et précontrainte"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "Steel reinforcing bar, typically used to reinforce concrete.",
+      "definition_fr": "Barre d'acier utilisée pour armer le béton.",
+      "psets_common": [
+        "Pset_ReinforcingBarCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "armature",
+          "fer à béton",
+          "barre d'armature"
+        ],
+        "en": [
+          "rebar",
+          "reinforcing bar"
+        ],
+        "it": [
+          "armatura",
+          "ferro d'armatura"
+        ],
+        "de": [
+          "Bewehrungsstab"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "MAIN",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Main longitudinal reinforcement.",
+          "description_fr": "Armature principale longitudinale.",
+          "synonyms": {
+            "fr": [
+              "armature principale"
+            ],
+            "en": [
+              "main bar"
+            ],
+            "it": [
+              "armatura principale"
+            ],
+            "de": [
+              "Hauptbewehrung"
+            ]
+          }
+        },
+        {
+          "value": "STIRRUP",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Shear reinforcement wrapping around main bars.",
+          "description_fr": "Cadre/étrier d'armature transversale.",
+          "synonyms": {
+            "fr": [
+              "étrier",
+              "cadre d'armature"
+            ],
+            "en": [
+              "stirrup"
+            ],
+            "it": [
+              "staffa"
+            ],
+            "de": [
+              "Bügel"
+            ]
+          }
+        },
+        {
+          "value": "SHEAR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Reinforcement resisting shear forces.",
+          "description_fr": "Armature d'effort tranchant.",
+          "synonyms": {
+            "fr": [
+              "armature d'effort tranchant"
+            ],
+            "en": [
+              "shear reinforcement"
+            ],
+            "it": [
+              "armatura a taglio"
+            ],
+            "de": [
+              "Schubbewehrung"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcReinforcingMesh",
+      "class_fr": "Treillis d'armature",
+      "parent": "IfcElementComponent",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Armatures et précontrainte"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A reinforcing mesh (welded fabric) used to reinforce concrete.",
+      "definition_fr": "Treillis soudé utilisé pour armer le béton.",
+      "psets_common": [
+        "Pset_ReinforcingMeshCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "treillis soudé",
+          "panneau de treillis"
+        ],
+        "en": [
+          "reinforcing mesh",
+          "welded fabric"
+        ],
+        "it": [
+          "rete elettrosaldata"
+        ],
+        "de": [
+          "Bewehrungsmatte"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcTendon",
+      "class_fr": "Câble de précontrainte",
+      "parent": "IfcElementComponent",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Armatures et précontrainte"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A tendon that is used for pre-tensioning or post-tensioning of a structural member.",
+      "definition_fr": "Câble ou barre utilisé pour la précontrainte (pré- ou post-tension) d'un élément structurel.",
+      "psets_common": [
+        "Pset_TendonCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "câble de précontrainte",
+          "torons"
+        ],
+        "en": [
+          "tendon"
+        ],
+        "it": [
+          "cavo di precompressione"
+        ],
+        "de": [
+          "Spannglied"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "STRAND",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A tendon made of a strand.",
+          "description_fr": "Câble constitué de torons.",
+          "synonyms": {
+            "fr": [
+              "toron"
+            ],
+            "en": [
+              "strand"
+            ],
+            "it": [
+              "trefolo"
+            ],
+            "de": [
+              "Litze"
+            ]
+          }
+        },
+        {
+          "value": "BAR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A tendon made of a solid bar.",
+          "description_fr": "Barre de précontrainte pleine.",
+          "synonyms": {
+            "fr": [
+              "barre de précontrainte"
+            ],
+            "en": [
+              "tendon bar"
+            ],
+            "it": [
+              "barra di precompressione"
+            ],
+            "de": [
+              "Spannstab"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcRailing",
+      "class_fr": "Garde-corps",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Garde-corps et gardes-fous"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A railing is a frame or barrier of vertical and horizontal members acting as protection against falling or as a guide.",
+      "definition_fr": "Ouvrage de protection contre les chutes ou de guidage, constitué de montants et de lisses (horizontales/verticales).",
+      "psets_common": [
+        "Pset_RailingCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "garde-corps",
+          "garde-fou",
+          "rambarde"
+        ],
+        "en": [
+          "railing",
+          "guard rail"
+        ],
+        "it": [
+          "ringhiera",
+          "parapetto"
+        ],
+        "de": [
+          "Geländer"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "HANDRAIL",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A railing serving as a handrail (grip) only.",
+          "description_fr": "Main courante seule.",
+          "synonyms": {
+            "fr": [
+              "main courante"
+            ],
+            "en": [
+              "handrail"
+            ],
+            "it": [
+              "corrimano"
+            ],
+            "de": [
+              "Handlauf"
+            ]
+          }
+        },
+        {
+          "value": "GUARDRAIL",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A railing preventing falls (protective barrier).",
+          "description_fr": "Garde-corps de protection contre les chutes.",
+          "synonyms": {
+            "fr": [
+              "garde-corps de sécurité",
+              "barrière de protection"
+            ],
+            "en": [
+              "guardrail"
+            ],
+            "it": [
+              "parapetto di sicurezza"
+            ],
+            "de": [
+              "Absturzsicherung"
+            ]
+          }
+        },
+        {
+          "value": "BALUSTRADE",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A railing composed of a series of balusters.",
+          "description_fr": "Balustrade composée d'une série de balustres.",
+          "synonyms": {
+            "fr": [
+              "balustrade"
+            ],
+            "en": [
+              "balustrade"
+            ],
+            "it": [
+              "balaustra"
+            ],
+            "de": [
+              "Balustrade"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "Le raidisseur d'un garde-corps préfabriqué (renfort de montant) relève lui d'IfcMember (STIFFENING_MEMBER), pas d'IfcRailing.",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcStair",
+      "class_fr": "Escalier",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Circulations verticales"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A vertical passageway allowing occupants to walk (step) from one floor level to another, often an aggregation of stair flights and landings.",
+      "definition_fr": "Ouvrage de circulation verticale permettant de passer d'un niveau à l'autre, souvent une agrégation de volées et paliers.",
+      "psets_common": [
+        "Pset_StairCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "escalier"
+        ],
+        "en": [
+          "stair",
+          "staircase"
+        ],
+        "it": [
+          "scala"
+        ],
+        "de": [
+          "Treppe"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "STRAIGHT_RUN_STAIR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A stair with a single straight flight.",
+          "description_fr": "Escalier droit, à volée unique.",
+          "synonyms": {
+            "fr": [
+              "escalier droit"
+            ],
+            "en": [
+              "straight stair"
+            ],
+            "it": [
+              "scala rettilinea"
+            ],
+            "de": [
+              "Gerade Treppe"
+            ]
+          }
+        },
+        {
+          "value": "SPIRAL_STAIR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A stair winding around a central point/newel.",
+          "description_fr": "Escalier hélicoïdal (colimaçon) autour d'un noyau central.",
+          "synonyms": {
+            "fr": [
+              "escalier en colimaçon",
+              "escalier hélicoïdal"
+            ],
+            "en": [
+              "spiral stair"
+            ],
+            "it": [
+              "scala a chiocciola"
+            ],
+            "de": [
+              "Spindeltreppe",
+              "Wendeltreppe"
+            ]
+          }
+        },
+        {
+          "value": "TWO_STRAIGHT_RUN_STAIR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A stair with two straight flights and a landing.",
+          "description_fr": "Escalier à deux volées droites avec palier intermédiaire.",
+          "synonyms": {
+            "fr": [
+              "escalier à deux volées"
+            ],
+            "en": [
+              "dog-leg stair"
+            ],
+            "it": [
+              "scala a due rampe"
+            ],
+            "de": [
+              "Zweiläufige Treppe"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcStairFlight",
+      "class_fr": "Volée d'escalier",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Circulations verticales"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A part of a stair without a turn or change in direction, consisting of steps.",
+      "definition_fr": "Partie rectiligne d'un escalier, sans changement de direction, composée de marches.",
+      "psets_common": [
+        "Pset_StairFlightCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "volée d'escalier",
+          "volée"
+        ],
+        "en": [
+          "stair flight"
+        ],
+        "it": [
+          "rampa di scala"
+        ],
+        "de": [
+          "Treppenlauf"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcRamp",
+      "class_fr": "Rampe",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Circulations verticales"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A vertical passageway which provides a means of moving between different levels using a sloped surface (aggregation of ramp flights).",
+      "definition_fr": "Ouvrage de circulation verticale à plan incliné (accès PMR, véhicules...).",
+      "psets_common": [
+        "Pset_RampCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "rampe d'accès",
+          "rampe"
+        ],
+        "en": [
+          "ramp"
+        ],
+        "it": [
+          "rampa"
+        ],
+        "de": [
+          "Rampe"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "STRAIGHT_RUN_RAMP",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A ramp with a single straight run.",
+          "description_fr": "Rampe droite à volée unique.",
+          "synonyms": {
+            "fr": [
+              "rampe droite"
+            ],
+            "en": [
+              "straight ramp"
+            ],
+            "it": [
+              "rampa rettilinea"
+            ],
+            "de": [
+              "Gerade Rampe"
+            ]
+          }
+        },
+        {
+          "value": "SPIRAL_RAMP",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A ramp winding around a central point.",
+          "description_fr": "Rampe hélicoïdale.",
+          "synonyms": {
+            "fr": [
+              "rampe hélicoïdale"
+            ],
+            "en": [
+              "spiral ramp"
+            ],
+            "it": [
+              "rampa elicoidale"
+            ],
+            "de": [
+              "Wendelrampe"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcRampFlight",
+      "class_fr": "Volée de rampe",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Circulations verticales"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A part of a ramp without a turn, forming a single sloped plane.",
+      "definition_fr": "Partie rectiligne d'une rampe, à pente unique.",
+      "psets_common": [
+        "Pset_RampFlightCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "volée de rampe"
+        ],
+        "en": [
+          "ramp flight"
+        ],
+        "it": [
+          "rampa lineare"
+        ],
+        "de": [
+          "Rampenlauf"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcCurtainWall",
+      "class_fr": "Mur rideau",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Baies et façades"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A curtain wall is an exterior wall which is non load-bearing and carries only its own weight, supported by an auxiliary framework.",
+      "definition_fr": "Paroi extérieure non porteuse, autoportante, suspendue à une ossature auxiliaire (montants/traverses).",
+      "psets_common": [
+        "Pset_CurtainWallCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "mur rideau",
+          "façade rideau"
+        ],
+        "en": [
+          "curtain wall"
+        ],
+        "it": [
+          "facciata continua"
+        ],
+        "de": [
+          "Vorhangfassade"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "Les meneaux/traverses de mur rideau sont modélisés en IfcMember (MULLION), les panneaux en IfcPlate (CURTAIN_PANEL).",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcDoor",
+      "class_fr": "Porte",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Baies et façades"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A door is a building element that is predominately used to provide controlled access for people, goods, animals and vehicles.",
+      "definition_fr": "Élément de bâtiment permettant un accès contrôlé (personnes, biens, véhicules) à travers une baie.",
+      "psets_common": [
+        "Pset_DoorCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "porte"
+        ],
+        "en": [
+          "door"
+        ],
+        "it": [
+          "porta"
+        ],
+        "de": [
+          "Tür"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "DOOR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A standard door.",
+          "description_fr": "Porte standard.",
+          "synonyms": {
+            "fr": [
+              "porte standard"
+            ],
+            "en": [
+              "standard door"
+            ],
+            "it": [
+              "porta standard"
+            ],
+            "de": [
+              "Standardtür"
+            ]
+          }
+        },
+        {
+          "value": "GATE",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A door used as a gate (e.g. vehicular access).",
+          "description_fr": "Portail (accès véhicules, clôture).",
+          "synonyms": {
+            "fr": [
+              "portail"
+            ],
+            "en": [
+              "gate"
+            ],
+            "it": [
+              "cancello"
+            ],
+            "de": [
+              "Tor"
+            ]
+          }
+        },
+        {
+          "value": "TRAPDOOR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A door installed in a floor or ceiling.",
+          "description_fr": "Trappe (accès horizontal, plancher/plafond).",
+          "synonyms": {
+            "fr": [
+              "trappe"
+            ],
+            "en": [
+              "trapdoor",
+              "hatch"
+            ],
+            "it": [
+              "botola"
+            ],
+            "de": [
+              "Falltür"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcWindow",
+      "class_fr": "Fenêtre",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Baies et façades"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A window is a building element that is predominately used to provide natural light and fresh air, and is often glazed.",
+      "definition_fr": "Élément de bâtiment assurant l'éclairage naturel et/ou la ventilation, généralement vitré.",
+      "psets_common": [
+        "Pset_WindowCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "fenêtre",
+          "châssis vitré"
+        ],
+        "en": [
+          "window"
+        ],
+        "it": [
+          "finestra"
+        ],
+        "de": [
+          "Fenster"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "WINDOW",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A standard window.",
+          "description_fr": "Fenêtre standard.",
+          "synonyms": {
+            "fr": [
+              "fenêtre standard"
+            ],
+            "en": [
+              "standard window"
+            ],
+            "it": [
+              "finestra standard"
+            ],
+            "de": [
+              "Standardfenster"
+            ]
+          }
+        },
+        {
+          "value": "SKYLIGHT",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A window installed in a roof.",
+          "description_fr": "Fenêtre de toit (velux).",
+          "synonyms": {
+            "fr": [
+              "fenêtre de toit",
+              "velux"
+            ],
+            "en": [
+              "skylight"
+            ],
+            "it": [
+              "lucernario"
+            ],
+            "de": [
+              "Dachfenster"
+            ]
+          }
+        },
+        {
+          "value": "LIGHTDOME",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A dome-shaped rooflight.",
+          "description_fr": "Dôme (coupole) d'éclairage zénithal.",
+          "synonyms": {
+            "fr": [
+              "coupole zénithale",
+              "dôme d'éclairage"
+            ],
+            "en": [
+              "roof light dome"
+            ],
+            "it": [
+              "cupola di illuminazione"
+            ],
+            "de": [
+              "Lichtkuppel"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcCovering",
+      "class_fr": "Revêtement / Finition",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Revêtements et finitions"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A covering is an element applied to another element (or spatial element) to cover its surface (e.g. finish for floor, wall, ceiling, roof, or insulation, coping, etc.).",
+      "definition_fr": "Élément appliqué en surface d'un autre élément ou d'un espace : revêtement de sol, mur, plafond, toiture, isolation, chape...",
+      "psets_common": [
+        "Pset_CoveringCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "revêtement",
+          "finition"
+        ],
+        "en": [
+          "covering",
+          "finish"
+        ],
+        "it": [
+          "rivestimento"
+        ],
+        "de": [
+          "Bekleidung"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "SCREED",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A thin layer applied to level or finish a surface (e.g. floor screed).",
+          "description_fr": "Couche mince rapportée pour niveler ou finir une surface (chape).",
+          "synonyms": {
+            "fr": [
+              "chape",
+              "chape de ragréage",
+              "chape flottante"
+            ],
+            "en": [
+              "screed"
+            ],
+            "it": [
+              "massetto"
+            ],
+            "de": [
+              "Estrich"
+            ]
+          }
+        },
+        {
+          "value": "MOLDING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A decorative strip, e.g. cornice or baseboard profile.",
+          "description_fr": "Profil décoratif rapporté, ex. corniche ou moulure.",
+          "synonyms": {
+            "fr": [
+              "corniche",
+              "moulure décorative"
+            ],
+            "en": [
+              "molding",
+              "cornice"
+            ],
+            "it": [
+              "cornice decorativa",
+              "modanatura"
+            ],
+            "de": [
+              "Gesims",
+              "Zierleiste"
+            ]
+          }
+        },
+        {
+          "value": "CLADDING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "An external covering (e.g. facade cladding).",
+          "description_fr": "Bardage ou habillage de façade.",
+          "synonyms": {
+            "fr": [
+              "bardage",
+              "habillage de façade"
+            ],
+            "en": [
+              "cladding"
+            ],
+            "it": [
+              "rivestimento di facciata"
+            ],
+            "de": [
+              "Verkleidung"
+            ]
+          }
+        },
+        {
+          "value": "FLOORING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A floor finish (e.g. tiling, parquet).",
+          "description_fr": "Revêtement de sol (carrelage, parquet...).",
+          "synonyms": {
+            "fr": [
+              "revêtement de sol",
+              "carrelage",
+              "parquet"
+            ],
+            "en": [
+              "flooring"
+            ],
+            "it": [
+              "pavimentazione"
+            ],
+            "de": [
+              "Bodenbelag"
+            ]
+          }
+        },
+        {
+          "value": "CEILING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A ceiling finish (e.g. suspended ceiling).",
+          "description_fr": "Faux-plafond ou plafond fini.",
+          "synonyms": {
+            "fr": [
+              "faux-plafond",
+              "plafond"
+            ],
+            "en": [
+              "ceiling"
+            ],
+            "it": [
+              "controsoffitto"
+            ],
+            "de": [
+              "Decke",
+              "Abhangdecke"
+            ]
+          }
+        },
+        {
+          "value": "ROOFING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A roof waterproofing/finish layer.",
+          "description_fr": "Étanchéité ou couverture de toiture.",
+          "synonyms": {
+            "fr": [
+              "étanchéité de toiture",
+              "couverture"
+            ],
+            "en": [
+              "roofing"
+            ],
+            "it": [
+              "manto di copertura"
+            ],
+            "de": [
+              "Dachdeckung"
+            ]
+          }
+        },
+        {
+          "value": "INSULATION",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A thermal or acoustic insulation layer.",
+          "description_fr": "Couche d'isolation thermique ou acoustique.",
+          "synonyms": {
+            "fr": [
+              "isolation",
+              "isolant"
+            ],
+            "en": [
+              "insulation"
+            ],
+            "it": [
+              "isolamento"
+            ],
+            "de": [
+              "Dämmung"
+            ]
+          }
+        },
+        {
+          "value": "COPING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A capping course on top of a wall or parapet.",
+          "description_fr": "Couvertine posée en tête de mur ou d'acrotère.",
+          "synonyms": {
+            "fr": [
+              "couvertine"
+            ],
+            "en": [
+              "coping"
+            ],
+            "it": [
+              "copertina"
+            ],
+            "de": [
+              "Mauerabdeckung"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "« Corniche » est ambigu : moulure décorative rapportée → IfcCovering(MOLDING) ; élément porteur en surplomb (corniche de charpente) → plutôt IfcBeam ou IfcMember selon le contexte.",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcBuildingElementProxy",
+      "class_fr": "Élément générique (proxy)",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Élément générique / non classé"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A proxy definition that provides a fallback for building elements that have no equivalent, more specific, semantic definition in the specification.",
+      "definition_fr": "Définition de repli pour un élément de bâtiment qui n'a pas d'équivalent sémantique plus spécifique dans le schéma IFC.",
+      "psets_common": [],
+      "class_synonyms": {
+        "fr": [
+          "élément générique",
+          "proxy",
+          "élément non typé"
+        ],
+        "en": [
+          "generic element",
+          "proxy"
+        ],
+        "it": [
+          "elemento generico"
+        ],
+        "de": [
+          "generisches Bauteil"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "USERDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A user-defined proxy type.",
+          "description_fr": "Type défini par l'utilisateur.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        },
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "À utiliser en dernier recours : si un élément ressemble à un raidisseur, un garde-corps ou un équipement mais que le logiciel source n'exporte qu'une géométrie brute sans sémantique, il atterrit souvent ici. Un contrôle qualité IDS doit signaler un usage excessif de BuildingElementProxy comme un défaut de modélisation à corriger si une classe plus spécifique existe.",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcChimney",
+      "class_fr": "Cheminée",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Éléments de superstructure"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A vertical, hollow substructure to convey exhaust gases to the outer air.",
+      "definition_fr": "Ouvrage vertical creux évacuant les gaz de combustion vers l'extérieur.",
+      "psets_common": [
+        "Pset_ChimneyCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "cheminée",
+          "conduit de fumée"
+        ],
+        "en": [
+          "chimney",
+          "flue"
+        ],
+        "it": [
+          "camino"
+        ],
+        "de": [
+          "Schornstein",
+          "Kamin"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcShadingDevice",
+      "class_fr": "Protection solaire",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Élément de bâtiment",
+        "Protections solaires"
+      ],
+      "ifc_versions": {
+        "introduced": "4.0",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A device attached to a building or free standing which provides solar shading, e.g. a louver, jalousie or shutter.",
+      "definition_fr": "Dispositif rapporté ou autonome assurant une protection solaire (brise-soleil, jalousie, volet).",
+      "psets_common": [
+        "Pset_ShadingDeviceCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "protection solaire",
+          "brise-soleil"
+        ],
+        "en": [
+          "shading device"
+        ],
+        "it": [
+          "schermatura solare"
+        ],
+        "de": [
+          "Sonnenschutz"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "LOUVER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A shading device made of angled slats.",
+          "description_fr": "Brise-soleil à lames orientées.",
+          "synonyms": {
+            "fr": [
+              "brise-soleil à lames",
+              "claustra"
+            ],
+            "en": [
+              "louver"
+            ],
+            "it": [
+              "frangisole a lamelle"
+            ],
+            "de": [
+              "Lamellenschutz"
+            ]
+          }
+        },
+        {
+          "value": "JALOUSIE",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "An adjustable slatted shutter/blind.",
+          "description_fr": "Jalousie à lames orientables.",
+          "synonyms": {
+            "fr": [
+              "jalousie"
+            ],
+            "en": [
+              "jalousie",
+              "venetian blind"
+            ],
+            "it": [
+              "gelosia"
+            ],
+            "de": [
+              "Jalousie"
+            ]
+          }
+        },
+        {
+          "value": "SHUTTER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A shutter, often foldable or rolling.",
+          "description_fr": "Volet, souvent battant ou roulant.",
+          "synonyms": {
+            "fr": [
+              "volet",
+              "volet roulant"
+            ],
+            "en": [
+              "shutter"
+            ],
+            "it": [
+              "persiana",
+              "tapparella"
+            ],
+            "de": [
+              "Fensterladen",
+              "Rollladen"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcDuctSegment",
+      "class_fr": "Gaine aéraulique (tronçon)",
+      "parent": "IfcFlowSegment",
+      "category_path": [
+        "Élément physique",
+        "Élément de distribution technique",
+        "Réseaux aérauliques (CVC)"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A segment of a duct system, distributing air for HVAC purposes.",
+      "definition_fr": "Tronçon de gaine assurant la distribution d'air (CVC).",
+      "psets_common": [
+        "Pset_DuctSegmentTypeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "gaine de ventilation",
+          "conduit d'air",
+          "gaine aéraulique"
+        ],
+        "en": [
+          "duct segment",
+          "air duct"
+        ],
+        "it": [
+          "condotto aria"
+        ],
+        "de": [
+          "Luftkanal"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "RIGIDSEGMENT",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A rigid duct segment.",
+          "description_fr": "Tronçon de gaine rigide.",
+          "synonyms": {
+            "fr": [
+              "gaine rigide"
+            ],
+            "en": [
+              "rigid duct"
+            ],
+            "it": [
+              "condotto rigido"
+            ],
+            "de": [
+              "Starrer Kanal"
+            ]
+          }
+        },
+        {
+          "value": "FLEXIBLESEGMENT",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A flexible duct segment.",
+          "description_fr": "Tronçon de gaine flexible.",
+          "synonyms": {
+            "fr": [
+              "gaine flexible"
+            ],
+            "en": [
+              "flexible duct"
+            ],
+            "it": [
+              "condotto flessibile"
+            ],
+            "de": [
+              "Flexkanal"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcPipeSegment",
+      "class_fr": "Tuyauterie (tronçon)",
+      "parent": "IfcFlowSegment",
+      "category_path": [
+        "Élément physique",
+        "Élément de distribution technique",
+        "Réseaux hydrauliques"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A segment of a pipe system, distributing fluids (water, gas...).",
+      "definition_fr": "Tronçon de canalisation assurant le transport d'un fluide (eau, gaz...).",
+      "psets_common": [
+        "Pset_PipeSegmentTypeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "tuyau",
+          "canalisation",
+          "conduite"
+        ],
+        "en": [
+          "pipe segment",
+          "pipe"
+        ],
+        "it": [
+          "tubazione"
+        ],
+        "de": [
+          "Rohrleitung"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "RIGIDSEGMENT",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A rigid pipe segment.",
+          "description_fr": "Tronçon de canalisation rigide.",
+          "synonyms": {
+            "fr": [
+              "tuyau rigide"
+            ],
+            "en": [
+              "rigid pipe"
+            ],
+            "it": [
+              "tubo rigido"
+            ],
+            "de": [
+              "Starres Rohr"
+            ]
+          }
+        },
+        {
+          "value": "GUTTER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A gutter conveying rainwater.",
+          "description_fr": "Chéneau ou gouttière.",
+          "synonyms": {
+            "fr": [
+              "gouttière",
+              "chéneau"
+            ],
+            "en": [
+              "gutter"
+            ],
+            "it": [
+              "grondaia"
+            ],
+            "de": [
+              "Dachrinne"
+            ]
+          }
+        },
+        {
+          "value": "CULVERT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A buried conduit conveying water under a road/embankment.",
+          "description_fr": "Buse ou dalot enterré sous une voirie ou un remblai.",
+          "synonyms": {
+            "fr": [
+              "buse",
+              "dalot",
+              "ponceau"
+            ],
+            "en": [
+              "culvert"
+            ],
+            "it": [
+              "tombino",
+              "canaletta interrata"
+            ],
+            "de": [
+              "Durchlass"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcSanitaryTerminal",
+      "class_fr": "Appareil sanitaire",
+      "parent": "IfcFlowTerminal",
+      "category_path": [
+        "Élément physique",
+        "Élément de distribution technique",
+        "Appareils sanitaires"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A sanitary terminal is a construction component used for personal hygiene, e.g. sink, toilet, bath.",
+      "definition_fr": "Appareil d'hygiène ou d'usage sanitaire (lavabo, WC, baignoire...).",
+      "psets_common": [
+        "Pset_SanitaryTerminalTypeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "appareil sanitaire",
+          "sanitaire"
+        ],
+        "en": [
+          "sanitary terminal",
+          "sanitary fixture"
+        ],
+        "it": [
+          "apparecchio sanitario"
+        ],
+        "de": [
+          "Sanitärobjekt"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "WASHHANDBASIN",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A wash hand basin.",
+          "description_fr": "Lavabo.",
+          "synonyms": {
+            "fr": [
+              "lavabo",
+              "vasque"
+            ],
+            "en": [
+              "wash hand basin",
+              "sink"
+            ],
+            "it": [
+              "lavabo"
+            ],
+            "de": [
+              "Waschbecken"
+            ]
+          }
+        },
+        {
+          "value": "TOILETPAN",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A toilet pan/bowl.",
+          "description_fr": "Cuvette de WC.",
+          "synonyms": {
+            "fr": [
+              "wc",
+              "cuvette",
+              "toilette"
+            ],
+            "en": [
+              "toilet",
+              "WC pan"
+            ],
+            "it": [
+              "water",
+              "wc"
+            ],
+            "de": [
+              "WC-Becken"
+            ]
+          }
+        },
+        {
+          "value": "SHOWER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A shower.",
+          "description_fr": "Douche.",
+          "synonyms": {
+            "fr": [
+              "douche"
+            ],
+            "en": [
+              "shower"
+            ],
+            "it": [
+              "doccia"
+            ],
+            "de": [
+              "Dusche"
+            ]
+          }
+        },
+        {
+          "value": "BATH",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A bath tub.",
+          "description_fr": "Baignoire.",
+          "synonyms": {
+            "fr": [
+              "baignoire"
+            ],
+            "en": [
+              "bathtub"
+            ],
+            "it": [
+              "vasca da bagno"
+            ],
+            "de": [
+              "Badewanne"
+            ]
+          }
+        },
+        {
+          "value": "URINAL",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A urinal.",
+          "description_fr": "Urinoir.",
+          "synonyms": {
+            "fr": [
+              "urinoir"
+            ],
+            "en": [
+              "urinal"
+            ],
+            "it": [
+              "orinatoio"
+            ],
+            "de": [
+              "Urinal"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcCableCarrierSegment",
+      "class_fr": "Chemin de câbles (tronçon)",
+      "parent": "IfcFlowSegment",
+      "category_path": [
+        "Élément physique",
+        "Élément de distribution technique",
+        "Réseaux électriques"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A segment of a system for carrying cables, e.g. cable tray or conduit.",
+      "definition_fr": "Tronçon de système de cheminement de câbles (chemin de câbles, goulotte, conduit électrique).",
+      "psets_common": [
+        "Pset_CableCarrierSegmentTypeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "chemin de câbles",
+          "goulotte",
+          "conduit électrique"
+        ],
+        "en": [
+          "cable tray",
+          "conduit"
+        ],
+        "it": [
+          "canalina",
+          "passerella portacavi"
+        ],
+        "de": [
+          "Kabeltrasse",
+          "Kabelkanal"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "CABLETRAYSEGMENT",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A cable tray segment.",
+          "description_fr": "Tronçon de chemin de câbles.",
+          "synonyms": {
+            "fr": [
+              "chemin de câbles"
+            ],
+            "en": [
+              "cable tray"
+            ],
+            "it": [
+              "passerella portacavi"
+            ],
+            "de": [
+              "Kabelrinne"
+            ]
+          }
+        },
+        {
+          "value": "CONDUITSEGMENT",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A conduit segment.",
+          "description_fr": "Tronçon de conduit électrique.",
+          "synonyms": {
+            "fr": [
+              "conduit électrique",
+              "gaine électrique"
+            ],
+            "en": [
+              "conduit"
+            ],
+            "it": [
+              "tubo protettivo"
+            ],
+            "de": [
+              "Elektroleerrohr"
+            ]
+          }
+        },
+        {
+          "value": "CABLETRUNKINGSEGMENT",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A cable trunking segment.",
+          "description_fr": "Tronçon de goulotte.",
+          "synonyms": {
+            "fr": [
+              "goulotte"
+            ],
+            "en": [
+              "cable trunking"
+            ],
+            "it": [
+              "canalina"
+            ],
+            "de": [
+              "Kabelkanal"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcLightFixture",
+      "class_fr": "Luminaire",
+      "parent": "IfcFlowTerminal",
+      "category_path": [
+        "Élément physique",
+        "Élément de distribution technique",
+        "Éclairage"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A light fixture (or luminaire) is a piece of equipment that houses a light source.",
+      "definition_fr": "Appareil d'éclairage abritant une ou plusieurs sources lumineuses.",
+      "psets_common": [
+        "Pset_LightFixtureTypeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "luminaire",
+          "appareil d'éclairage"
+        ],
+        "en": [
+          "light fixture",
+          "luminaire"
+        ],
+        "it": [
+          "apparecchio di illuminazione"
+        ],
+        "de": [
+          "Leuchte"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "POINTSOURCE",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A fixture with a point light source.",
+          "description_fr": "Luminaire ponctuel (spot).",
+          "synonyms": {
+            "fr": [
+              "spot",
+              "luminaire ponctuel"
+            ],
+            "en": [
+              "point source fixture"
+            ],
+            "it": [
+              "faretto"
+            ],
+            "de": [
+              "Punktleuchte"
+            ]
+          }
+        },
+        {
+          "value": "DIRECTIONSOURCE",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A fixture with a directional light source.",
+          "description_fr": "Luminaire directionnel (projecteur).",
+          "synonyms": {
+            "fr": [
+              "projecteur"
+            ],
+            "en": [
+              "directional fixture"
+            ],
+            "it": [
+              "proiettore"
+            ],
+            "de": [
+              "Strahler"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcAirTerminal",
+      "class_fr": "Bouche de ventilation",
+      "parent": "IfcFlowTerminal",
+      "category_path": [
+        "Élément physique",
+        "Élément de distribution technique",
+        "Terminaux aérauliques"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "An air terminal is a construction element that typically covers an air distribution outlet or inlet, e.g. a diffuser or grille.",
+      "definition_fr": "Élément terminal d'un réseau aéraulique : diffuseur, grille de soufflage ou de reprise.",
+      "psets_common": [
+        "Pset_AirTerminalTypeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "bouche de ventilation",
+          "grille de soufflage",
+          "diffuseur"
+        ],
+        "en": [
+          "air terminal",
+          "diffuser",
+          "grille"
+        ],
+        "it": [
+          "bocchetta"
+        ],
+        "de": [
+          "Luftdurchlass"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "DIFFUSER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "An air terminal diffusing supply air.",
+          "description_fr": "Diffuseur de soufflage.",
+          "synonyms": {
+            "fr": [
+              "diffuseur"
+            ],
+            "en": [
+              "diffuser"
+            ],
+            "it": [
+              "diffusore"
+            ],
+            "de": [
+              "Diffusor"
+            ]
+          }
+        },
+        {
+          "value": "GRILLE",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A grille covering an air opening.",
+          "description_fr": "Grille de ventilation.",
+          "synonyms": {
+            "fr": [
+              "grille de ventilation"
+            ],
+            "en": [
+              "grille"
+            ],
+            "it": [
+              "griglia"
+            ],
+            "de": [
+              "Gitter"
+            ]
+          }
+        },
+        {
+          "value": "REGISTER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A grille with adjustable dampers.",
+          "description_fr": "Bouche réglable à registre.",
+          "synonyms": {
+            "fr": [
+              "bouche à registre"
+            ],
+            "en": [
+              "register"
+            ],
+            "it": [
+              "bocchetta regolabile"
+            ],
+            "de": [
+              "Regelklappe"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcSpaceHeater",
+      "class_fr": "Émetteur de chauffage",
+      "parent": "IfcFlowTerminal",
+      "category_path": [
+        "Élément physique",
+        "Élément de distribution technique",
+        "Émetteurs de chauffage"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A space heater is a device used to warm the air in an occupied space using heated water, steam or electricity, e.g. a radiator.",
+      "definition_fr": "Appareil de chauffage d'un espace occupé (radiateur, convecteur).",
+      "psets_common": [
+        "Pset_SpaceHeaterTypeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "radiateur",
+          "émetteur de chauffage",
+          "convecteur"
+        ],
+        "en": [
+          "space heater",
+          "radiator"
+        ],
+        "it": [
+          "radiatore"
+        ],
+        "de": [
+          "Heizkörper"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "CONVECTOR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A convector-type space heater.",
+          "description_fr": "Radiateur de type convecteur.",
+          "synonyms": {
+            "fr": [
+              "convecteur"
+            ],
+            "en": [
+              "convector"
+            ],
+            "it": [
+              "convettore"
+            ],
+            "de": [
+              "Konvektor"
+            ]
+          }
+        },
+        {
+          "value": "RADIATOR",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A radiator-type space heater.",
+          "description_fr": "Radiateur classique à eau chaude.",
+          "synonyms": {
+            "fr": [
+              "radiateur à eau chaude"
+            ],
+            "en": [
+              "radiator"
+            ],
+            "it": [
+              "radiatore"
+            ],
+            "de": [
+              "Heizkörper"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcFurniture",
+      "class_fr": "Mobilier",
+      "parent": "IfcElement",
+      "category_path": [
+        "Élément physique",
+        "Aménagement intérieur",
+        "Mobilier"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "An object which is used to equip an interior space, e.g. tables, chairs, cabinets.",
+      "definition_fr": "Objet équipant un espace intérieur : tables, chaises, armoires...",
+      "psets_common": [
+        "Pset_FurnitureTypeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "mobilier",
+          "meuble"
+        ],
+        "en": [
+          "furniture"
+        ],
+        "it": [
+          "arredo",
+          "mobilio"
+        ],
+        "de": [
+          "Möbel"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcSpace",
+      "class_fr": "Espace / Local",
+      "parent": "IfcSpatialElement",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Espace"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A space represents an area or volume bounded actually or theoretically, used for the containment or delimitation of physical elements.",
+      "definition_fr": "Zone ou volume délimité, réel ou théorique, utilisé pour contenir ou délimiter des éléments physiques (pièce, local).",
+      "psets_common": [
+        "Pset_SpaceCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "espace",
+          "local",
+          "pièce"
+        ],
+        "en": [
+          "space",
+          "room"
+        ],
+        "it": [
+          "ambiente",
+          "locale"
+        ],
+        "de": [
+          "Raum"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "SPACE",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A standard space.",
+          "description_fr": "Local ou pièce standard.",
+          "synonyms": {
+            "fr": [
+              "local standard"
+            ],
+            "en": [
+              "standard space"
+            ],
+            "it": [
+              "locale standard"
+            ],
+            "de": [
+              "Standardraum"
+            ]
+          }
+        },
+        {
+          "value": "PARKING",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A space used for parking.",
+          "description_fr": "Place ou zone de parking.",
+          "synonyms": {
+            "fr": [
+              "place de parking",
+              "zone de stationnement"
+            ],
+            "en": [
+              "parking space"
+            ],
+            "it": [
+              "posto auto"
+            ],
+            "de": [
+              "Parkplatz"
+            ]
+          }
+        },
+        {
+          "value": "GFA",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A space used for gross floor area calculation.",
+          "description_fr": "Espace utilisé pour le calcul de surface brute de plancher.",
+          "synonyms": {
+            "fr": [
+              "surface brute de plancher"
+            ],
+            "en": [
+              "gross floor area"
+            ],
+            "it": [
+              "superficie lorda di piano"
+            ],
+            "de": [
+              "Bruttogeschossfläche"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcBuildingStorey",
+      "class_fr": "Étage / Niveau",
+      "parent": "IfcSpatialStructureElement",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Étage"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A building storey represents a (nearly) horizontal aggregation of spaces that are vertically bound.",
+      "definition_fr": "Regroupement (quasi) horizontal d'espaces situés à un même niveau vertical.",
+      "psets_common": [
+        "Pset_BuildingStoreyCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "étage",
+          "niveau"
+        ],
+        "en": [
+          "building storey",
+          "floor level"
+        ],
+        "it": [
+          "piano"
+        ],
+        "de": [
+          "Geschoss"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcBuilding",
+      "class_fr": "Bâtiment",
+      "parent": "IfcSpatialStructureElement",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Bâtiment"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A building represents a structure that provides shelter for its occupants or contents.",
+      "definition_fr": "Structure abritant des occupants ou des biens.",
+      "psets_common": [
+        "Pset_BuildingCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "bâtiment",
+          "immeuble"
+        ],
+        "en": [
+          "building"
+        ],
+        "it": [
+          "edificio"
+        ],
+        "de": [
+          "Gebäude"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcSite",
+      "class_fr": "Terrain / Site",
+      "parent": "IfcSpatialStructureElement",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Site"
+      ],
+      "ifc_versions": {
+        "introduced": "2x3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A site is defined as a designated area of land on which the project construction is to be completed.",
+      "definition_fr": "Zone de terrain désignée sur laquelle le projet de construction est réalisé.",
+      "psets_common": [
+        "Pset_SiteCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "terrain",
+          "site",
+          "parcelle"
+        ],
+        "en": [
+          "site",
+          "plot"
+        ],
+        "it": [
+          "terreno",
+          "sito"
+        ],
+        "de": [
+          "Grundstück"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "2x3",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "Undefined.",
+          "description_fr": "Non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "",
+      "children": []
+    },
+    {
+      "class": "IfcKerb",
+      "class_fr": "Bordure de trottoir",
+      "parent": "IfcCivilElement",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Voirie et équipements routiers"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A kerb (curb) is a raised border along the edge of a road or pavement, introduced in IFC4.3 for infrastructure projects.",
+      "definition_fr": "Bordure surélevée en limite de chaussée ou de trottoir. Classe introduite en IFC4.3 pour les projets d'infrastructure routière.",
+      "psets_common": [
+        "Pset_KerbCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "bordure de trottoir",
+          "bordure de voirie"
+        ],
+        "en": [
+          "kerb",
+          "curb"
+        ],
+        "it": [
+          "cordolo stradale"
+        ],
+        "de": [
+          "Bordstein"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "USERDEFINED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A user-defined kerb type.",
+          "description_fr": "Type défini par l'utilisateur.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "Classe absente d'IFC2x3 et IFC4 : nouveauté du domaine infrastructure introduite en IFC4.3.",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure routière).",
+      "children": []
+    },
+    {
+      "class": "IfcPavement",
+      "class_fr": "Revêtement de chaussée",
+      "parent": "IfcCivilElement",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Voirie et équipements routiers"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A pavement is the durable surface material laid down on a road, path or similar area, introduced in IFC4.3.",
+      "definition_fr": "Structure de surface durable d'une chaussée, d'un chemin ou d'une aire similaire. Classe introduite en IFC4.3.",
+      "psets_common": [
+        "Pset_PavementCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "revêtement de chaussée",
+          "chaussée"
+        ],
+        "en": [
+          "pavement"
+        ],
+        "it": [
+          "pavimentazione stradale"
+        ],
+        "de": [
+          "Fahrbahnbelag"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "USERDEFINED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A user-defined pavement type.",
+          "description_fr": "Type défini par l'utilisateur.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "À ne pas confondre avec IfcSlab(PAVING) qui désigne une dalle de pavage ponctuelle plutôt qu'une structure de chaussée complète.",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure routière).",
+      "children": []
+    },
+    {
+      "class": "IfcRail",
+      "class_fr": "Rail (voie ferrée)",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Voirie et équipements routiers"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A rail is a component of railway track providing the running surface for train wheels, introduced in IFC4.3.",
+      "definition_fr": "Composant de voie ferrée assurant la surface de roulement des roues de train. Classe introduite en IFC4.3.",
+      "psets_common": [
+        "Pset_RailCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "rail",
+          "rail de chemin de fer"
+        ],
+        "en": [
+          "rail"
+        ],
+        "it": [
+          "rotaia"
+        ],
+        "de": [
+          "Schiene"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "USERDEFINED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A user-defined rail type.",
+          "description_fr": "Type défini par l'utilisateur.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "Domaine ferroviaire, extension infrastructure d'IFC4.3.",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure ferroviaire).",
+      "children": []
+    }
+  ]
+}
