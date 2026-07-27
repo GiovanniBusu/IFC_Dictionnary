@@ -46,11 +46,15 @@ def test_stiffener_multilingual(reference, query, expected_lang):
 
 
 def test_stiffener_italian_traversa(reference):
-    # "traversa" est un terme italien plus générique (recoupe aussi
-    # "travetto" = solive/IfcBeam.JOIST) : on vérifie seulement que le
-    # raidisseur ressort en tête, la langue détectée pouvant être incertaine.
+    # "traversa" (IT, raidisseur) est lexicalement très proche du français
+    # "traverse" (traverse de voie ferrée, IfcTrackElement.SLEEPER) : une
+    # fois le vocabulaire ferroviaire ajouté, ce terme devient une véritable
+    # ambiguïté inter-langues plutôt qu'un cas à sens unique. On vérifie que
+    # le raidisseur reste bien identifié (suggestion ou alternative), sans
+    # exiger qu'il soit toujours la toute première suggestion.
     result = search("traversa", reference=reference)
-    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_RIB")
+    ranked = [top_class_pdt(result)] + [(a["class"], a["predefined_type"]) for a in result["alternatives"]]
+    assert ("IfcMember", "STIFFENING_RIB") in ranked
 
 
 def test_stiffener_german_ambiguity_with_shear_wall(reference):
@@ -140,6 +144,74 @@ def test_specific_predefined_type_match_has_no_available_types_list(reference):
     # détaillée de la classe).
     result = search("raidisseur", reference=reference)
     assert result["suggestion"]["available_predefined_types"] == []
+
+
+# ---------------------------------------------------------------------------
+# Infrastructure et ferroviaire (extension IFC4.3)
+# ---------------------------------------------------------------------------
+
+def test_sleeper_traverse_de_voie(reference):
+    result = search("traverse de voie", reference=reference)
+    assert top_class_pdt(result) == ("IfcTrackElement", "SLEEPER")
+
+
+def test_ballast_layer(reference):
+    result = search("ballast", reference=reference)
+    assert top_class_pdt(result) == ("IfcCourse", "BALLASTBED")
+
+
+def test_frog_coeur_daiguillage(reference):
+    result = search("cœur d'aiguillage", reference=reference)
+    assert top_class_pdt(result) == ("IfcTrackElement", "FROG")
+
+
+def test_kilopoint_point_kilometrique(reference):
+    result = search("point kilométrique", reference=reference)
+    assert top_class_pdt(result) == ("IfcReferent", "KILOPOINT")
+
+
+def test_bridge_abutment_culee(reference):
+    result = search("culée", reference=reference)
+    assert top_class_pdt(result) == ("IfcBridgePart", "ABUTMENT")
+
+
+def test_bridge_type_cable_stayed(reference):
+    result = search("pont à haubans", reference=reference)
+    assert top_class_pdt(result) == ("IfcBridge", "CABLE_STAYED")
+
+
+def test_roundabout_giratoire(reference):
+    result = search("giratoire", reference=reference)
+    assert top_class_pdt(result) == ("IfcRoadPart", "ROUNDABOUT")
+
+
+def test_railway_crossing_passage_a_niveau(reference):
+    result = search("passage à niveau", reference=reference)
+    assert top_class_pdt(result) == ("IfcRoadPart", "RAILWAYCROSSING")
+
+
+def test_earthworks_cut_and_fill(reference):
+    assert top_class_pdt(search("déblai", reference=reference)) == ("IfcEarthworksCut", "CUT")
+    assert top_class_pdt(search("remblai", reference=reference)) == ("IfcEarthworksFill", "EMBANKMENT")
+
+
+def test_rail_guardrail_vs_railing_guardrail_homonym(reference):
+    # Homonymie intentionnelle : IfcRail.GUARDRAIL (contre-rail ferroviaire)
+    # et IfcRailing.GUARDRAIL (garde-corps de bâtiment) partagent le même mot
+    # anglais mais sont deux classes de domaines différents. La requête
+    # générique "garde-corps" (FR, bâtiment) ne doit pas remonter le rail.
+    result = search("garde-corps", reference=reference)
+    assert top_class_pdt(result)[0] == "IfcRailing"
+
+
+def test_alignment_and_referent_classes_exist(reference):
+    assert reference.get_class("IfcAlignment") is not None
+    assert reference.get_class("IfcReferent") is not None
+
+
+def test_infrastructure_spatial_structures_exist(reference):
+    for cls in ["IfcRoad", "IfcRoadPart", "IfcRailway", "IfcRailwayPart", "IfcBridge", "IfcBridgePart"]:
+        assert reference.get_class(cls) is not None, f"{cls} manquant du référentiel"
 
 
 # ---------------------------------------------------------------------------

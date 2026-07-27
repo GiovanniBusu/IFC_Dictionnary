@@ -46,17 +46,25 @@ test ambigus couverts).
 ### Couverture des données
 
 Le référentiel actuel (`data/ifc_reference.json`, généré par
-`scripts/build_reference_data.py`) couvre **41 classes IFC / ~242
+`scripts/build_reference_data.py`) couvre **54 classes IFC / ~338
 PredefinedType**, sélectionnées pour représenter toutes les situations
 demandées : structure porteuse, second œuvre/architecture, CVC/plomberie/
 électricité, mobilier, accessoires et pièces d'assemblage (`IfcDiscreteAccessory`,
-ex. un « corbeau »), éléments spatiaux, et génie civil (nouveautés
-IFC4.3 : `IfcKerb`, `IfcPavement`, `IfcRail`...). Chaque classe et chaque
-`PredefinedType` porte des synonymes FR/EN/IT/DE, y compris du vocabulaire
-régional suisse (« chape », « corniche », « raidisseur »...) et des termes de
-chantier vulgarisés. Un cas de dépréciation (`IfcWallStandardCase`, IFC2x3 →
-IFC4) illustre la traçabilité de version demandée pour les utilisateurs
-travaillant encore en IFC2x3 (Revit/cadwork).
+ex. un « corbeau »), éléments spatiaux, et un volet **infrastructure et
+ferroviaire** particulièrement développé (nouveautés IFC4.3) :
+`IfcAlignment` et `IfcReferent` (tracé en plan et points kilométriques),
+`IfcRoad`/`IfcRoadPart` (chaussée, giratoire, passage à niveau...),
+`IfcRailway`/`IfcRailwayPart` (voie, zone d'aiguillage, plateforme...),
+`IfcBridge`/`IfcBridgePart` (pont à haubans, culée, tablier, pile...),
+`IfcTrackElement` (traverse, cœur d'aiguillage, dérailleur...), `IfcSignal`,
+`IfcEarthworksCut`/`IfcEarthworksFill` (déblai/remblai), `IfcCourse`
+(couche de ballast, de chaussée...), `IfcKerb`, `IfcPavement`, `IfcRail`.
+Chaque classe et chaque `PredefinedType` porte des synonymes FR/EN/IT/DE, y
+compris du vocabulaire régional suisse (« chape », « corniche »,
+« raidisseur »...) et des termes de chantier vulgarisés. Un cas de
+dépréciation (`IfcWallStandardCase`, IFC2x3 → IFC4) illustre la traçabilité
+de version demandée pour les utilisateurs travaillant encore en IFC2x3
+(Revit/cadwork).
 
 Les valeurs `PredefinedType` et leurs définitions ont été vérifiées auprès du
 dépôt source buildingSMART/IFC4.3.x-development plutôt que reconstituées de

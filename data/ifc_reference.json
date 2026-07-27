@@ -6813,7 +6813,7 @@
       "category_path": [
         "Élément physique",
         "Génie civil et infrastructure",
-        "Voirie et équipements routiers"
+        "Voie ferrée et équipements ferroviaires"
       ],
       "ifc_versions": {
         "introduced": "4.3",
@@ -6978,6 +6978,2638 @@
       ],
       "notes_fr": "Attention à l'homonymie : IfcRail.GUARDRAIL (contre-rail ferroviaire anti-déraillement) n'a rien à voir avec IfcRailing.GUARDRAIL (garde-corps de protection contre les chutes en bâtiment) — deux classes et deux domaines différents pour le même mot anglais.",
       "version_notes": "Nouveau en IFC4.3 (extension infrastructure ferroviaire).",
+      "children": []
+    },
+    {
+      "class": "IfcTrackElement",
+      "class_fr": "Élément de voie ferrée",
+      "parent": "IfcBuildingElement",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Voie ferrée et équipements ferroviaires"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A track element is a built element used specifically in the track domain in railway.",
+      "definition_fr": "Élément construit utilisé spécifiquement dans le domaine de la voie ferrée.",
+      "psets_common": [
+        "Pset_TrackElementCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "élément de voie",
+          "composant de voie ferrée"
+        ],
+        "en": [
+          "track element"
+        ],
+        "it": [
+          "elemento del binario"
+        ],
+        "de": [
+          "Gleiselement"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "SLEEPER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A track element that supports running rails, guard rails and check rails, usually at right angles to the track axis.",
+          "description_fr": "Traverse : élément de voie supportant les rails de roulement, contre-rails et rails de guidage.",
+          "synonyms": {
+            "fr": [
+              "traverse",
+              "traverse de voie"
+            ],
+            "en": [
+              "sleeper",
+              "railroad tie"
+            ],
+            "it": [
+              "traversina"
+            ],
+            "de": [
+              "Schwelle"
+            ]
+          }
+        },
+        {
+          "value": "FROG",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "An arrangement ensuring the intersection of two opposite running edges of turnouts or diamond crossings.",
+          "description_fr": "Cœur d'aiguillage : dispositif assurant le croisement des files de roulement d'un appareil de voie.",
+          "synonyms": {
+            "fr": [
+              "cœur d'aiguillage",
+              "cœur de croisement"
+            ],
+            "en": [
+              "frog"
+            ],
+            "it": [
+              "cuore di scambio"
+            ],
+            "de": [
+              "Herzstück"
+            ]
+          }
+        },
+        {
+          "value": "DERAILER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A fixed device which, when placed on the rail, derails the wheels of a vehicle to protect a converging line.",
+          "description_fr": "Dérailleur : dispositif fixe provoquant le déraillement volontaire d'un véhicule pour protéger une voie convergente.",
+          "synonyms": {
+            "fr": [
+              "dérailleur"
+            ],
+            "en": [
+              "derailer"
+            ],
+            "it": [
+              "deviatoio di sicurezza"
+            ],
+            "de": [
+              "Gleissperre"
+            ]
+          }
+        },
+        {
+          "value": "VEHICLESTOP",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A fixed installation at the end of the track which stops any vehicle movement (e.g. buffer stop, sand hump).",
+          "description_fr": "Butoir de voie : installation fixe en fin de voie arrêtant tout mouvement de véhicule.",
+          "synonyms": {
+            "fr": [
+              "butoir",
+              "butoir de voie",
+              "heurtoir"
+            ],
+            "en": [
+              "buffer stop"
+            ],
+            "it": [
+              "paraurti di fine binario"
+            ],
+            "de": [
+              "Prellbock"
+            ]
+          }
+        },
+        {
+          "value": "BLOCKINGDEVICE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A device composed of pneumatic, mechanic or electric components causing the braking of a train in case of emergency.",
+          "description_fr": "Dispositif de blocage d'urgence provoquant le freinage d'un train.",
+          "synonyms": {
+            "fr": [
+              "dispositif de blocage d'urgence"
+            ],
+            "en": [
+              "blocking device"
+            ],
+            "it": [
+              "dispositivo di blocco"
+            ],
+            "de": [
+              "Blockiervorrichtung"
+            ]
+          }
+        },
+        {
+          "value": "SPEEDREGULATOR",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A device composed of pneumatic, mechanic or electric components causing the braking of a train.",
+          "description_fr": "Régulateur de vitesse : dispositif provoquant le freinage contrôlé d'un train.",
+          "synonyms": {
+            "fr": [
+              "régulateur de vitesse"
+            ],
+            "en": [
+              "speed regulator"
+            ],
+            "it": [
+              "regolatore di velocità"
+            ],
+            "de": [
+              "Geschwindigkeitsregler"
+            ]
+          }
+        },
+        {
+          "value": "HALF_SET_OF_BLADES",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "One stock rail and its switch rail complete with small fittings, right or left hand as seen from the switch toe.",
+          "description_fr": "Demi-jeu de lames d'aiguille : un rail fixe et sa lame mobile associée, avec petite quincaillerie.",
+          "synonyms": {
+            "fr": [
+              "demi-jeu de lames d'aiguille"
+            ],
+            "en": [
+              "half set of blades"
+            ],
+            "it": [
+              "semiscambio"
+            ],
+            "de": [
+              "Halber Zungensatz"
+            ]
+          }
+        },
+        {
+          "value": "TRACKENDOFALIGNMENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A special functional installation such as an axle-gauge changeover point or transporter wagon loading point.",
+          "description_fr": "Installation spéciale de fin de voie (changement d'écartement, chargement de wagon transporteur...).",
+          "synonyms": {
+            "fr": [
+              "fin de voie (installation spéciale)"
+            ],
+            "en": [
+              "track end of alignment"
+            ],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "SLEEPER (traverse) est l'un des termes ferroviaires les plus recherchés : à ne pas confondre avec IfcCourse(BALLASTBED), la couche de ballast sur laquelle reposent les traverses.",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure ferroviaire).",
+      "children": []
+    },
+    {
+      "class": "IfcSignal",
+      "class_fr": "Signal (ferroviaire/routier)",
+      "parent": "IfcFlowTerminal",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Signalisation"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "An active device that conveys information or instructions to users, by means of an audio, visual signal, or a combination of both — e.g. a railway signal frame or a traffic light unit.",
+      "definition_fr": "Dispositif actif transmettant une information ou une instruction (signal visuel, sonore ou mixte) — ex. un signal ferroviaire ou un feu de circulation.",
+      "psets_common": [
+        "Pset_SignalCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "signal",
+          "signal ferroviaire",
+          "feu de signalisation"
+        ],
+        "en": [
+          "signal"
+        ],
+        "it": [
+          "segnale"
+        ],
+        "de": [
+          "Signal"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "VISUAL",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A signal type conveying information in a visual manner, such as a light, cluster of lights, or mechanical moving shape.",
+          "description_fr": "Signal visuel (feu, ensemble de feux, ou forme mécanique mobile).",
+          "synonyms": {
+            "fr": [
+              "signal visuel"
+            ],
+            "en": [
+              "visual signal"
+            ],
+            "it": [
+              "segnale visivo"
+            ],
+            "de": [
+              "Visuelles Signal"
+            ]
+          }
+        },
+        {
+          "value": "AUDIO",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A signal type conveying information by emitting an audio signal such as a beep, ring, horn or explosive sound.",
+          "description_fr": "Signal sonore (avertisseur, sonnerie, corne...).",
+          "synonyms": {
+            "fr": [
+              "signal sonore"
+            ],
+            "en": [
+              "audio signal"
+            ],
+            "it": [
+              "segnale acustico"
+            ],
+            "de": [
+              "Akustisches Signal"
+            ]
+          }
+        },
+        {
+          "value": "MIXED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A signal type conveying information in both a visual and audio manner.",
+          "description_fr": "Signal mixte, à la fois visuel et sonore.",
+          "synonyms": {
+            "fr": [
+              "signal mixte"
+            ],
+            "en": [
+              "mixed signal"
+            ],
+            "it": [
+              "segnale misto"
+            ],
+            "de": [
+              "Gemischtes Signal"
+            ]
+          }
+        },
+        {
+          "value": "NON_PHYSICAL_SIGNAL",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A virtual or fictitious signal, e.g. in a railway signalling system a signal not physically sent to the train.",
+          "description_fr": "Signal virtuel ou fictif, ex. un signal d'un système de signalisation ferroviaire non envoyé physiquement au train.",
+          "synonyms": {
+            "fr": [
+              "signal virtuel",
+              "signal non physique"
+            ],
+            "en": [
+              "non-physical signal"
+            ],
+            "it": [
+              "segnale virtuale"
+            ],
+            "de": [
+              "Virtuelles Signal"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "Nouveau en IFC4.3.",
+      "children": []
+    },
+    {
+      "class": "IfcEarthworksCut",
+      "class_fr": "Terrassement en déblai (fouille)",
+      "parent": "IfcCivilElement",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Terrassements et couches de structure"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "The resulting void from modification of existing terrain or road structure by excavation or other means of removing material.",
+      "definition_fr": "Vide résultant de la modification d'un terrain ou d'une structure routière existante par excavation ou tout autre moyen d'enlèvement de matériau.",
+      "psets_common": [
+        "Pset_EarthworksCutCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "déblai",
+          "terrassement en déblai",
+          "fouille"
+        ],
+        "en": [
+          "earthworks cut",
+          "excavation"
+        ],
+        "it": [
+          "scavo"
+        ],
+        "de": [
+          "Aushub"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "TRENCH",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Excavation whose length greatly exceeds the depth and width, e.g. for strip foundations or buried services.",
+          "description_fr": "Tranchée : excavation dont la longueur dépasse largement la profondeur et la largeur (fondations filantes, réseaux enterrés).",
+          "synonyms": {
+            "fr": [
+              "tranchée"
+            ],
+            "en": [
+              "trench"
+            ],
+            "it": [
+              "trincea"
+            ],
+            "de": [
+              "Graben"
+            ]
+          }
+        },
+        {
+          "value": "DREDGING",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Underwater excavation to recover material or to create a greater depth of water.",
+          "description_fr": "Dragage : excavation sous l'eau pour récupérer du matériau ou augmenter la profondeur d'eau.",
+          "synonyms": {
+            "fr": [
+              "dragage"
+            ],
+            "en": [
+              "dredging"
+            ],
+            "it": [
+              "dragaggio"
+            ],
+            "de": [
+              "Baggerung"
+            ]
+          }
+        },
+        {
+          "value": "EXCAVATION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "General type of excavation when a more accurate type is not specified.",
+          "description_fr": "Excavation générale, quand un type plus précis n'est pas spécifié.",
+          "synonyms": {
+            "fr": [
+              "excavation générale"
+            ],
+            "en": [
+              "general excavation"
+            ],
+            "it": [
+              "scavo generale"
+            ],
+            "de": [
+              "Allgemeiner Aushub"
+            ]
+          }
+        },
+        {
+          "value": "OVEREXCAVATION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Excavation beyond the depth required for construction, to replace unsuitable material.",
+          "description_fr": "Sur-excavation, au-delà de la profondeur nécessaire, pour remplacer un matériau impropre.",
+          "synonyms": {
+            "fr": [
+              "sur-excavation"
+            ],
+            "en": [
+              "overexcavation"
+            ],
+            "it": [
+              "sovrascavo"
+            ],
+            "de": [
+              "Übertiefer Aushub"
+            ]
+          }
+        },
+        {
+          "value": "TOPSOILREMOVAL",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Excavation where the topmost layer of soil containing organic material is cut or stripped.",
+          "description_fr": "Décapage de la terre végétale (couche superficielle organique).",
+          "synonyms": {
+            "fr": [
+              "décapage de terre végétale"
+            ],
+            "en": [
+              "topsoil removal"
+            ],
+            "it": [
+              "scortico"
+            ],
+            "de": [
+              "Mutterbodenabtrag"
+            ]
+          }
+        },
+        {
+          "value": "STEPEXCAVATION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Removal of the soft part of an existing road slope, dug into steps, when widening a road.",
+          "description_fr": "Excavation en redans (marches) du talus existant, lors de l'élargissement d'une route.",
+          "synonyms": {
+            "fr": [
+              "excavation en redans"
+            ],
+            "en": [
+              "step excavation"
+            ],
+            "it": [
+              "scavo a gradoni"
+            ],
+            "de": [
+              "Stufenaushub"
+            ]
+          }
+        },
+        {
+          "value": "PAVEMENTMILLING",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Removal of expired material from the top of a pavement, to be replaced by new material.",
+          "description_fr": "Fraisage de chaussée : enlèvement du matériau usagé en surface avant remplacement.",
+          "synonyms": {
+            "fr": [
+              "fraisage de chaussée",
+              "rabotage de chaussée"
+            ],
+            "en": [
+              "pavement milling"
+            ],
+            "it": [
+              "fresatura della pavimentazione"
+            ],
+            "de": [
+              "Fahrbahnfräsung"
+            ]
+          }
+        },
+        {
+          "value": "CUT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Excavation where soil or rock below topsoil is cut to the depth required for roads/railways; removed material can be reused as fill.",
+          "description_fr": "Déblai : matériau excavé sous la terre végétale à la profondeur requise (route, voie ferrée), pouvant être réutilisé en remblai.",
+          "synonyms": {
+            "fr": [
+              "déblai"
+            ],
+            "en": [
+              "cut"
+            ],
+            "it": [
+              "scavo di sbancamento"
+            ],
+            "de": [
+              "Abtrag"
+            ]
+          }
+        },
+        {
+          "value": "BASE_EXCAVATION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Excavation for basements of buildings, bridge abutments or similar structures, partially or completely below ground.",
+          "description_fr": "Fouille de fondation pour un sous-sol, une culée de pont ou un ouvrage similaire.",
+          "synonyms": {
+            "fr": [
+              "fouille de fondation"
+            ],
+            "en": [
+              "base excavation"
+            ],
+            "it": [
+              "scavo di fondazione"
+            ],
+            "de": [
+              "Baugrubenaushub"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure).",
+      "children": []
+    },
+    {
+      "class": "IfcEarthworksFill",
+      "class_fr": "Terrassement en remblai",
+      "parent": "IfcCivilElement",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Terrassements et couches de structure"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "An earthworks element created by earthwork activities to build a subgrade or to raise the level of the ground in general.",
+      "definition_fr": "Élément de terrassement créé pour constituer une plateforme support ou rehausser le niveau du terrain.",
+      "psets_common": [
+        "Pset_EarthworksFillCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "remblai",
+          "terrassement en remblai"
+        ],
+        "en": [
+          "earthworks fill",
+          "embankment"
+        ],
+        "it": [
+          "rilevato"
+        ],
+        "de": [
+          "Damm"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "BACKFILL",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Fill behind retaining walls or other structures such as quays, behind abutments and bridges.",
+          "description_fr": "Remblai de contact, mis en œuvre derrière un mur de soutènement, un quai ou une culée de pont.",
+          "synonyms": {
+            "fr": [
+              "remblai de contact"
+            ],
+            "en": [
+              "backfill"
+            ],
+            "it": [
+              "rinterro"
+            ],
+            "de": [
+              "Hinterfüllung"
+            ]
+          }
+        },
+        {
+          "value": "COUNTERWEIGHT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Embankment built on the side of the main road structure to reduce settlement.",
+          "description_fr": "Remblai de contrepoids, construit sur le côté de l'ouvrage principal pour réduire les tassements.",
+          "synonyms": {
+            "fr": [
+              "remblai de contrepoids"
+            ],
+            "en": [
+              "counterweight fill"
+            ],
+            "it": [
+              "rilevato di contrappeso"
+            ],
+            "de": [
+              "Gegengewichtsdamm"
+            ]
+          }
+        },
+        {
+          "value": "SUBGRADE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The structure below pavement and above natural soil, supporting the loads transmitted by the overlying structure.",
+          "description_fr": "Plateforme support de chaussée, entre le sol naturel et la structure de chaussée.",
+          "synonyms": {
+            "fr": [
+              "plateforme support de chaussée"
+            ],
+            "en": [
+              "subgrade"
+            ],
+            "it": [
+              "sottofondo"
+            ],
+            "de": [
+              "Planum"
+            ]
+          }
+        },
+        {
+          "value": "EMBANKMENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A predominantly longitudinal earthworks element, formed by cut or fill, where finished ground level is above or below original level.",
+          "description_fr": "Remblai longitudinal, formé par déblai ou apport, dont le niveau fini diffère du terrain naturel.",
+          "synonyms": {
+            "fr": [
+              "remblai"
+            ],
+            "en": [
+              "embankment"
+            ],
+            "it": [
+              "rilevato"
+            ],
+            "de": [
+              "Damm"
+            ]
+          }
+        },
+        {
+          "value": "TRANSITIONSECTION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A section of subgrade ensuring consistency of stiffness and preventing uneven settlement (e.g. embankment/bridge abutment).",
+          "description_fr": "Zone de transition de remblai assurant la continuité de rigidité (ex. entre remblai et culée de pont).",
+          "synonyms": {
+            "fr": [
+              "zone de transition de remblai"
+            ],
+            "en": [
+              "transition section"
+            ],
+            "it": [
+              "tratto di transizione"
+            ],
+            "de": [
+              "Übergangsbereich"
+            ]
+          }
+        },
+        {
+          "value": "SLOPEFILL",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Side slope (batter) fill abutting the road structure or back slope fill.",
+          "description_fr": "Remblai de talus, adossé à la structure routière.",
+          "synonyms": {
+            "fr": [
+              "remblai de talus"
+            ],
+            "en": [
+              "slope fill"
+            ],
+            "it": [
+              "riempimento di scarpata"
+            ],
+            "de": [
+              "Böschungsauffüllung"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure).",
+      "children": []
+    },
+    {
+      "class": "IfcCourse",
+      "class_fr": "Couche de structure (chaussée/voie)",
+      "parent": "IfcCivilElement",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Terrassements et couches de structure"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A built element whose length greatly exceeds its thickness, usually a single material laid on site on top of another built element — a graded granular material, distinct from earthworks (soil-based).",
+      "definition_fr": "Élément dont la longueur dépasse largement l'épaisseur, généralement d'un seul matériau granulaire mis en œuvre sur un autre élément — distinct du terrassement (matériau du sol en place).",
+      "psets_common": [
+        "Pset_CourseCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "couche de structure",
+          "couche de forme"
+        ],
+        "en": [
+          "course",
+          "layer"
+        ],
+        "it": [
+          "strato"
+        ],
+        "de": [
+          "Schicht"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "BALLASTBED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A layer composed of broken stones under the sleepers.",
+          "description_fr": "Couche de ballast, constituée de pierres concassées sous les traverses.",
+          "synonyms": {
+            "fr": [
+              "couche de ballast",
+              "ballast"
+            ],
+            "en": [
+              "ballast bed"
+            ],
+            "it": [
+              "strato di ballast"
+            ],
+            "de": [
+              "Schotterbett"
+            ]
+          }
+        },
+        {
+          "value": "PAVEMENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A layer within a pavement structure that forms a paved area or road.",
+          "description_fr": "Couche de chaussée formant une aire pavée ou une route.",
+          "synonyms": {
+            "fr": [
+              "couche de chaussée"
+            ],
+            "en": [
+              "pavement course"
+            ],
+            "it": [
+              "strato di pavimentazione"
+            ],
+            "de": [
+              "Fahrbahnschicht"
+            ]
+          }
+        },
+        {
+          "value": "ARMOUR",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "An aggregate layer whose primary function is to protect against erosion by water, e.g. riprap.",
+          "description_fr": "Couche de protection contre l'érosion par l'eau (enrochement).",
+          "synonyms": {
+            "fr": [
+              "enrochement de protection"
+            ],
+            "en": [
+              "armour layer",
+              "riprap"
+            ],
+            "it": [
+              "strato di protezione"
+            ],
+            "de": [
+              "Steinschüttung"
+            ]
+          }
+        },
+        {
+          "value": "FILTER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "An intermediate layer whose primary function is to prevent the washing through of fine materials.",
+          "description_fr": "Couche filtrante empêchant le lessivage des matériaux fins.",
+          "synonyms": {
+            "fr": [
+              "couche filtrante"
+            ],
+            "en": [
+              "filter layer"
+            ],
+            "it": [
+              "strato filtrante"
+            ],
+            "de": [
+              "Filterschicht"
+            ]
+          }
+        },
+        {
+          "value": "CORE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The bulk internal structure of aggregate structures.",
+          "description_fr": "Noyau : structure interne massive d'un ouvrage en enrochement.",
+          "synonyms": {
+            "fr": [
+              "noyau"
+            ],
+            "en": [
+              "core layer"
+            ],
+            "it": [
+              "nucleo"
+            ],
+            "de": [
+              "Kernschicht"
+            ]
+          }
+        },
+        {
+          "value": "PROTECTION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A layer with the primary task of providing protection against erosion and scour.",
+          "description_fr": "Couche de protection contre l'érosion et l'affouillement.",
+          "synonyms": {
+            "fr": [
+              "couche de protection"
+            ],
+            "en": [
+              "protection layer"
+            ],
+            "it": [
+              "strato di protezione"
+            ],
+            "de": [
+              "Schutzschicht"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "BALLASTBED (couche de ballast) est la couche sur laquelle reposent les traverses (IfcTrackElement.SLEEPER) ; à ne pas confondre avec une chape (IfcCovering.TOPPING), sans rapport.",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure).",
+      "children": []
+    },
+    {
+      "class": "IfcAlignment",
+      "class_fr": "Alignement (référence linéaire)",
+      "parent": "IfcLinearElement",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Alignement et référencement linéaire"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A reference system for linear positioning used to place elements along linear construction works (roads, rails, bridges), combining a horizontal layout, an optional vertical layout, and (for rail) a cant layout.",
+      "definition_fr": "Système de référence géométrique utilisé pour positionner des éléments le long d'un ouvrage linéaire (route, voie ferrée, pont), combinant un tracé en plan (horizontal), un profil en long (vertical) et, pour le ferroviaire, un dévers (cant).",
+      "psets_common": [
+        "Pset_Stationing"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "alignement",
+          "tracé en plan",
+          "axe en plan"
+        ],
+        "en": [
+          "alignment"
+        ],
+        "it": [
+          "tracciato",
+          "asse stradale"
+        ],
+        "de": [
+          "Trassierung",
+          "Achse"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Undefined predefined type.",
+          "description_fr": "Type non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "Concept central de tout modèle d'infrastructure IFC4.3 : l'alignement est la colonne vertébrale géométrique le long de laquelle tous les autres éléments linéaires (route, voie ferrée, pont) sont positionnés et repérés (voir IfcReferent pour les points kilométriques/gares nichés sur l'alignement).",
+      "version_notes": "Nouveau en IFC4.3 (concept central du domaine infrastructure).",
+      "children": []
+    },
+    {
+      "class": "IfcReferent",
+      "class_fr": "Repère linéaire (point kilométrique, station)",
+      "parent": "IfcProduct",
+      "category_path": [
+        "Élément physique",
+        "Génie civil et infrastructure",
+        "Alignement et référencement linéaire"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "Defines a position at a particular offset along an alignment curve — used for stations, mileposts, events or physical landmarks along a linear referencing system.",
+      "definition_fr": "Définit une position à une distance donnée le long d'un alignement — station, point kilométrique, événement ou repère physique au sein d'un système de référencement linéaire.",
+      "psets_common": [
+        "Pset_Stationing",
+        "Pset_LinearReferencingMethod"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "point kilométrique",
+          "pk",
+          "chaînage",
+          "repère linéaire"
+        ],
+        "en": [
+          "referent",
+          "chainage marker"
+        ],
+        "it": [
+          "punto chilometrico"
+        ],
+        "de": [
+          "Kilometrierung"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "KILOPOINT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Kilo point.",
+          "description_fr": "Point kilométrique (PK).",
+          "synonyms": {
+            "fr": [
+              "point kilométrique",
+              "pk"
+            ],
+            "en": [
+              "kilopoint"
+            ],
+            "it": [
+              "chilometrica"
+            ],
+            "de": [
+              "Kilometerpunkt"
+            ]
+          }
+        },
+        {
+          "value": "MILEPOINT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Mile point.",
+          "description_fr": "Point milliaire.",
+          "synonyms": {
+            "fr": [
+              "point milliaire"
+            ],
+            "en": [
+              "milepoint"
+            ],
+            "it": [
+              "punto miliare"
+            ],
+            "de": [
+              "Meilenpunkt"
+            ]
+          }
+        },
+        {
+          "value": "STATION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Defines the stationing (chainage) system along a linear element, establishing the origin or a station equation.",
+          "description_fr": "Définit le système de stationnement (chaînage) le long d'un élément linéaire, origine ou équation de chaînage.",
+          "synonyms": {
+            "fr": [
+              "station de chaînage"
+            ],
+            "en": [
+              "station"
+            ],
+            "it": [
+              "stazionamento"
+            ],
+            "de": [
+              "Station"
+            ]
+          }
+        },
+        {
+          "value": "REFERENCEMARKER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A notation referent, typically a marker physically located in the right of way of the road, rail or other system.",
+          "description_fr": "Balise de repérage, matérialisée physiquement en bordure de route, de voie ferrée ou autre.",
+          "synonyms": {
+            "fr": [
+              "balise de repérage"
+            ],
+            "en": [
+              "reference marker"
+            ],
+            "it": [
+              "indicatore di riferimento"
+            ],
+            "de": [
+              "Referenzmarke"
+            ]
+          }
+        },
+        {
+          "value": "LANDMARK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The referent is the location of a physical landmark visible in the field.",
+          "description_fr": "Point de repère physique visible sur le terrain.",
+          "synonyms": {
+            "fr": [
+              "point de repère visible"
+            ],
+            "en": [
+              "landmark"
+            ],
+            "it": [
+              "punto di riferimento"
+            ],
+            "de": [
+              "Landmarke"
+            ]
+          }
+        },
+        {
+          "value": "BOUNDARY",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Where an administrative or maintenance boundary crosses the linear element being measured.",
+          "description_fr": "Limite administrative ou de gestion croisant l'élément linéaire mesuré.",
+          "synonyms": {
+            "fr": [
+              "limite administrative"
+            ],
+            "en": [
+              "boundary"
+            ],
+            "it": [
+              "confine amministrativo"
+            ],
+            "de": [
+              "Verwaltungsgrenze"
+            ]
+          }
+        },
+        {
+          "value": "INTERSECTION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The location of an intersection specified by the referent name.",
+          "description_fr": "Point d'intersection désigné par le nom du repère.",
+          "synonyms": {
+            "fr": [
+              "point d'intersection"
+            ],
+            "en": [
+              "intersection referent"
+            ],
+            "it": [
+              "punto di intersezione"
+            ],
+            "de": [
+              "Kreuzungspunkt"
+            ]
+          }
+        },
+        {
+          "value": "POSITION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Fully describes a linearly referenced location given the linear element, the measurement method and a measure value.",
+          "description_fr": "Décrit une position chaînée complète (élément linéaire, méthode de mesure, valeur).",
+          "synonyms": {
+            "fr": [
+              "position chaînée"
+            ],
+            "en": [
+              "position referent"
+            ],
+            "it": [
+              "posizione lineare"
+            ],
+            "de": [
+              "Linienbezogene Position"
+            ]
+          }
+        },
+        {
+          "value": "WIDTHEVENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Specifies the width at a specific location along a road alignment and the type of transition from the previous location.",
+          "description_fr": "Événement spécifiant la largeur à un point donné d'un alignement routier et le type de transition.",
+          "synonyms": {
+            "fr": [
+              "événement de largeur"
+            ],
+            "en": [
+              "width event"
+            ],
+            "it": [
+              "evento di larghezza"
+            ],
+            "de": [
+              "Breitenereignis"
+            ]
+          }
+        },
+        {
+          "value": "SUPERELEVATIONEVENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Specifies the superelevation (cross slope) at a specific location along a road alignment.",
+          "description_fr": "Événement spécifiant le dévers (pente transversale) à un point donné d'un alignement routier.",
+          "synonyms": {
+            "fr": [
+              "événement de dévers"
+            ],
+            "en": [
+              "superelevation event"
+            ],
+            "it": [
+              "evento di sopraelevazione"
+            ],
+            "de": [
+              "Überhöhungsereignis"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "Le point kilométrique (« PK »), très utilisé en France/Suisse romande en génie civil routier et ferroviaire, correspond ici à IfcReferent(KILOPOINT), niché sur un IfcAlignment via IfcRelNests.",
+      "version_notes": "Nouveau en IFC4.3 (référencement linéaire).",
+      "children": []
+    },
+    {
+      "class": "IfcRoad",
+      "class_fr": "Route (structure spatiale)",
+      "parent": "IfcFacility",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Route"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A route built on land to allow travel from one location to another (highways, streets, cycle/foot paths), excluding railways. As a Facility, provides the basic project structure element for a road project.",
+      "definition_fr": "Voie de circulation aménagée sur terrain (autoroute, rue, piste cyclable, cheminement piéton), à l'exclusion des voies ferrées. Élément de base de la hiérarchie spatiale d'un projet routier.",
+      "psets_common": [
+        "Pset_RoadCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "route",
+          "projet routier"
+        ],
+        "en": [
+          "road"
+        ],
+        "it": [
+          "strada"
+        ],
+        "de": [
+          "Straße"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Undefined road type.",
+          "description_fr": "Type non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure routière).",
+      "children": []
+    },
+    {
+      "class": "IfcRoadPart",
+      "class_fr": "Partie de route",
+      "parent": "IfcFacilityPart",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Route"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A spatial structure element used to spatially decompose an IfcRoad into manageable parts (carriageway, shoulder, sidewalk, roundabout...).",
+      "definition_fr": "Élément de structure spatiale décomposant un IfcRoad en parties gérables (chaussée, accotement, trottoir, giratoire...).",
+      "psets_common": [
+        "Pset_RoadPartCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "partie de route"
+        ],
+        "en": [
+          "road part"
+        ],
+        "it": [
+          "parte di strada"
+        ],
+        "de": [
+          "Straßenteil"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "CARRIAGEWAY",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Unitary lateral part of road built for traffic, possibly with several traffic lanes and lay-bys.",
+          "description_fr": "Chaussée : partie latérale unitaire de la route construite pour la circulation.",
+          "synonyms": {
+            "fr": [
+              "chaussée"
+            ],
+            "en": [
+              "carriageway"
+            ],
+            "it": [
+              "carreggiata"
+            ],
+            "de": [
+              "Fahrbahn"
+            ]
+          }
+        },
+        {
+          "value": "TRAFFICLANE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Lateral part of carriageway designated to vehicular traffic for a particular purpose.",
+          "description_fr": "Voie de circulation : bande de chaussée dédiée à la circulation d'une file de véhicules.",
+          "synonyms": {
+            "fr": [
+              "voie de circulation"
+            ],
+            "en": [
+              "traffic lane"
+            ],
+            "it": [
+              "corsia di marcia"
+            ],
+            "de": [
+              "Fahrstreifen"
+            ]
+          }
+        },
+        {
+          "value": "SHOULDER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A lateral part of road adjacent to the carriageway, not intended for vehicular traffic but usable in emergencies.",
+          "description_fr": "Accotement : partie latérale non destinée à la circulation, utilisable en cas d'urgence.",
+          "synonyms": {
+            "fr": [
+              "accotement"
+            ],
+            "en": [
+              "shoulder"
+            ],
+            "it": [
+              "banchina"
+            ],
+            "de": [
+              "Bankett"
+            ]
+          }
+        },
+        {
+          "value": "HARDSHOULDER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A surfaced type of shoulder providing for safe use by vehicles in distress.",
+          "description_fr": "Bande d'arrêt d'urgence : accotement revêtu pour l'usage des véhicules en difficulté.",
+          "synonyms": {
+            "fr": [
+              "bande d'arrêt d'urgence"
+            ],
+            "en": [
+              "hard shoulder"
+            ],
+            "it": [
+              "corsia di emergenza"
+            ],
+            "de": [
+              "Befestigtes Bankett"
+            ]
+          }
+        },
+        {
+          "value": "SOFTSHOULDER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A type of shoulder that is not surfaced.",
+          "description_fr": "Accotement non revêtu.",
+          "synonyms": {
+            "fr": [
+              "accotement non revêtu"
+            ],
+            "en": [
+              "soft shoulder"
+            ],
+            "it": [
+              "banchina non pavimentata"
+            ],
+            "de": [
+              "Unbefestigtes Bankett"
+            ]
+          }
+        },
+        {
+          "value": "SIDEWALK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A footpath along the side of a road, normally separated from the vehicular section by a kerb.",
+          "description_fr": "Trottoir : cheminement piéton le long de la route, séparé de la chaussée par une bordure.",
+          "synonyms": {
+            "fr": [
+              "trottoir"
+            ],
+            "en": [
+              "sidewalk"
+            ],
+            "it": [
+              "marciapiede"
+            ],
+            "de": [
+              "Gehweg"
+            ]
+          }
+        },
+        {
+          "value": "CENTRALRESERVE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Lateral road part separating two carriageways of the same road, or traffic lanes and sidewalk.",
+          "description_fr": "Terre-plein central séparant deux chaussées d'une même route.",
+          "synonyms": {
+            "fr": [
+              "terre-plein central"
+            ],
+            "en": [
+              "central reserve",
+              "median"
+            ],
+            "it": [
+              "spartitraffico"
+            ],
+            "de": [
+              "Mittelstreifen"
+            ]
+          }
+        },
+        {
+          "value": "ROADWAYPLATEAU",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Lateral part of road comprising the carriageway(s), shoulders and medians.",
+          "description_fr": "Plateforme routière regroupant chaussée(s), accotements et terre-plein.",
+          "synonyms": {
+            "fr": [
+              "plateforme routière"
+            ],
+            "en": [
+              "roadway platform"
+            ],
+            "it": [
+              "piattaforma stradale"
+            ],
+            "de": [
+              "Fahrbahnplattform"
+            ]
+          }
+        },
+        {
+          "value": "ROADSIDE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A lateral road part located along the road adjoining the outer edges of the shoulders.",
+          "description_fr": "Abords de route : zone en dehors de la plateforme routière, hors circulation.",
+          "synonyms": {
+            "fr": [
+              "abords de route"
+            ],
+            "en": [
+              "roadside"
+            ],
+            "it": [
+              "margine stradale"
+            ],
+            "de": [
+              "Straßenrand"
+            ]
+          }
+        },
+        {
+          "value": "ROADSIDEPART",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A general concept for various parts of the roadside, e.g. side slopes, roadside ditches, back slopes.",
+          "description_fr": "Partie latérale de bord de route (talus, fossé, contre-pente...).",
+          "synonyms": {
+            "fr": [
+              "partie de bord de route"
+            ],
+            "en": [
+              "roadside part"
+            ],
+            "it": [
+              "parte del margine stradale"
+            ],
+            "de": [
+              "Straßenrandteil"
+            ]
+          }
+        },
+        {
+          "value": "ROUNDABOUT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Type of at-grade junction at which traffic streams are directed around a circle.",
+          "description_fr": "Giratoire (rond-point) : carrefour où la circulation tourne autour d'un îlot central.",
+          "synonyms": {
+            "fr": [
+              "giratoire",
+              "rond-point"
+            ],
+            "en": [
+              "roundabout"
+            ],
+            "it": [
+              "rotatoria"
+            ],
+            "de": [
+              "Kreisverkehr"
+            ]
+          }
+        },
+        {
+          "value": "CENTRALISLAND",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The center of a roundabout, not intended for traffic.",
+          "description_fr": "Îlot central d'un giratoire.",
+          "synonyms": {
+            "fr": [
+              "îlot central de giratoire"
+            ],
+            "en": [
+              "central island"
+            ],
+            "it": [
+              "isola centrale"
+            ],
+            "de": [
+              "Kreisverkehrsinsel"
+            ]
+          }
+        },
+        {
+          "value": "REFUGEISLAND",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A raised platform or guarded area sited in the carriageway to divide traffic streams and provide refuge for pedestrians.",
+          "description_fr": "Îlot refuge protégeant les piétons au milieu de la chaussée.",
+          "synonyms": {
+            "fr": [
+              "îlot refuge"
+            ],
+            "en": [
+              "refuge island"
+            ],
+            "it": [
+              "isola spartitraffico"
+            ],
+            "de": [
+              "Verkehrsinsel"
+            ]
+          }
+        },
+        {
+          "value": "TRAFFICISLAND",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A raised or marked area on the carriageway, typically at a junction, shaped to direct traffic and/or provide pedestrian refuge.",
+          "description_fr": "Îlot directionnel, généralement à un carrefour, orientant la circulation.",
+          "synonyms": {
+            "fr": [
+              "îlot directionnel"
+            ],
+            "en": [
+              "traffic island"
+            ],
+            "it": [
+              "isola direzionale"
+            ],
+            "de": [
+              "Verkehrslenkungsinsel"
+            ]
+          }
+        },
+        {
+          "value": "INTERSECTION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "At-grade junction where two or more roads meet or cross.",
+          "description_fr": "Carrefour : jonction à niveau où deux routes ou plus se rencontrent.",
+          "synonyms": {
+            "fr": [
+              "carrefour"
+            ],
+            "en": [
+              "intersection"
+            ],
+            "it": [
+              "intersezione"
+            ],
+            "de": [
+              "Kreuzung"
+            ]
+          }
+        },
+        {
+          "value": "RAILWAYCROSSING",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "At-grade crossing between road and railway.",
+          "description_fr": "Passage à niveau entre une route et une voie ferrée.",
+          "synonyms": {
+            "fr": [
+              "passage à niveau"
+            ],
+            "en": [
+              "railway level crossing"
+            ],
+            "it": [
+              "passaggio a livello"
+            ],
+            "de": [
+              "Bahnübergang"
+            ]
+          }
+        },
+        {
+          "value": "PEDESTRIAN_CROSSING",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Designated level crossing over a road for pedestrians.",
+          "description_fr": "Passage piéton, traversée aménagée pour les piétons.",
+          "synonyms": {
+            "fr": [
+              "passage piéton"
+            ],
+            "en": [
+              "pedestrian crossing"
+            ],
+            "it": [
+              "attraversamento pedonale"
+            ],
+            "de": [
+              "Fußgängerüberweg"
+            ]
+          }
+        },
+        {
+          "value": "BICYCLECROSSING",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Designated level crossing over a road for cyclists.",
+          "description_fr": "Traversée cyclable aménagée.",
+          "synonyms": {
+            "fr": [
+              "traversée cyclable"
+            ],
+            "en": [
+              "bicycle crossing"
+            ],
+            "it": [
+              "attraversamento ciclabile"
+            ],
+            "de": [
+              "Radwegüberquerung"
+            ]
+          }
+        },
+        {
+          "value": "PARKINGBAY",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Lateral part of road for parking vehicles.",
+          "description_fr": "Aire de stationnement en bordure de route.",
+          "synonyms": {
+            "fr": [
+              "aire de stationnement"
+            ],
+            "en": [
+              "parking bay"
+            ],
+            "it": [
+              "area di sosta"
+            ],
+            "de": [
+              "Parkbucht"
+            ]
+          }
+        },
+        {
+          "value": "BUS_STOP",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Lateral part of road for stopping buses, allowing them to draw out of the traffic lanes.",
+          "description_fr": "Arrêt de bus, en retrait des voies de circulation.",
+          "synonyms": {
+            "fr": [
+              "arrêt de bus"
+            ],
+            "en": [
+              "bus stop"
+            ],
+            "it": [
+              "fermata dell'autobus"
+            ],
+            "de": [
+              "Bushaltestelle"
+            ]
+          }
+        },
+        {
+          "value": "PASSINGBAY",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A lateral part of a single-lane road that is a widening, allowing one vehicle to move over so another can pass.",
+          "description_fr": "Aire de croisement, élargissement ponctuel d'une route à voie unique.",
+          "synonyms": {
+            "fr": [
+              "aire de croisement"
+            ],
+            "en": [
+              "passing bay"
+            ],
+            "it": [
+              "piazzola di incrocio"
+            ],
+            "de": [
+              "Ausweichstelle"
+            ]
+          }
+        },
+        {
+          "value": "LAYBY",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A lateral part of road where vehicles can divert from the ordinary stream of traffic.",
+          "description_fr": "Aire de repos latérale, où les véhicules peuvent s'écarter de la circulation.",
+          "synonyms": {
+            "fr": [
+              "aire de repos latérale"
+            ],
+            "en": [
+              "layby"
+            ],
+            "it": [
+              "piazzola di sosta"
+            ],
+            "de": [
+              "Rastplatz"
+            ]
+          }
+        },
+        {
+          "value": "TOLLPLAZA",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A part of a road facility where tolls are collected for use of a toll road, tunnel or bridge.",
+          "description_fr": "Gare de péage où les péages sont collectés.",
+          "synonyms": {
+            "fr": [
+              "gare de péage"
+            ],
+            "en": [
+              "toll plaza"
+            ],
+            "it": [
+              "stazione di pedaggio"
+            ],
+            "de": [
+              "Mautstelle"
+            ]
+          }
+        },
+        {
+          "value": "ROADSEGMENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A longitudinal, linear segment of a road, defined by uniform characteristics or as a transition segment.",
+          "description_fr": "Tronçon longitudinal de route, à caractéristiques uniformes ou de transition.",
+          "synonyms": {
+            "fr": [
+              "tronçon de route"
+            ],
+            "en": [
+              "road segment"
+            ],
+            "it": [
+              "segmento stradale"
+            ],
+            "de": [
+              "Straßenabschnitt"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure routière).",
+      "children": []
+    },
+    {
+      "class": "IfcRailway",
+      "class_fr": "Voie ferrée (structure spatiale)",
+      "parent": "IfcFacility",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Voie ferrée"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A spatial structure element representing a route for the guided passage of wheeled vehicles on rails, supporting the breakdown of a railway project into manageable parts.",
+      "definition_fr": "Élément de structure spatiale représentant un itinéraire pour le passage guidé de véhicules sur rails, structurant un projet ferroviaire en parties gérables.",
+      "psets_common": [
+        "Pset_RailwayCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "voie ferrée",
+          "ligne ferroviaire",
+          "chemin de fer",
+          "projet ferroviaire"
+        ],
+        "en": [
+          "railway"
+        ],
+        "it": [
+          "ferrovia"
+        ],
+        "de": [
+          "Eisenbahn",
+          "Bahnstrecke"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "NOTDEFINED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Undefined railway type.",
+          "description_fr": "Type non précisé.",
+          "synonyms": {
+            "fr": [],
+            "en": [],
+            "it": [],
+            "de": []
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure ferroviaire).",
+      "children": []
+    },
+    {
+      "class": "IfcRailwayPart",
+      "class_fr": "Partie de voie ferrée",
+      "parent": "IfcFacilityPart",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Voie ferrée"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A spatial structure element used to spatially organise a railway line (track, line-side, substructure, above-track), vertically and/or longitudinally.",
+      "definition_fr": "Élément de structure spatiale organisant une ligne ferroviaire (voie, abords, plateforme, zone caténaire), verticalement et/ou longitudinalement.",
+      "psets_common": [
+        "Pset_RailwayPartCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "partie de voie ferrée"
+        ],
+        "en": [
+          "railway part"
+        ],
+        "it": [
+          "parte di ferrovia"
+        ],
+        "de": [
+          "Bahnteil"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "TRACK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element containing track-related elements, e.g. rails and sleepers.",
+          "description_fr": "Voie : élément spatial regroupant les éléments de voie (rails, traverses...).",
+          "synonyms": {
+            "fr": [
+              "voie"
+            ],
+            "en": [
+              "track"
+            ],
+            "it": [
+              "binario"
+            ],
+            "de": [
+              "Gleis"
+            ]
+          }
+        },
+        {
+          "value": "PLAINTRACK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element further dividing a track; does not contain turnout or dilatation panels.",
+          "description_fr": "Voie courante : partie de voie sans appareil de voie ni joint de dilatation.",
+          "synonyms": {
+            "fr": [
+              "voie courante"
+            ],
+            "en": [
+              "plain track"
+            ],
+            "it": [
+              "binario semplice"
+            ],
+            "de": [
+              "Freie Strecke"
+            ]
+          }
+        },
+        {
+          "value": "TURNOUTTRACK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element further dividing a track; contains turnouts (switches).",
+          "description_fr": "Zone d'appareil de voie (aiguillage).",
+          "synonyms": {
+            "fr": [
+              "zone d'aiguillage"
+            ],
+            "en": [
+              "turnout track"
+            ],
+            "it": [
+              "zona di scambio"
+            ],
+            "de": [
+              "Weichenbereich"
+            ]
+          }
+        },
+        {
+          "value": "DILATATIONTRACK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element used at points where expansions or movements of tracks need to be accommodated (e.g. near a bridge).",
+          "description_fr": "Zone de joint de dilatation de voie, où les mouvements de la voie doivent être absorbés.",
+          "synonyms": {
+            "fr": [
+              "zone de joint de dilatation"
+            ],
+            "en": [
+              "dilatation track"
+            ],
+            "it": [
+              "zona di dilatazione"
+            ],
+            "de": [
+              "Dilatationsbereich"
+            ]
+          }
+        },
+        {
+          "value": "TRACKPART",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element further dividing a track for purposes not covered by plain/turnout/dilatation track.",
+          "description_fr": "Partie générique de voie, pour un usage non couvert par les autres catégories.",
+          "synonyms": {
+            "fr": [
+              "partie générique de voie"
+            ],
+            "en": [
+              "track part"
+            ],
+            "it": [
+              "parte del binario"
+            ],
+            "de": [
+              "Gleisteil"
+            ]
+          }
+        },
+        {
+          "value": "LINESIDE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element containing elements of the railway not in or over the tracks.",
+          "description_fr": "Abords de voie : éléments ferroviaires situés en dehors de l'emprise de la voie.",
+          "synonyms": {
+            "fr": [
+              "abords de voie"
+            ],
+            "en": [
+              "line-side"
+            ],
+            "it": [
+              "margine della linea"
+            ],
+            "de": [
+              "Streckenrand"
+            ]
+          }
+        },
+        {
+          "value": "LINESIDEPART",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element further dividing a line-side part into manageable volumes.",
+          "description_fr": "Partie d'abords de voie, subdivision d'une zone d'abords de voie.",
+          "synonyms": {
+            "fr": [
+              "partie d'abords de voie"
+            ],
+            "en": [
+              "line-side part"
+            ],
+            "it": [
+              "parte del margine linea"
+            ],
+            "de": [
+              "Streckenrandteil"
+            ]
+          }
+        },
+        {
+          "value": "ABOVETRACK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element containing elements positioned above or over the track, e.g. catenary lines.",
+          "description_fr": "Zone au-dessus de la voie, contenant les éléments aériens (caténaire...).",
+          "synonyms": {
+            "fr": [
+              "zone au-dessus de la voie",
+              "zone caténaire"
+            ],
+            "en": [
+              "above-track zone"
+            ],
+            "it": [
+              "zona sopra il binario"
+            ],
+            "de": [
+              "Bereich über dem Gleis"
+            ]
+          }
+        },
+        {
+          "value": "SUBSTRUCTURE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A spatial structure element containing elements positioned below the track, e.g. earthwork platform, subgrade, embankment.",
+          "description_fr": "Plateforme : infrastructure sous voie (terrassement, plateforme support, remblai).",
+          "synonyms": {
+            "fr": [
+              "plateforme (infrastructure sous voie)"
+            ],
+            "en": [
+              "substructure"
+            ],
+            "it": [
+              "sottostruttura"
+            ],
+            "de": [
+              "Unterbau"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure ferroviaire).",
+      "children": []
+    },
+    {
+      "class": "IfcBridge",
+      "class_fr": "Pont (structure spatiale)",
+      "parent": "IfcFacility",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Pont"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A civil engineering works that allows passage over obstacles (water, valleys, roads, railways) by spanning them, classified per its primary structural typology.",
+      "definition_fr": "Ouvrage de génie civil permettant le franchissement d'un obstacle (cours d'eau, vallée, route, voie ferrée), classé selon sa typologie structurelle principale.",
+      "psets_common": [
+        "Pset_BridgeCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "pont",
+          "ouvrage d'art",
+          "projet de pont"
+        ],
+        "en": [
+          "bridge"
+        ],
+        "it": [
+          "ponte"
+        ],
+        "de": [
+          "Brücke"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "ARCHED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A bridge that has one or more arches as its main structure.",
+          "description_fr": "Pont en arc, dont la structure principale est constituée d'un ou plusieurs arcs.",
+          "synonyms": {
+            "fr": [
+              "pont en arc"
+            ],
+            "en": [
+              "arch bridge"
+            ],
+            "it": [
+              "ponte ad arco"
+            ],
+            "de": [
+              "Bogenbrücke"
+            ]
+          }
+        },
+        {
+          "value": "CABLE_STAYED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A bridge with one or more towers and inclined cables connected to the tower, supporting the deck.",
+          "description_fr": "Pont à haubans, où le tablier est suspendu par des câbles inclinés reliés à un ou plusieurs pylônes.",
+          "synonyms": {
+            "fr": [
+              "pont à haubans"
+            ],
+            "en": [
+              "cable-stayed bridge"
+            ],
+            "it": [
+              "ponte strallato"
+            ],
+            "de": [
+              "Schrägseilbrücke"
+            ]
+          }
+        },
+        {
+          "value": "SUSPENSION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A bridge whose main structural members are catenary cables from which the deck is suspended.",
+          "description_fr": "Pont suspendu, dont le tablier est suspendu à des câbles porteurs en caténaire.",
+          "synonyms": {
+            "fr": [
+              "pont suspendu"
+            ],
+            "en": [
+              "suspension bridge"
+            ],
+            "it": [
+              "ponte sospeso"
+            ],
+            "de": [
+              "Hängebrücke"
+            ]
+          }
+        },
+        {
+          "value": "CANTILEVER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A bridge whose main structural members are cantilevers.",
+          "description_fr": "Pont en encorbellement (cantilever).",
+          "synonyms": {
+            "fr": [
+              "pont en encorbellement"
+            ],
+            "en": [
+              "cantilever bridge"
+            ],
+            "it": [
+              "ponte a sbalzo"
+            ],
+            "de": [
+              "Auslegerbrücke"
+            ]
+          }
+        },
+        {
+          "value": "GIRDER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A bridge that uses girders as the means of supporting its deck.",
+          "description_fr": "Pont à poutres, dont le tablier est supporté par des poutres.",
+          "synonyms": {
+            "fr": [
+              "pont à poutres"
+            ],
+            "en": [
+              "girder bridge"
+            ],
+            "it": [
+              "ponte a travata"
+            ],
+            "de": [
+              "Balkenbrücke"
+            ]
+          }
+        },
+        {
+          "value": "TRUSS",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A bridge with a braced triangulated frame designed to act as a beam.",
+          "description_fr": "Pont à treillis, structure triangulée contreventée agissant comme une poutre.",
+          "synonyms": {
+            "fr": [
+              "pont à treillis"
+            ],
+            "en": [
+              "truss bridge"
+            ],
+            "it": [
+              "ponte a traliccio"
+            ],
+            "de": [
+              "Fachwerkbrücke"
+            ]
+          }
+        },
+        {
+          "value": "FRAMEWORK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A framework bridge, whose structure is a rigid portal frame.",
+          "description_fr": "Pont à structure en portique (cadre rigide).",
+          "synonyms": {
+            "fr": [
+              "pont-cadre",
+              "pont en portique"
+            ],
+            "en": [
+              "framework bridge"
+            ],
+            "it": [
+              "ponte a telaio"
+            ],
+            "de": [
+              "Rahmenbrücke"
+            ]
+          }
+        },
+        {
+          "value": "CULVERT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A transverse drain or waterway construction under a road, railway or canal, or through an embankment.",
+          "description_fr": "Ponceau ou buse : ouvrage de franchissement transversal sous une route, une voie ferrée ou un remblai.",
+          "synonyms": {
+            "fr": [
+              "ponceau",
+              "buse de franchissement"
+            ],
+            "en": [
+              "culvert bridge"
+            ],
+            "it": [
+              "tombino stradale"
+            ],
+            "de": [
+              "Durchlassbrücke"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "Les prédéfinis de tablier/pile/culée s'expriment via IfcBridgePart, tandis que les éléments structurels détaillés (poutres, piles, plaques...) restent modélisés avec IfcBeam, IfcColumn, IfcPlate etc., déjà enrichis de PredefinedType spécifiques aux ponts (ex. IfcBeam.PIERCAP, IfcColumn.PIERSTEM).",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure — ouvrages d'art).",
+      "children": []
+    },
+    {
+      "class": "IfcBridgePart",
+      "class_fr": "Partie de pont",
+      "parent": "IfcFacilityPart",
+      "category_path": [
+        "Élément spatial",
+        "Structure spatiale",
+        "Pont"
+      ],
+      "ifc_versions": {
+        "introduced": "4.3",
+        "current": "4.3",
+        "deprecated": null
+      },
+      "definition_en": "A spatial structure element used to spatially decompose an IfcBridge into manageable parts (abutment, deck, pier, pylon, sub/superstructure).",
+      "definition_fr": "Élément de structure spatiale décomposant un IfcBridge en parties gérables (culée, tablier, pile, pylône, infra/superstructure).",
+      "psets_common": [
+        "Pset_BridgePartCommon"
+      ],
+      "class_synonyms": {
+        "fr": [
+          "partie de pont"
+        ],
+        "en": [
+          "bridge part"
+        ],
+        "it": [
+          "parte di ponte"
+        ],
+        "de": [
+          "Brückenteil"
+        ]
+      },
+      "predefined_types": [
+        {
+          "value": "ABUTMENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The substructure at the ends of a bridge, supporting its superstructure (wing walls, head wall, stem wall, cone).",
+          "description_fr": "Culée : appui d'extrémité du pont, supportant la superstructure.",
+          "synonyms": {
+            "fr": [
+              "culée"
+            ],
+            "en": [
+              "abutment"
+            ],
+            "it": [
+              "spalla"
+            ],
+            "de": [
+              "Widerlager"
+            ]
+          }
+        },
+        {
+          "value": "PIER",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A structure extending to the ground or into water, supporting the bridge superstructure and transferring loads to the foundation.",
+          "description_fr": "Pile : appui intermédiaire du pont, transmettant les charges à la fondation.",
+          "synonyms": {
+            "fr": [
+              "pile de pont"
+            ],
+            "en": [
+              "pier"
+            ],
+            "it": [
+              "pila"
+            ],
+            "de": [
+              "Pfeiler"
+            ]
+          }
+        },
+        {
+          "value": "PIER_SEGMENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A segment of a bridge pier; segments may be separated by construction or expansion joints.",
+          "description_fr": "Tronçon de pile de pont, séparé par des joints de construction ou de dilatation.",
+          "synonyms": {
+            "fr": [
+              "tronçon de pile"
+            ],
+            "en": [
+              "pier segment"
+            ],
+            "it": [
+              "segmento della pila"
+            ],
+            "de": [
+              "Pfeilersegment"
+            ]
+          }
+        },
+        {
+          "value": "DECK",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The bridge deck comprises the elements used for conveying traffic, not performing structural functions of the superstructure.",
+          "description_fr": "Tablier : partie du pont dédiée à la circulation, sans fonction structurelle propre de superstructure.",
+          "synonyms": {
+            "fr": [
+              "tablier"
+            ],
+            "en": [
+              "deck"
+            ],
+            "it": [
+              "impalcato"
+            ],
+            "de": [
+              "Fahrbahnplatte"
+            ]
+          }
+        },
+        {
+          "value": "DECK_SEGMENT",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A segment of the bridge deck; segments may be separated by construction or expansion joints.",
+          "description_fr": "Tronçon de tablier, séparé par des joints de construction ou de dilatation.",
+          "synonyms": {
+            "fr": [
+              "tronçon de tablier"
+            ],
+            "en": [
+              "deck segment"
+            ],
+            "it": [
+              "segmento dell'impalcato"
+            ],
+            "de": [
+              "Fahrbahnsegment"
+            ]
+          }
+        },
+        {
+          "value": "FOUNDATION",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Structural elements that support and anchor the bridge to the ground, transmitting all loads to the supporting strata.",
+          "description_fr": "Fondation de pont, transmettant les charges au sol porteur.",
+          "synonyms": {
+            "fr": [
+              "fondation de pont"
+            ],
+            "en": [
+              "bridge foundation"
+            ],
+            "it": [
+              "fondazione del ponte"
+            ],
+            "de": [
+              "Brückenfundament"
+            ]
+          }
+        },
+        {
+          "value": "PYLON",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A vertical structure supporting cables in suspended or stayed structures.",
+          "description_fr": "Pylône supportant les câbles d'un pont suspendu ou à haubans.",
+          "synonyms": {
+            "fr": [
+              "pylône"
+            ],
+            "en": [
+              "pylon"
+            ],
+            "it": [
+              "pilone"
+            ],
+            "de": [
+              "Pylon"
+            ]
+          }
+        },
+        {
+          "value": "SUBSTRUCTURE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The elements that transfer loads to the ground; includes abutments and piers.",
+          "description_fr": "Infrastructure : ensemble des éléments transmettant les charges au sol (culées, piles).",
+          "synonyms": {
+            "fr": [
+              "infrastructure (partie basse)"
+            ],
+            "en": [
+              "substructure"
+            ],
+            "it": [
+              "sottostruttura"
+            ],
+            "de": [
+              "Unterbau (Brücke)"
+            ]
+          }
+        },
+        {
+          "value": "SUPERSTRUCTURE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "The part of the bridge that spans horizontally and transfers the traffic load to the bridge substructures.",
+          "description_fr": "Superstructure : partie du pont qui franchit l'obstacle et transmet les charges à l'infrastructure.",
+          "synonyms": {
+            "fr": [
+              "superstructure (partie haute)"
+            ],
+            "en": [
+              "superstructure"
+            ],
+            "it": [
+              "sovrastruttura"
+            ],
+            "de": [
+              "Überbau"
+            ]
+          }
+        }
+      ],
+      "notes_fr": "",
+      "version_notes": "Nouveau en IFC4.3 (extension infrastructure — ouvrages d'art).",
       "children": []
     }
   ]

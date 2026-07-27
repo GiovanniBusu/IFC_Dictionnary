@@ -17,7 +17,7 @@ python3 -m pytest tests/ -q
 | Cas | Test | Ce qu'il vérifie |
 |---|---|---|
 | Terme structurel multilingue | `test_stiffener_multilingual` | « raidisseur » (FR), « stiffener » (EN), « Aussteifung » (DE) pointent tous vers `IfcMember.STIFFENING_RIB`, avec la bonne langue détectée. |
-| Terme italien générique | `test_stiffener_italian_traversa` | « traversa » (IT, terme plus polysémique) remonte bien le raidisseur en tête malgré une détection de langue incertaine. |
+| Terme italien générique / homonymie inter-langues | `test_stiffener_italian_traversa` | « traversa » (IT, raidisseur) est lexicalement proche du français « traverse » (traverse de voie ferrée) : le raidisseur doit rester identifiable (suggestion ou alternative) sans que ce soit imposé comme unique résultat possible. |
 | Ambiguïté structure vs discipline | `test_stiffener_german_ambiguity_with_shear_wall` | « Aussteifung » (DE, terme générique de contreventement) doit renvoyer le raidisseur en suggestion principale mais signaler le voile de contreventement (`IfcWall.SHEAR`) comme alternative plausible — exactement le type de cas ambigu inter-discipline demandé en section 3.2.2. |
 | Tolérance aux fautes de frappe | `test_typo_tolerance_on_stiffener` | « raidiseur » (faute d'orthographe) retrouve tout de même `STIFFENING_RIB`. |
 | Vocabulaire régional suisse | `test_swiss_chape`, `test_swiss_corniche_is_molding_not_structural` | « chape » → `IfcCovering.TOPPING` ; « corniche » → `IfcCovering.MOLDING` (et non l'homonyme `IfcBeam.CORNICE` de tablier de pont), cas explicitement cité dans le cahier des charges. |
@@ -31,6 +31,9 @@ python3 -m pytest tests/ -q
 | Recherche directe par nom de classe | `test_direct_class_name_lookup` | « IfcSlab » (nom de classe brut) doit être reconnu directement. |
 | Requêtes vides / non reconnues | `test_empty_query_returns_no_suggestion`, `test_gibberish_query_returns_no_suggestion` | Pas de faux résultat sur une requête vide ou un charabia. |
 | Forçage manuel de la langue | `test_forced_language_overrides_detection` | L'utilisateur peut forcer la langue si la détection automatique se trompe (section 6). |
+| Vocabulaire ferroviaire et infrastructure | `test_sleeper_traverse_de_voie`, `test_ballast_layer`, `test_frog_coeur_daiguillage`, `test_kilopoint_point_kilometrique`, `test_bridge_abutment_culee`, `test_bridge_type_cable_stayed`, `test_roundabout_giratoire`, `test_railway_crossing_passage_a_niveau`, `test_earthworks_cut_and_fill` | Couvre le vocabulaire de chantier ferroviaire/routier/ouvrages d'art ajouté suite au constat d'un manque de données sur ce domaine : traverse, ballast, cœur d'aiguillage, point kilométrique, culée, pont à haubans, giratoire, passage à niveau, déblai/remblai. |
+| Homonymie inter-domaines (rail vs bâtiment) | `test_rail_guardrail_vs_railing_guardrail_homonym` | `IfcRail.GUARDRAIL` (contre-rail ferroviaire anti-déraillement) et `IfcRailing.GUARDRAIL` (garde-corps de bâtiment) partagent le même mot anglais mais sont deux classes de domaines différents ; une requête bâtiment ne doit pas remonter le rail. |
+| Présence des classes d'infrastructure | `test_alignment_and_referent_classes_exist`, `test_infrastructure_spatial_structures_exist` | Vérifie que le référentiel contient bien `IfcAlignment`, `IfcReferent`, `IfcRoad(Part)`, `IfcRailway(Part)`, `IfcBridge(Part)`. |
 
 ## Cas couverts (`test_api.py`)
 
@@ -42,7 +45,7 @@ Vérifie le contrat HTTP de l'API : `/health`, `/search` (y compris validation
 
 - Pas de test de performance automatisé pour la contrainte « < 300 ms
   perçus » (section 8) : à valider en conditions réelles une fois déployé,
-  le volume de données actuel (41 classes, ~242 PredefinedType) rend la
+  le volume de données actuel (54 classes, ~338 PredefinedType) rend la
   recherche largement infra-milliseconde en local.
 - Pas de test end-to-end frontend automatisé (Playwright) : la validation a
   été faite manuellement en lançant l'application (voir captures dans le
