@@ -310,6 +310,49 @@ main {
   margin-top: 0.6rem;
 }
 
+.predefined-types-list {
+  margin-top: 0.7rem;
+  background: var(--surface-alt);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+}
+
+.predefined-types-list__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.predefined-types-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.35rem 0.8rem;
+}
+
+.predefined-types-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  font-size: 0.86rem;
+}
+
+.predefined-types-list__desc {
+  color: var(--text-muted);
+}
+
+.predefined-types-list__hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
 .loading, .empty-state, .error-state {
   color: var(--text-muted);
   padding: 2rem 0;

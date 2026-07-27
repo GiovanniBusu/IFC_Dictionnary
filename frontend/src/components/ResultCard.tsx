@@ -35,6 +35,32 @@ export default function ResultCard({ result, variant }: Props) {
         <p className="justification">{result.alternative_reason_fr}</p>
       )}
 
+      {result.available_predefined_types.length > 0 && (
+        <div className="predefined-types-list">
+          <div className="predefined-types-list__label">
+            Types prédéfinis (PredefinedType) disponibles pour {result.class} :
+          </div>
+          <ul>
+            {result.available_predefined_types.map((p) => (
+              <li key={p.value}>
+                <span className="mono">{p.value}</span>
+                {p.new_in_43 && <span className="badge badge--accent">4.3</span>}
+                {p.deprecated_since && (
+                  <span className="badge badge--warning">déprécié</span>
+                )}
+                <span className="predefined-types-list__desc">{p.description_fr}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="predefined-types-list__hint">
+            Précisez votre recherche avec l'un de ces types (ex. « {result.class_fr.toLowerCase()}{" "}
+            {result.available_predefined_types[0].value.toLowerCase()} ») ou consultez la{" "}
+            <Link to={`/classe/${result.class}`}>fiche détaillée</Link> pour la liste complète avec
+            synonymes.
+          </p>
+        </div>
+      )}
+
       {result.notes_fr && variant === "primary" && (
         <div className="notes">{result.notes_fr}</div>
       )}

@@ -2,7 +2,7 @@
 
 Ce document explique comment maintenir et étendre `data/ifc_reference.json`
 lors d'une future révision du schéma IFC (ex. IFC4.4), et comment passer du
-sous-ensemble curé actuel (40 classes / ~103 PredefinedType) à une couverture
+sous-ensemble curé actuel (41 classes / ~242 PredefinedType) à une couverture
 exhaustive du schéma.
 
 ## 1. État actuel
@@ -101,7 +101,7 @@ son index de recherche à partir de ce fichier uniquement.
 
 ## 5. Limites connues du sous-ensemble actuel
 
-- Seules ~40 classes physiques/spatiales sont couvertes (voir
+- Seules 41 classes physiques/spatiales sont couvertes (voir
   `data/ifc_reference.json` pour la liste), sur les ~200+ sous-types
   d'`IfcElement`/`IfcSpatialElement` du schéma complet IFC4X3.
 - Les classes purement analytiques (`IfcStructuralCurveMember`,

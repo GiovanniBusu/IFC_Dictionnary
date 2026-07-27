@@ -42,7 +42,7 @@ def top_class_pdt(result):
 def test_stiffener_multilingual(reference, query, expected_lang):
     result = search(query, reference=reference)
     assert result["detected_language"] == expected_lang
-    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_MEMBER")
+    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_RIB")
 
 
 def test_stiffener_italian_traversa(reference):
@@ -50,7 +50,7 @@ def test_stiffener_italian_traversa(reference):
     # "travetto" = solive/IfcBeam.JOIST) : on vérifie seulement que le
     # raidisseur ressort en tête, la langue détectée pouvant être incertaine.
     result = search("traversa", reference=reference)
-    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_MEMBER")
+    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_RIB")
 
 
 def test_stiffener_german_ambiguity_with_shear_wall(reference):
@@ -59,14 +59,14 @@ def test_stiffener_german_ambiguity_with_shear_wall(reference):
     # voile de contreventement (IfcWall/SHEAR) comme alternative plausible,
     # conformément à la section 3.2.2 (cas ambigus / disciplines différentes).
     result = search("Aussteifung", reference=reference)
-    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_MEMBER")
+    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_RIB")
     alt_keys = [(a["class"], a["predefined_type"]) for a in result["alternatives"]]
     assert ("IfcWall", "SHEAR") in alt_keys
 
 
 def test_typo_tolerance_on_stiffener(reference):
     result = search("raidiseur", reference=reference)  # faute de frappe (1 seul "s")
-    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_MEMBER")
+    assert top_class_pdt(result) == ("IfcMember", "STIFFENING_RIB")
 
 
 # ---------------------------------------------------------------------------
@@ -75,7 +75,7 @@ def test_typo_tolerance_on_stiffener(reference):
 
 def test_swiss_chape(reference):
     result = search("chape", reference=reference)
-    assert top_class_pdt(result) == ("IfcCovering", "SCREED")
+    assert top_class_pdt(result) == ("IfcCovering", "TOPPING")
 
 
 def test_swiss_corniche_is_molding_not_structural(reference):
@@ -87,6 +87,59 @@ def test_garde_corps(reference):
     result = search("garde-corps", reference=reference)
     ifc_class, _ = top_class_pdt(result)
     assert ifc_class == "IfcRailing"
+
+
+def test_corbeau_vulgarized_term_maps_to_discrete_accessory_bracket(reference):
+    # "corbeau" est un terme de chantier très concret (appui d'une dalle de
+    # transition, très courant en construction métallique) qui ne
+    # correspond à aucun nom de classe IFC direct : il doit être reconnu via
+    # la table de synonymes comme IfcDiscreteAccessory.BRACKET.
+    result = search("corbeau", reference=reference)
+    assert top_class_pdt(result) == ("IfcDiscreteAccessory", "BRACKET")
+
+
+def test_free_form_description_matches_corbel_context(reference):
+    # Recherche "vulgarisée" par description libre plutôt que par le terme
+    # technique exact : chaque mot significatif de la phrase est aussi
+    # recherché individuellement (section 5 du cahier des charges).
+    result = search(
+        "l'endroit où l'on vient appuyer une dalle de transition en construction métallique",
+        reference=reference,
+    )
+    ranked_classes = [result["suggestion"]["class"]] + [a["class"] for a in result["alternatives"]]
+    assert "IfcSlab" in ranked_classes
+
+
+# ---------------------------------------------------------------------------
+# Requête générique sur un nom de classe : lister tous les PredefinedType
+# ---------------------------------------------------------------------------
+
+def test_generic_wall_query_lists_all_predefined_types(reference):
+    result = search("wall", reference=reference)
+    suggestion = result["suggestion"]
+    assert suggestion["class"] == "IfcWall"
+    assert suggestion["predefined_type"] is None
+    values = {p["value"] for p in suggestion["available_predefined_types"]}
+    assert {"STANDARD", "SHEAR", "PARAPET", "PARTITIONING", "SOLIDWALL"} <= values
+    # Pas de bruit d'autres classes juste par coïncidence lexicale
+    # (ex. IfcPlate.CURTAIN_PANEL contient aussi le mot "wall").
+    assert all(a["class"] == "IfcWall" for a in result["alternatives"])
+
+
+def test_generic_french_mur_query_lists_all_predefined_types(reference):
+    result = search("mur", reference=reference)
+    suggestion = result["suggestion"]
+    assert suggestion["class"] == "IfcWall"
+    assert suggestion["predefined_type"] is None
+    assert len(suggestion["available_predefined_types"]) >= 10
+
+
+def test_specific_predefined_type_match_has_no_available_types_list(reference):
+    # Quand la requête pointe déjà vers un PredefinedType précis, la liste
+    # complète n'est pas nécessaire (elle reste consultable sur la fiche
+    # détaillée de la classe).
+    result = search("raidisseur", reference=reference)
+    assert result["suggestion"]["available_predefined_types"] == []
 
 
 # ---------------------------------------------------------------------------

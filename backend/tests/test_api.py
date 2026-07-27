@@ -21,7 +21,7 @@ def test_search_endpoint():
     assert r.status_code == 200
     data = r.json()
     assert data["suggestion"]["class"] == "IfcMember"
-    assert data["suggestion"]["predefined_type"] == "STIFFENING_MEMBER"
+    assert data["suggestion"]["predefined_type"] == "STIFFENING_RIB"
 
 
 def test_search_requires_query():
@@ -47,7 +47,7 @@ def test_class_detail_endpoint():
     assert r.status_code == 200
     data = r.json()
     assert data["class"] == "IfcMember"
-    assert any(p["value"] == "STIFFENING_MEMBER" for p in data["predefined_types"])
+    assert any(p["value"] == "STIFFENING_RIB" for p in data["predefined_types"])
 
 
 def test_class_detail_not_found():

@@ -7,6 +7,14 @@ export interface VersionInfo {
   version_notes: string;
 }
 
+export interface AvailablePredefinedType {
+  value: string;
+  description_fr: string;
+  since: string;
+  new_in_43: boolean;
+  deprecated_since: string | null;
+}
+
 export interface SearchResult {
   class: string;
   class_fr: string;
@@ -21,6 +29,10 @@ export interface SearchResult {
   justification_fr: string;
   alternative_reason_fr: string;
   notes_fr: string;
+  /** Peuplé uniquement quand predefined_type est null (correspondance
+   * générique sur la classe) : liste complète des PredefinedType existants,
+   * pour que l'utilisateur puisse choisir lui-même. */
+  available_predefined_types: AvailablePredefinedType[];
 }
 
 export interface SearchResponse {

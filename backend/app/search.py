@@ -6,24 +6,48 @@ Algorithme (cf. section 5 du cahier des charges) :
  3. à défaut, recherche floue (similarité de chaînes) toutes langues
     confondues, avec une pénalité si la langue du terme trouvé diffère de
     la langue détectée
- 4. scoring : proximité lexicale + spécificité (un match au niveau
+ 4. recherche « libre » : en complément de la requête entière, chaque mot
+    significatif de la requête est aussi recherché individuellement (avec
+    une pénalité), afin de gérer les descriptions vulgarisées à la manière
+    d'une phrase (« l'endroit où l'on vient appuyer une dalle de
+    transition ») plutôt qu'un terme exact
+ 5. scoring : proximité lexicale + spécificité (un match au niveau
     PredefinedType est plus spécifique qu'un simple synonyme de classe ;
     une expression de plusieurs mots est plus spécifique qu'un mot
     générique)
- 5. tri des candidats ; le meilleur devient la suggestion principale, les
+ 6. tri des candidats ; le meilleur devient la suggestion principale, les
     3 à 5 suivants (au-dessus d'un seuil) deviennent les alternatives
- 6. génération de la justification en français par gabarit de phrase
+ 7. génération de la justification en français par gabarit de phrase
+ 8. si la suggestion principale ne pointe pas vers un PredefinedType précis
+    (correspondance générique sur le nom de la classe), la liste complète
+    des PredefinedType de cette classe est jointe au résultat pour
+    permettre à l'utilisateur de choisir lui-même (section 3.2.1)
 """
 from __future__ import annotations
 
 from difflib import SequenceMatcher
 
 from .data_loader import IfcReference, get_reference, normalize
-from .language_detect import detect_language
+from .language_detect import STOPWORDS, detect_language
 
 MIN_ALTERNATIVE_SCORE = 0.45
 MAX_ALTERNATIVES = 5
 FUZZY_CUTOFF = 0.80
+TOKEN_MATCH_DAMPING = 0.75
+MIN_TOKEN_LENGTH = 4
+ALL_STOPWORDS = {w for words in STOPWORDS.values() for w in words}
+# Un terme identique au mot recherché (ex. « wall » == synonyme « wall »)
+# doit toujours l'emporter sur un terme qui ne fait que CONTENIR ce mot par
+# coïncidence (ex. « wave wall », « curtain wall panel »...), même si ce
+# dernier porte un poids ou une spécificité plus élevée. Sans ce bonus, une
+# requête générique (nom de classe nu) se retrouvait à pointer vers un
+# PredefinedType arbitraire simplement parce que son synonyme anglais se
+# terminait par le mot cherché.
+EXACT_MATCH_BONUS = 0.35
+
+
+SHORT_WORD_CONTAINMENT_DAMPING = 0.85
+SHORT_WORD_THRESHOLD = 5
 
 
 def _string_similarity(a: str, b: str) -> float:
@@ -31,7 +55,19 @@ def _string_similarity(a: str, b: str) -> float:
         return 1.0
     if len(a) >= 3 and len(b) >= 3 and (a in b or b in a):
         shorter, longer = sorted([a, b], key=len)
-        return 0.80 + 0.15 * (len(shorter) / len(longer))
+        score = 0.80 + 0.15 * (len(shorter) / len(longer))
+        if len(shorter) <= SHORT_WORD_THRESHOLD:
+            # Un mot générique court (« wall », « mur », « beam »...) se
+            # retrouve, par pure coïncidence lexicale, à l'intérieur de
+            # nombreux synonymes composés appartenant à d'AUTRES classes
+            # (ex. « curtain wall panel » -> IfcPlate, « wall plate » ->
+            # IfcMember). On atténue ce cas pour ne pas polluer les
+            # résultats d'une classe non liée, sans pénaliser les
+            # correspondances partielles sur des mots plus longs et
+            # spécifiques (ex. « traversa » dans « traversa di
+            # irrigidimento »).
+            score *= SHORT_WORD_CONTAINMENT_DAMPING
+        return score
     return SequenceMatcher(None, a, b).ratio()
 
 
@@ -42,9 +78,13 @@ def _specificity_bonus(level: str, term: str) -> float:
     return bonus
 
 
-def _collect_candidates(query_norm: str, reference: IfcReference, detected_lang: str):
-    """Retourne un dict {(class, predefined_type): meilleur score, match info}."""
-    candidates: dict[tuple[str, str | None], dict] = {}
+def _collect_candidates(query_norm: str, reference: IfcReference, detected_lang: str,
+                         candidates: dict | None = None, damping: float = 1.0):
+    """Alimente (et retourne) un dict {(class, predefined_type): meilleur score,
+    match info}, en fusionnant avec les candidats déjà trouvés le cas échéant
+    (utilisé pour combiner un score sur la requête entière et des scores sur
+    des mots individuels de la requête, cf. `_token_candidates`)."""
+    candidates = {} if candidates is None else candidates
 
     for lang in reference.index:
         lang_bonus = 0.05 if lang == detected_lang else 0.0
@@ -52,13 +92,15 @@ def _collect_candidates(query_norm: str, reference: IfcReference, detected_lang:
             sim = _string_similarity(query_norm, term_norm)
             if sim < FUZZY_CUTOFF:
                 continue
+            exact_bonus = EXACT_MATCH_BONUS if query_norm == term_norm else 0.0
             for m in matches:
                 base = sim * m["weight"]
                 # Score de tri non plafonné (préserve l'ordre entre un match
                 # exact et un match par confinement/flou qui atteindraient
                 # tous deux ~1.0 après troncature) ; seul le score affiché
                 # est ensuite ramené à l'intervalle [0, 1].
-                raw_score = base + lang_bonus + _specificity_bonus(m["level"], term_norm)
+                raw_score = (base + exact_bonus + lang_bonus
+                             + _specificity_bonus(m["level"], term_norm)) * damping
                 key = (m["class"], m["predefined_type"])
                 existing = candidates.get(key)
                 if existing is None or raw_score > existing["raw_score"]:
@@ -70,6 +112,16 @@ def _collect_candidates(query_norm: str, reference: IfcReference, detected_lang:
                         "level": m["level"],
                     }
     return candidates
+
+
+def _significant_tokens(query_norm: str) -> list[str]:
+    """Mots significatifs d'une requête libre (description vulgarisée) :
+    plus longs qu'un seuil et hors mots grammaticaux courants toutes
+    langues confondues."""
+    words = query_norm.split(" ")
+    if len(words) < 2:
+        return []
+    return [w for w in words if len(w) >= MIN_TOKEN_LENGTH and w not in ALL_STOPWORDS]
 
 
 def _hierarchy_path(entry: dict, predefined_type: str | None) -> list[str]:
@@ -123,6 +175,24 @@ def _alternative_reason(entry: dict, pdt: dict | None) -> str:
     return reason
 
 
+def _available_predefined_types(entry: dict) -> list[dict]:
+    """Liste complète des PredefinedType d'une classe, pour un affichage
+    direct quand la requête ne pointe pas vers un type précis (ex.
+    recherche générique « mur »/« wall ») — section 3.2.1 du cahier des
+    charges : « et alors donner chaque PredefinedType »."""
+    return [
+        {
+            "value": p["value"],
+            "description_fr": p["description_fr"],
+            "since": p["since"],
+            "new_in_43": bool(p.get("new_in_43")),
+            "deprecated_since": p.get("deprecated_since"),
+        }
+        for p in entry["predefined_types"]
+        if p["value"] not in ("USERDEFINED", "NOTDEFINED")
+    ]
+
+
 def _build_result(entry: dict, predefined_type: str | None, match_info: dict, query: str):
     pdt = None
     if predefined_type:
@@ -141,6 +211,9 @@ def _build_result(entry: dict, predefined_type: str | None, match_info: dict, qu
         "justification_fr": _justification(entry, pdt, query, match_info["matched_term"]),
         "alternative_reason_fr": _alternative_reason(entry, pdt),
         "notes_fr": entry.get("notes_fr", ""),
+        "available_predefined_types": (
+            _available_predefined_types(entry) if predefined_type is None else []
+        ),
     }
 
 
@@ -156,6 +229,9 @@ def search(query: str, forced_language: str | None = None, reference: IfcReferen
 
     query_norm = normalize(query)
     candidates = _collect_candidates(query_norm, reference, detected_lang)
+    for token in _significant_tokens(query_norm):
+        _collect_candidates(token, reference, detected_lang, candidates,
+                             damping=TOKEN_MATCH_DAMPING)
 
     ranked = sorted(candidates.items(), key=lambda kv: kv[1]["raw_score"], reverse=True)
 

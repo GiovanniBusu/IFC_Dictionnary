@@ -46,16 +46,27 @@ test ambigus couverts).
 ### Couverture des données
 
 Le référentiel actuel (`data/ifc_reference.json`, généré par
-`scripts/build_reference_data.py`) couvre **40 classes IFC / ~103
+`scripts/build_reference_data.py`) couvre **41 classes IFC / ~242
 PredefinedType**, sélectionnées pour représenter toutes les situations
 demandées : structure porteuse, second œuvre/architecture, CVC/plomberie/
-électricité, mobilier, éléments spatiaux, et génie civil (nouveautés
+électricité, mobilier, accessoires et pièces d'assemblage (`IfcDiscreteAccessory`,
+ex. un « corbeau »), éléments spatiaux, et génie civil (nouveautés
 IFC4.3 : `IfcKerb`, `IfcPavement`, `IfcRail`...). Chaque classe et chaque
 `PredefinedType` porte des synonymes FR/EN/IT/DE, y compris du vocabulaire
-régional suisse (« chape », « corniche », « raidisseur »...). Un cas de
-dépréciation (`IfcWallStandardCase`, IFC2x3 → IFC4) illustre la traçabilité
-de version demandée pour les utilisateurs travaillant encore en IFC2x3
-(Revit/cadwork).
+régional suisse (« chape », « corniche », « raidisseur »...) et des termes de
+chantier vulgarisés. Un cas de dépréciation (`IfcWallStandardCase`, IFC2x3 →
+IFC4) illustre la traçabilité de version demandée pour les utilisateurs
+travaillant encore en IFC2x3 (Revit/cadwork).
+
+Les valeurs `PredefinedType` et leurs définitions ont été vérifiées auprès du
+dépôt source buildingSMART/IFC4.3.x-development plutôt que reconstituées de
+mémoire (voir l'en-tête de `scripts/build_reference_data.py`).
+
+Quand une requête correspond seulement au nom générique d'une classe (ex.
+« wall », « mur »), la suggestion affiche la classe et **la liste complète de
+ses PredefinedType** plutôt qu'un type choisi arbitrairement — la recherche
+gère aussi les descriptions libres/vulgarisées (chaque mot significatif de la
+requête est aussi recherché individuellement).
 
 Ce n'est **pas** l'intégralité du schéma IFC4X3 (~1500 entités) : c'est un
 sous-ensemble curé à la main, choisi pour livrer un système complet et
@@ -112,11 +123,17 @@ npm run build
 
 Requêtes « raidisseur » (FR), « stiffener » (EN), « traversa » (IT) ou
 « Aussteifung » (DE) renvoient toutes `IfcMember` avec
-`PredefinedType = STIFFENING_MEMBER`, avec justification en français,
+`PredefinedType = STIFFENING_RIB`, avec justification en français,
 position hiérarchique complète, et — pour le terme allemand, plus
 générique — le voile de contreventement (`IfcWall.SHEAR`) signalé comme
-alternative plausible selon la discipline. Voir
-[`docs/TEST_PLAN.md`](docs/TEST_PLAN.md) pour l'ensemble des cas ambigus
+alternative plausible selon la discipline.
+
+Une requête très concrète de chantier comme « corbeau » (l'appui d'une dalle
+de transition, courant en construction métallique) est reconnue via la table
+de synonymes comme `IfcDiscreteAccessory.BRACKET`, sans que l'utilisateur
+ait besoin de connaître le nom de la classe IFC.
+
+Voir [`docs/TEST_PLAN.md`](docs/TEST_PLAN.md) pour l'ensemble des cas ambigus
 testés (proxy générique vs classe spécifique, structurel vs architectural,
 vocabulaire régional suisse).
 
