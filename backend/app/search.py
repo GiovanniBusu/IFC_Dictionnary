@@ -27,7 +27,7 @@ from __future__ import annotations
 
 from difflib import SequenceMatcher
 
-from .data_loader import IfcReference, get_reference, normalize
+from .data_loader import CUSTOM_PSET_GUIDANCE, IfcReference, get_reference, normalize
 from .language_detect import STOPWORDS, detect_language
 
 MIN_ALTERNATIVE_SCORE = 0.45
@@ -214,6 +214,8 @@ def _build_result(entry: dict, predefined_type: str | None, match_info: dict, qu
         "available_predefined_types": (
             _available_predefined_types(entry) if predefined_type is None else []
         ),
+        "psets_common": entry.get("psets_common", []),
+        "custom_pset_guidance": CUSTOM_PSET_GUIDANCE,
     }
 
 

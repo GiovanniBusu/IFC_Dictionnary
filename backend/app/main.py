@@ -11,7 +11,7 @@ from __future__ import annotations
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
-from .data_loader import get_reference
+from .data_loader import CUSTOM_PSET_GUIDANCE, get_reference
 from .search import search as run_search
 from .tree import build_tree
 
@@ -64,4 +64,5 @@ def class_detail(ifc_class: str):
     return {
         **entry,
         "parent_known": bool(parent),
+        "custom_pset_guidance": CUSTOM_PSET_GUIDANCE,
     }

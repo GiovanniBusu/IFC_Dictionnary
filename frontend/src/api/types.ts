@@ -33,6 +33,8 @@ export interface SearchResult {
    * générique sur la classe) : liste complète des PredefinedType existants,
    * pour que l'utilisateur puisse choisir lui-même. */
   available_predefined_types: AvailablePredefinedType[];
+  psets_common: string[];
+  custom_pset_guidance: string;
 }
 
 export interface SearchResponse {
@@ -68,6 +70,7 @@ export interface ClassDetail {
   predefined_types: PredefinedType[];
   notes_fr: string;
   version_notes: string;
+  custom_pset_guidance: string;
 }
 
 export interface TreeNodeData {

@@ -106,7 +106,7 @@ DATA.append(entry(
     "A wall is a vertically-oriented element used to enclose or subdivide "
     "spaces.",
     "Élément vertical utilisé pour enclore ou subdiviser un espace.",
-    ["Pset_WallCommon"],
+    ["Pset_ReinforcementBarPitchOfWall", "Pset_WallCommon", "Qto_WallBaseQuantities"],
     {"fr": ["mur", "voile", "paroi"], "en": ["wall"], "it": ["muro", "parete"],
      "de": ["Wand"]},
     [
@@ -199,7 +199,7 @@ DATA.append(entry(
     "A vertical structural member which transmits loads from other parts "
     "of the structure to the foundations.",
     "Élément vertical porteur transmettant les charges vers les fondations.",
-    ["Pset_ColumnCommon"],
+    ["Pset_ColumnCommon", "Pset_ReinforcementBarPitchOfColumn", "Qto_ColumnBaseQuantities"],
     {"fr": ["poteau", "colonne", "pilier"], "en": ["column", "pillar"],
      "it": ["pilastro", "colonna"], "de": ["Stütze", "Säule"]},
     [
@@ -239,7 +239,7 @@ DATA.append(entry(
     "A horizontal, or nearly horizontal, structural member that carries "
     "loads primarily by bending.",
     "Élément horizontal (ou quasi) travaillant principalement en flexion.",
-    ["Pset_BeamCommon"],
+    ["Pset_BeamCommon", "Pset_ReinforcementBarPitchOfBeam", "Qto_BeamBaseQuantities"],
     {"fr": ["poutre", "sommier"], "en": ["beam"], "it": ["trave"], "de": ["Balken", "Träger"]},
     [
         pt("BEAM", "4.0", "A standard beam usually used horizontally.", "Poutre standard.",
@@ -307,7 +307,7 @@ DATA.append(entry(
     "stiffening rib).",
     "Élément linéaire structurel secondaire, non classé comme poutre ou "
     "poteau (contreventement, panne, raidisseur, montant...).",
-    ["Pset_MemberCommon"],
+    ["Pset_MemberCommon", "Qto_MemberBaseQuantities"],
     {"fr": ["membrure", "élément linéaire", "barre"], "en": ["member"],
      "it": ["asta", "elemento lineare"], "de": ["Bauteilstab"]},
     [
@@ -408,7 +408,7 @@ DATA.append(entry(
     "area, e.g. floor, roof or landing slab.",
     "Élément couvrant une surface horizontale : plancher, toiture-terrasse, "
     "palier, radier...",
-    ["Pset_SlabCommon"],
+    ["Pset_PrecastSlab", "Pset_ReinforcementBarPitchOfSlab", "Pset_SlabCommon", "Qto_SlabBaseQuantities"],
     {"fr": ["dalle", "plancher"], "en": ["slab"], "it": ["soletta", "solaio"],
      "de": ["Platte", "Decke"]},
     [
@@ -461,7 +461,7 @@ DATA.append(entry(
     "A footing, also called spread footing, isolated footing or "
     "pad footing, is a part of, usually, a shallow foundation.",
     "Élément de fondation superficielle transmettant les charges au sol.",
-    ["Pset_FootingCommon"],
+    ["Pset_FootingCommon", "Pset_ReinforcementBarCountOfIndependentFooting", "Pset_ReinforcementBarPitchOfContinuousFooting", "Qto_FootingBaseQuantities"],
     {"fr": ["semelle", "fondation superficielle"], "en": ["footing"],
      "it": ["fondazione", "plinto"], "de": ["Fundament"]},
     [
@@ -499,7 +499,7 @@ DATA.append(entry(
     "drilled or otherwise embedded into the ground for use as a foundation.",
     "Élément élancé (bois, béton, acier) foncé ou foré dans le sol pour "
     "servir de fondation profonde.",
-    ["Pset_PileCommon"],
+    ["Pset_PileCommon", "Qto_PileBaseQuantities"],
     {"fr": ["pieu"], "en": ["pile"], "it": ["palo di fondazione"], "de": ["Pfahl"]},
     [
         pt("BORED", "4.0", "A pile installed by drilling/boring.", "Pieu foré.",
@@ -530,7 +530,7 @@ DATA.append(entry(
     {"introduced": "2x3", "current": "4.3", "deprecated": None},
     "A plate is a planar and often flat part with constant thickness.",
     "Élément plan, souvent plat et de faible épaisseur constante.",
-    ["Pset_PlateCommon"],
+    ["Pset_PlateCommon", "Qto_PlateBaseQuantities"],
     {"fr": ["platine", "plaque"], "en": ["plate"], "it": ["piastra"], "de": ["Platte"]},
     [
         pt("CURTAIN_PANEL", "2x3", "A planar element within a curtain wall, often a frame with fixed glazing.",
@@ -584,7 +584,7 @@ DATA.append(entry(
     "Ouvrage de couverture d'un bâtiment, agrégeant l'ensemble des éléments "
     "qui composent la toiture (souvent un conteneur regroupant dalles, "
     "membrures, couverture...).",
-    ["Pset_RoofCommon"],
+    ["Pset_RoofCommon", "Qto_RoofBaseQuantities"],
     {"fr": ["toiture", "toit"], "en": ["roof"], "it": ["tetto", "copertura"],
      "de": ["Dach"]},
     [
@@ -738,7 +738,7 @@ DATA.append(entry(
     "acting as protection against falling or as a guide.",
     "Ouvrage de protection contre les chutes ou de guidage, constitué de "
     "montants et de lisses (horizontales/verticales).",
-    ["Pset_RailingCommon"],
+    ["Pset_RailingCommon", "Qto_RailingBaseQuantities"],
     {"fr": ["garde-corps", "garde-fou", "rambarde"], "en": ["railing", "guard rail"],
      "it": ["ringhiera", "parapetto"], "de": ["Geländer"]},
     [
@@ -850,7 +850,7 @@ DATA.append(entry(
     "of steps, classified by the shape of its walking line.",
     "Partie rectiligne (ou non) d'un escalier, sans changement brusque de "
     "direction, classée selon la forme de sa ligne de foulée.",
-    ["Pset_StairFlightCommon"],
+    ["Pset_StairFlightCommon", "Qto_StairFlightBaseQuantities"],
     {"fr": ["volée d'escalier", "volée"], "en": ["stair flight"], "it": ["rampa di scala"],
      "de": ["Treppenlauf"]},
     [
@@ -920,7 +920,7 @@ DATA.append(entry(
     "A part of a ramp without a turn, forming a single sloped plane, "
     "classified by the shape of its walking line.",
     "Partie d'une rampe sans virage, formant un seul plan incliné.",
-    ["Pset_RampFlightCommon"],
+    ["Pset_RampFlightCommon", "Qto_RampFlightBaseQuantities"],
     {"fr": ["volée de rampe"], "en": ["ramp flight"], "it": ["rampa lineare"],
      "de": ["Rampenlauf"]},
     [
@@ -947,7 +947,7 @@ DATA.append(entry(
     "carries only its own weight, supported by an auxiliary framework.",
     "Paroi extérieure non porteuse, autoportante, suspendue à une "
     "ossature auxiliaire (montants/traverses).",
-    ["Pset_CurtainWallCommon"],
+    ["Pset_CurtainWallCommon", "Qto_CurtainWallQuantities"],
     {"fr": ["mur rideau", "façade rideau"], "en": ["curtain wall"], "it": ["facciata continua"],
      "de": ["Vorhangfassade"]},
     [pt("NOTDEFINED", "2x3", "Undefined.", "Non précisé.", {})],
@@ -966,7 +966,7 @@ DATA.append(entry(
     "controlled access for people, goods, animals and vehicles.",
     "Élément de bâtiment permettant un accès contrôlé (personnes, biens, "
     "véhicules) à travers une baie.",
-    ["Pset_DoorCommon"],
+    ["Pset_DoorCommon", "Pset_DoorLiningProperties", "Pset_DoorPanelProperties", "Pset_DoorWindowGlazingType", "Qto_DoorBaseQuantities"],
     {"fr": ["porte"], "en": ["door"], "it": ["porta"], "de": ["Tür"]},
     [
         pt("DOOR", "4.0", "A standard door within a wall opening, as a curtain wall panel, or free standing.",
@@ -999,7 +999,7 @@ DATA.append(entry(
     "provide natural light and fresh air, and is often glazed.",
     "Élément de bâtiment assurant l'éclairage naturel et/ou la ventilation, "
     "généralement vitré.",
-    ["Pset_WindowCommon"],
+    ["Pset_DoorWindowGlazingType", "Pset_WindowCommon", "Pset_WindowLiningProperties", "Pset_WindowPanelProperties", "Qto_WindowBaseQuantities"],
     {"fr": ["fenêtre", "châssis vitré"], "en": ["window"], "it": ["finestra"],
      "de": ["Fenster"]},
     [
@@ -1028,7 +1028,7 @@ DATA.append(entry(
     "roof, or insulation, coping, etc.).",
     "Élément appliqué en surface d'un autre élément ou d'un espace : "
     "revêtement de sol, mur, plafond, toiture, isolation, chape...",
-    ["Pset_CoveringCommon"],
+    ["Pset_CoveringCommon", "Qto_CoveringBaseQuantities"],
     {"fr": ["revêtement", "finition"], "en": ["covering", "finish"], "it": ["rivestimento"],
      "de": ["Bekleidung"]},
     [
@@ -1092,7 +1092,7 @@ DATA.append(entry(
     "specification.",
     "Définition de repli pour un élément de bâtiment qui n'a pas "
     "d'équivalent sémantique plus spécifique dans le schéma IFC.",
-    [],
+    ["Pset_BuildingElementProxyCommon", "Qto_BuildingElementProxyQuantities"],
     {"fr": ["élément générique", "proxy", "élément non typé"],
      "en": ["generic element", "proxy"], "it": ["elemento generico"],
      "de": ["generisches Bauteil"]},
@@ -1115,7 +1115,7 @@ DATA.append(entry(
     "Ouvrage vertical creux évacuant les gaz de combustion vers "
     "l'extérieur. Aucun type spécifique n'est actuellement défini dans le "
     "schéma (uniquement USERDEFINED/NOTDEFINED).",
-    ["Pset_ChimneyCommon"],
+    ["Pset_ChimneyCommon", "Qto_ChimneyBaseQuantities"],
     {"fr": ["cheminée", "conduit de fumée"], "en": ["chimney", "flue"], "it": ["camino"],
      "de": ["Schornstein", "Kamin"]},
     [pt("NOTDEFINED", "4.0", "Undefined.", "Non précisé.", {})],
@@ -1130,7 +1130,7 @@ DATA.append(entry(
     "solar shading, e.g. a jalousie, shutter or awning.",
     "Dispositif rapporté ou autonome assurant une protection solaire "
     "(jalousie, volet, auvent).",
-    ["Pset_ShadingDeviceCommon"],
+    ["Pset_ShadingDeviceCommon", "Pset_ShadingDevicePHistory"],
     {"fr": ["protection solaire", "brise-soleil"], "en": ["shading device"],
      "it": ["schermatura solare"], "de": ["Sonnenschutz"]},
     [
@@ -1163,7 +1163,7 @@ DATA.append(entry(
     "elements, such as a bracket, anchor plate, or shoe.",
     "Petit accessoire connectant, supportant ou faisant l'interface entre "
     "plusieurs éléments : corbeau, platine d'ancrage, sabot d'about, etc.",
-    ["Pset_DiscreteAccessoryCommon"],
+    ["Pset_DiscreteAccessoryCornerFixingPlate", "Pset_DiscreteAccessoryDiagonalTrussConnector", "Pset_DiscreteAccessoryEdgeFixingPlate", "Pset_DiscreteAccessoryFixingSocket", "Pset_DiscreteAccessoryLadderTrussConnector", "Pset_DiscreteAccessoryStandardFixingPlate", "Pset_DiscreteAccessoryWireLoop"],
     {"fr": ["accessoire", "pièce d'assemblage", "pièce de fixation"],
      "en": ["discrete accessory"], "it": ["accessorio discreto"], "de": ["Zubehörteil"]},
     [
@@ -1272,7 +1272,7 @@ DATA.append(entry(
     {"introduced": "2x3", "current": "4.3", "deprecated": None},
     "A segment of a duct system, distributing air for HVAC purposes.",
     "Tronçon de gaine assurant la distribution d'air (CVC).",
-    ["Pset_DuctSegmentTypeCommon"],
+    ["Pset_DuctSegmentOccurrence", "Pset_DuctSegmentPHistory", "Pset_DuctSegmentTypeCommon", "Qto_DuctSegmentBaseQuantities"],
     {"fr": ["gaine de ventilation", "conduit d'air", "gaine aéraulique"],
      "en": ["duct segment", "air duct"], "it": ["condotto aria"], "de": ["Luftkanal"]},
     [
@@ -1294,7 +1294,7 @@ DATA.append(entry(
     {"introduced": "2x3", "current": "4.3", "deprecated": None},
     "A segment of a pipe system, distributing fluids (water, gas...).",
     "Tronçon de canalisation assurant le transport d'un fluide (eau, gaz...).",
-    ["Pset_PipeSegmentTypeCommon"],
+    ["Pset_PipeSegmentOccurrence", "Pset_PipeSegmentPHistory", "Pset_PipeSegmentTypeCommon", "Qto_PipeSegmentBaseQuantities"],
     {"fr": ["tuyau", "canalisation", "conduite"], "en": ["pipe segment", "pipe"],
      "it": ["tubazione"], "de": ["Rohrleitung"]},
     [
@@ -1329,7 +1329,7 @@ DATA.append(entry(
     "A sanitary terminal is a construction component used for personal "
     "hygiene, e.g. sink, toilet, bath.",
     "Appareil d'hygiène ou d'usage sanitaire (lavabo, WC, baignoire...).",
-    ["Pset_SanitaryTerminalTypeCommon"],
+    ["Pset_SanitaryTerminalTypeCommon", "Qto_SanitaryTerminalBaseQuantities"],
     {"fr": ["appareil sanitaire", "sanitaire"], "en": ["sanitary terminal", "sanitary fixture"],
      "it": ["apparecchio sanitario"], "de": ["Sanitärobjekt"]},
     [
@@ -1375,7 +1375,7 @@ DATA.append(entry(
     "conduit.",
     "Tronçon de système de cheminement de câbles (chemin de câbles, "
     "goulotte, conduit électrique).",
-    ["Pset_CableCarrierSegmentTypeCommon"],
+    ["Pset_CableCarrierSegmentTypeCommon", "Qto_CableCarrierSegmentBaseQuantities"],
     {"fr": ["chemin de câbles", "goulotte", "conduit électrique"],
      "en": ["cable tray", "conduit"], "it": ["canalina", "passerella portacavi"],
      "de": ["Kabeltrasse", "Kabelkanal"]},
@@ -1418,7 +1418,7 @@ DATA.append(entry(
     "A light fixture (or luminaire) is a piece of equipment that houses "
     "a light source.",
     "Appareil d'éclairage abritant une ou plusieurs sources lumineuses.",
-    ["Pset_LightFixtureTypeCommon"],
+    ["Pset_LightFixtureTypeCommon", "Qto_LightFixtureBaseQuantities"],
     {"fr": ["luminaire", "appareil d'éclairage"], "en": ["light fixture", "luminaire"],
      "it": ["apparecchio di illuminazione"], "de": ["Leuchte"]},
     [
@@ -1446,7 +1446,7 @@ DATA.append(entry(
     "air distribution outlet or inlet, e.g. a diffuser or grille.",
     "Élément terminal d'un réseau aéraulique : diffuseur, grille de "
     "soufflage ou de reprise.",
-    ["Pset_AirTerminalTypeCommon"],
+    ["Pset_AirTerminalOccurrence", "Pset_AirTerminalPHistory", "Pset_AirTerminalTypeCommon", "Qto_AirTerminalBaseQuantities"],
     {"fr": ["bouche de ventilation", "grille de soufflage", "diffuseur"],
      "en": ["air terminal", "diffuser", "grille"], "it": ["bocchetta"],
      "de": ["Luftdurchlass"]},
@@ -1474,7 +1474,7 @@ DATA.append(entry(
     "A space heater is a device used to warm the air in an occupied "
     "space using heated water, steam or electricity, e.g. a radiator.",
     "Appareil de chauffage d'un espace occupé (radiateur, convecteur).",
-    ["Pset_SpaceHeaterTypeCommon"],
+    ["Pset_SpaceHeaterPHistory", "Pset_SpaceHeaterTypeCommon", "Qto_SpaceHeaterBaseQuantities"],
     {"fr": ["radiateur", "émetteur de chauffage", "convecteur"], "en": ["space heater", "radiator"],
      "it": ["radiatore"], "de": ["Heizkörper"]},
     [pt("CONVECTOR", "2x3", "A heat-distributing unit that operates with gravity-circulated air.",
@@ -1538,7 +1538,7 @@ DATA.append(entry(
     "physical elements.",
     "Zone ou volume délimité, réel ou théorique, utilisé pour contenir "
     "ou délimiter des éléments physiques (pièce, local).",
-    ["Pset_SpaceCommon"],
+    ["Pset_SpaceAirHandlingDimensioning", "Pset_SpaceCommon", "Pset_SpaceCoveringRequirements", "Pset_SpaceFireSafetyRequirements", "Pset_SpaceHVACDesign", "Pset_SpaceLightingDesign", "Pset_SpaceOccupancyRequirements", "Pset_SpaceThermalLoad", "Pset_SpaceThermalLoadPHistory", "Pset_SpaceThermalPHistory", "Qto_SpaceBaseQuantities"],
     {"fr": ["espace", "local", "pièce"], "en": ["space", "room"], "it": ["ambiente", "locale"],
      "de": ["Raum"]},
     [
@@ -1576,7 +1576,7 @@ DATA.append(entry(
     "spaces that are vertically bound.",
     "Regroupement (quasi) horizontal d'espaces situés à un même niveau "
     "vertical.",
-    ["Pset_BuildingStoreyCommon"],
+    ["Pset_BuildingStoreyCommon", "Qto_BuildingStoreyBaseQuantities"],
     {"fr": ["étage", "niveau"], "en": ["building storey", "floor level"], "it": ["piano"],
      "de": ["Geschoss"]},
     [pt("NOTDEFINED", "2x3", "Undefined.", "Non précisé.", {})],
@@ -1590,7 +1590,7 @@ DATA.append(entry(
     "A building represents a structure that provides shelter for its "
     "occupants or contents.",
     "Structure abritant des occupants ou des biens.",
-    ["Pset_BuildingCommon"],
+    ["Pset_BuildingCommon", "Pset_BuildingUse", "Pset_BuildingUseAdjacent", "Qto_BuildingBaseQuantities"],
     {"fr": ["bâtiment", "immeuble"], "en": ["building"], "it": ["edificio"], "de": ["Gebäude"]},
     [pt("NOTDEFINED", "2x3", "Undefined.", "Non précisé.", {})],
     notes_fr="",
@@ -1604,7 +1604,7 @@ DATA.append(entry(
     "project construction is to be completed.",
     "Zone de terrain désignée sur laquelle le projet de construction est "
     "réalisé.",
-    ["Pset_SiteCommon"],
+    ["Pset_SiteCommon", "Pset_SiteWeather", "Qto_SiteBaseQuantities"],
     {"fr": ["terrain", "site", "parcelle"], "en": ["site", "plot"], "it": ["terreno", "sito"],
      "de": ["Grundstück"]},
     [pt("NOTDEFINED", "2x3", "Undefined.", "Non précisé.", {})],
@@ -1625,7 +1625,7 @@ DATA.append(entry(
     "Bordure surélevée en limite de chaussée ou de trottoir. Classe "
     "introduite en IFC4.3 ; aucun type spécifique n'est actuellement défini "
     "(uniquement USERDEFINED/NOTDEFINED).",
-    ["Pset_KerbCommon"],
+    ["Pset_KerbCommon", "Pset_KerbStone", "Pset_OnSiteCastKerb", "Pset_PrecastKerbStone", "Pset_RadiiKerbStone", "Qto_KerbBaseQuantities"],
     {"fr": ["bordure de trottoir", "bordure de voirie"], "en": ["kerb", "curb"],
      "it": ["cordolo stradale"], "de": ["Bordstein"]},
     [pt("NOTDEFINED", "4.3", "Undefined kerb type.", "Type non précisé.", {}, new_in_43=True)],
@@ -1642,7 +1642,7 @@ DATA.append(entry(
     "path or similar area, introduced in IFC4.3.",
     "Structure de surface durable d'une chaussée, d'un chemin ou d'une "
     "aire similaire. Classe introduite en IFC4.3.",
-    ["Pset_PavementCommon"],
+    ["Pset_PavementCommon", "Pset_PavementSurfaceCommon", "Qto_PavementBaseQuantities"],
     {"fr": ["revêtement de chaussée", "chaussée"], "en": ["pavement"], "it": ["pavimentazione stradale"],
      "de": ["Fahrbahnbelag"]},
     [
@@ -1670,7 +1670,7 @@ DATA.append(entry(
     "of rolling stock or other heavy machinery, introduced in IFC4.3.",
     "Barre profilée assurant le guidage des roues d'un matériel roulant. "
     "Classe introduite en IFC4.3.",
-    ["Pset_RailCommon"],
+    ["Qto_RailBaseQuantities"],
     {"fr": ["rail", "rail de chemin de fer"], "en": ["rail"], "it": ["rotaia"],
      "de": ["Schiene"]},
     [
@@ -1768,7 +1768,7 @@ DATA.append(entry(
     "Dispositif actif transmettant une information ou une instruction "
     "(signal visuel, sonore ou mixte) — ex. un signal ferroviaire ou un feu "
     "de circulation.",
-    ["Pset_SignalCommon"],
+    ["Pset_RailwaySignalAspect", "Pset_RailwaySignalOccurrence", "Pset_RailwaySignalSighting", "Pset_RailwaySignalType", "Pset_SignalFrame", "Qto_SignalBaseQuantities"],
     {"fr": ["signal", "signal ferroviaire", "feu de signalisation"], "en": ["signal"],
      "it": ["segnale"], "de": ["Signal"]},
     [
@@ -1798,7 +1798,7 @@ DATA.append(entry(
     "Vide résultant de la modification d'un terrain ou d'une structure "
     "routière existante par excavation ou tout autre moyen d'enlèvement de "
     "matériau.",
-    ["Pset_EarthworksCutCommon"],
+    ["Qto_EarthworksCutBaseQuantities"],
     {"fr": ["déblai", "terrassement en déblai", "fouille"], "en": ["earthworks cut", "excavation"],
      "it": ["scavo"], "de": ["Aushub"]},
     [
@@ -1848,7 +1848,7 @@ DATA.append(entry(
     "subgrade or to raise the level of the ground in general.",
     "Élément de terrassement créé pour constituer une plateforme support ou "
     "rehausser le niveau du terrain.",
-    ["Pset_EarthworksFillCommon"],
+    ["Qto_EarthworksFillBaseQuantities"],
     {"fr": ["remblai", "terrassement en remblai"], "en": ["earthworks fill", "embankment"],
      "it": ["rilevato"], "de": ["Damm"]},
     [
@@ -1894,7 +1894,7 @@ DATA.append(entry(
     "Élément dont la longueur dépasse largement l'épaisseur, généralement "
     "d'un seul matériau granulaire mis en œuvre sur un autre élément — "
     "distinct du terrassement (matériau du sol en place).",
-    ["Pset_CourseCommon"],
+    ["Pset_BoundedCourseCommon", "Pset_CourseApplicationConditions", "Pset_CourseCommon", "Qto_CourseBaseQuantities"],
     {"fr": ["couche de structure", "couche de forme"], "en": ["course", "layer"],
      "it": ["strato"], "de": ["Schicht"]},
     [
@@ -1966,7 +1966,7 @@ DATA.append(entry(
     "Définit une position à une distance donnée le long d'un alignement — "
     "station, point kilométrique, événement ou repère physique au sein "
     "d'un système de référencement linéaire.",
-    ["Pset_Stationing", "Pset_LinearReferencingMethod"],
+    ["Pset_ReferentCommon"],
     {"fr": ["point kilométrique", "pk", "chaînage", "repère linéaire"],
      "en": ["referent", "chainage marker"], "it": ["punto chilometrico"],
      "de": ["Kilometrierung"]},
@@ -2032,7 +2032,7 @@ DATA.append(entry(
     "Voie de circulation aménagée sur terrain (autoroute, rue, piste "
     "cyclable, cheminement piéton), à l'exclusion des voies ferrées. "
     "Élément de base de la hiérarchie spatiale d'un projet routier.",
-    ["Pset_RoadCommon"],
+    ["Pset_RoadDesignCriteriaCommon"],
     {"fr": ["route", "projet routier"], "en": ["road"], "it": ["strada"], "de": ["Straße"]},
     [pt("NOTDEFINED", "4.3", "Undefined road type.", "Type non précisé.", {}, new_in_43=True)],
     notes_fr="",

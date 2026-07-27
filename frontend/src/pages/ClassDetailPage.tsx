@@ -151,7 +151,7 @@ export default function ClassDetailPage() {
 
       {detail.psets_common.length > 0 && (
         <div className="card">
-          <h3>Property Sets couramment associés</h3>
+          <h3>Quel Pset utiliser ?</h3>
           <div className="synonym-list">
             {detail.psets_common.map((p) => (
               <span className="synonym-chip mono" key={p}>
@@ -159,6 +159,9 @@ export default function ClassDetailPage() {
               </span>
             ))}
           </div>
+          <p style={{ marginTop: "0.6rem", color: "var(--text-muted)", fontSize: "0.88rem" }}>
+            {detail.custom_pset_guidance}
+          </p>
         </div>
       )}
 

@@ -312,3 +312,24 @@ def test_forced_language_overrides_detection(reference):
     result = search("stiffener", forced_language="fr", reference=reference)
     assert result["detected_language"] == "fr"
     assert result["language_confident"] is True
+
+
+# ---------------------------------------------------------------------------
+# Property Sets et guidance de nommage pour un Pset personnalisé
+# ---------------------------------------------------------------------------
+
+def test_search_result_exposes_psets_and_custom_pset_guidance(reference):
+    result = search("raidisseur", reference=reference)
+    suggestion = result["suggestion"]
+    assert "Pset_MemberCommon" in suggestion["psets_common"]
+    assert "Pset_" in suggestion["custom_pset_guidance"]
+    assert "Qto_" in suggestion["custom_pset_guidance"]
+
+
+def test_wall_psets_include_quantities_and_reinforcement(reference):
+    # Vérifié contre l'export bSDD officiel : IfcWall a plus qu'un seul Pset
+    # "Common" (aussi un Qto de quantités et un Pset de renfort de ferraillage).
+    entry = reference.get_class("IfcWall")
+    assert set(entry["psets_common"]) == {
+        "Pset_WallCommon", "Qto_WallBaseQuantities", "Pset_ReinforcementBarPitchOfWall",
+    }

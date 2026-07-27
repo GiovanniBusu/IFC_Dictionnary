@@ -353,6 +353,28 @@ main {
   color: var(--text-muted);
 }
 
+.psets-block {
+  margin-top: 0.7rem;
+  background: var(--surface-alt);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+}
+
+.psets-block__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.psets-block__guidance {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
 .loading, .empty-state, .error-state {
   color: var(--text-muted);
   padding: 2rem 0;

@@ -10,6 +10,21 @@ DATA_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "ifc_refere
 
 LANGUAGES = ("fr", "en", "it", "de")
 
+# Les préfixes "Pset_" et "Qto_" sont réservés aux Property Sets/Quantity Sets
+# officiels définis par buildingSMART : un Pset personnalisé ne doit jamais
+# les réutiliser, sous peine de collision avec une future définition
+# officielle et d'échec de validation IDS. Cf. discussions buildingSMART
+# (forums.buildingsmart.org, "Are there rules for Custom Pset naming
+# conventions?").
+CUSTOM_PSET_GUIDANCE = (
+    "Si aucun des Psets officiels ci-dessus ne couvre la propriété recherchée, "
+    "créez un Pset personnalisé SANS utiliser les préfixes « Pset_ » ou « Qto_ » "
+    "(réservés aux définitions officielles buildingSMART) : leur réutilisation "
+    "provoque des collisions et des échecs de validation IDS. Nommez-le plutôt "
+    "avec un préfixe propre à votre organisation ou projet, par exemple "
+    "« VotreOrg_NomDuPset »."
+)
+
 
 def normalize(text: str) -> str:
     """Minuscule, sans accents, espaces normalisés. Utilisé pour l'indexation

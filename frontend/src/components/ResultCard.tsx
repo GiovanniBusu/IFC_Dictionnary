@@ -61,6 +61,20 @@ export default function ResultCard({ result, variant }: Props) {
         </div>
       )}
 
+      {variant === "primary" && result.psets_common.length > 0 && (
+        <div className="psets-block">
+          <div className="psets-block__label">Quel Pset utiliser ?</div>
+          <div className="synonym-list">
+            {result.psets_common.map((p) => (
+              <span className="synonym-chip mono" key={p}>
+                {p}
+              </span>
+            ))}
+          </div>
+          <p className="psets-block__guidance">{result.custom_pset_guidance}</p>
+        </div>
+      )}
+
       {result.notes_fr && variant === "primary" && (
         <div className="notes">{result.notes_fr}</div>
       )}

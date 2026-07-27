@@ -18,7 +18,9 @@
       "definition_en": "A wall is a vertically-oriented element used to enclose or subdivide spaces.",
       "definition_fr": "Élément vertical utilisé pour enclore ou subdiviser un espace.",
       "psets_common": [
-        "Pset_WallCommon"
+        "Pset_ReinforcementBarPitchOfWall",
+        "Pset_WallCommon",
+        "Qto_WallBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -366,7 +368,9 @@
       "definition_en": "A vertical structural member which transmits loads from other parts of the structure to the foundations.",
       "definition_fr": "Élément vertical porteur transmettant les charges vers les fondations.",
       "psets_common": [
-        "Pset_ColumnCommon"
+        "Pset_ColumnCommon",
+        "Pset_ReinforcementBarPitchOfColumn",
+        "Qto_ColumnBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -523,7 +527,9 @@
       "definition_en": "A horizontal, or nearly horizontal, structural member that carries loads primarily by bending.",
       "definition_fr": "Élément horizontal (ou quasi) travaillant principalement en flexion.",
       "psets_common": [
-        "Pset_BeamCommon"
+        "Pset_BeamCommon",
+        "Pset_ReinforcementBarPitchOfBeam",
+        "Qto_BeamBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -832,7 +838,8 @@
       "definition_en": "A 1-dimensional structural member, often part of a structural frame, not otherwise classified as beam or column (e.g. brace, purlin, stiffening rib).",
       "definition_fr": "Élément linéaire structurel secondaire, non classé comme poutre ou poteau (contreventement, panne, raidisseur, montant...).",
       "psets_common": [
-        "Pset_MemberCommon"
+        "Pset_MemberCommon",
+        "Qto_MemberBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -1312,7 +1319,10 @@
       "definition_en": "A slab is a component of the construction that covers a horizontal area, e.g. floor, roof or landing slab.",
       "definition_fr": "Élément couvrant une surface horizontale : plancher, toiture-terrasse, palier, radier...",
       "psets_common": [
-        "Pset_SlabCommon"
+        "Pset_PrecastSlab",
+        "Pset_ReinforcementBarPitchOfSlab",
+        "Pset_SlabCommon",
+        "Qto_SlabBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -1561,7 +1571,10 @@
       "definition_en": "A footing, also called spread footing, isolated footing or pad footing, is a part of, usually, a shallow foundation.",
       "definition_fr": "Élément de fondation superficielle transmettant les charges au sol.",
       "psets_common": [
-        "Pset_FootingCommon"
+        "Pset_FootingCommon",
+        "Pset_ReinforcementBarCountOfIndependentFooting",
+        "Pset_ReinforcementBarPitchOfContinuousFooting",
+        "Qto_FootingBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -1715,7 +1728,8 @@
       "definition_en": "A slender timber, concrete, or steel structural element driven, drilled or otherwise embedded into the ground for use as a foundation.",
       "definition_fr": "Élément élancé (bois, béton, acier) foncé ou foré dans le sol pour servir de fondation profonde.",
       "psets_common": [
-        "Pset_PileCommon"
+        "Pset_PileCommon",
+        "Qto_PileBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -1887,7 +1901,8 @@
       "definition_en": "A plate is a planar and often flat part with constant thickness.",
       "definition_fr": "Élément plan, souvent plat et de faible épaisseur constante.",
       "psets_common": [
-        "Pset_PlateCommon"
+        "Pset_PlateCommon",
+        "Qto_PlateBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -2131,7 +2146,8 @@
       "definition_en": "The roof is the covering of the top part of a building, acting as an aggregate container for all functional parts that make up the roof.",
       "definition_fr": "Ouvrage de couverture d'un bâtiment, agrégeant l'ensemble des éléments qui composent la toiture (souvent un conteneur regroupant dalles, membrures, couverture...).",
       "psets_common": [
-        "Pset_RoofCommon"
+        "Pset_RoofCommon",
+        "Qto_RoofBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -2890,7 +2906,8 @@
       "definition_en": "A railing is a frame or barrier of vertical and horizontal members acting as protection against falling or as a guide.",
       "definition_fr": "Ouvrage de protection contre les chutes ou de guidage, constitué de montants et de lisses (horizontales/verticales).",
       "psets_common": [
-        "Pset_RailingCommon"
+        "Pset_RailingCommon",
+        "Qto_RailingBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -3375,7 +3392,8 @@
       "definition_en": "A part of a stair without a turn or change in direction, consisting of steps, classified by the shape of its walking line.",
       "definition_fr": "Partie rectiligne (ou non) d'un escalier, sans changement brusque de direction, classée selon la forme de sa ligne de foulée.",
       "psets_common": [
-        "Pset_StairFlightCommon"
+        "Pset_StairFlightCommon",
+        "Qto_StairFlightBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -3681,7 +3699,8 @@
       "definition_en": "A part of a ramp without a turn, forming a single sloped plane, classified by the shape of its walking line.",
       "definition_fr": "Partie d'une rampe sans virage, formant un seul plan incliné.",
       "psets_common": [
-        "Pset_RampFlightCommon"
+        "Pset_RampFlightCommon",
+        "Qto_RampFlightBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -3764,7 +3783,8 @@
       "definition_en": "A curtain wall is an exterior wall which is non load-bearing and carries only its own weight, supported by an auxiliary framework.",
       "definition_fr": "Paroi extérieure non porteuse, autoportante, suspendue à une ossature auxiliaire (montants/traverses).",
       "psets_common": [
-        "Pset_CurtainWallCommon"
+        "Pset_CurtainWallCommon",
+        "Qto_CurtainWallQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -3818,7 +3838,11 @@
       "definition_en": "A door is a building element that is predominately used to provide controlled access for people, goods, animals and vehicles.",
       "definition_fr": "Élément de bâtiment permettant un accès contrôlé (personnes, biens, véhicules) à travers une baie.",
       "psets_common": [
-        "Pset_DoorCommon"
+        "Pset_DoorCommon",
+        "Pset_DoorLiningProperties",
+        "Pset_DoorPanelProperties",
+        "Pset_DoorWindowGlazingType",
+        "Qto_DoorBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -3968,7 +3992,11 @@
       "definition_en": "A window is a building element that is predominately used to provide natural light and fresh air, and is often glazed.",
       "definition_fr": "Élément de bâtiment assurant l'éclairage naturel et/ou la ventilation, généralement vitré.",
       "psets_common": [
-        "Pset_WindowCommon"
+        "Pset_DoorWindowGlazingType",
+        "Pset_WindowCommon",
+        "Pset_WindowLiningProperties",
+        "Pset_WindowPanelProperties",
+        "Qto_WindowBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -4076,7 +4104,8 @@
       "definition_en": "A covering is an element applied to another element (or spatial element) to cover its surface (e.g. finish for floor, wall, ceiling, roof, or insulation, coping, etc.).",
       "definition_fr": "Élément appliqué en surface d'un autre élément ou d'un espace : revêtement de sol, mur, plafond, toiture, isolation, chape...",
       "psets_common": [
-        "Pset_CoveringCommon"
+        "Pset_CoveringCommon",
+        "Qto_CoveringBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -4396,7 +4425,10 @@
       },
       "definition_en": "A proxy definition that provides a fallback for building elements that have no equivalent, more specific, semantic definition in the specification.",
       "definition_fr": "Définition de repli pour un élément de bâtiment qui n'a pas d'équivalent sémantique plus spécifique dans le schéma IFC.",
-      "psets_common": [],
+      "psets_common": [
+        "Pset_BuildingElementProxyCommon",
+        "Qto_BuildingElementProxyQuantities"
+      ],
       "class_synonyms": {
         "fr": [
           "élément générique",
@@ -4465,7 +4497,8 @@
       "definition_en": "A vertical, hollow substructure to convey exhaust gases to the outer air. The enumeration currently defines no specific chimney types.",
       "definition_fr": "Ouvrage vertical creux évacuant les gaz de combustion vers l'extérieur. Aucun type spécifique n'est actuellement défini dans le schéma (uniquement USERDEFINED/NOTDEFINED).",
       "psets_common": [
-        "Pset_ChimneyCommon"
+        "Pset_ChimneyCommon",
+        "Qto_ChimneyBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -4521,7 +4554,8 @@
       "definition_en": "A device attached to a building or free standing which provides solar shading, e.g. a jalousie, shutter or awning.",
       "definition_fr": "Dispositif rapporté ou autonome assurant une protection solaire (jalousie, volet, auvent).",
       "psets_common": [
-        "Pset_ShadingDeviceCommon"
+        "Pset_ShadingDeviceCommon",
+        "Pset_ShadingDevicePHistory"
       ],
       "class_synonyms": {
         "fr": [
@@ -4633,7 +4667,13 @@
       "definition_en": "A discrete accessory is a small, purpose-made object connecting, supporting or otherwise interfacing between two or more other elements, such as a bracket, anchor plate, or shoe.",
       "definition_fr": "Petit accessoire connectant, supportant ou faisant l'interface entre plusieurs éléments : corbeau, platine d'ancrage, sabot d'about, etc.",
       "psets_common": [
-        "Pset_DiscreteAccessoryCommon"
+        "Pset_DiscreteAccessoryCornerFixingPlate",
+        "Pset_DiscreteAccessoryDiagonalTrussConnector",
+        "Pset_DiscreteAccessoryEdgeFixingPlate",
+        "Pset_DiscreteAccessoryFixingSocket",
+        "Pset_DiscreteAccessoryLadderTrussConnector",
+        "Pset_DiscreteAccessoryStandardFixingPlate",
+        "Pset_DiscreteAccessoryWireLoop"
       ],
       "class_synonyms": {
         "fr": [
@@ -5109,7 +5149,10 @@
       "definition_en": "A segment of a duct system, distributing air for HVAC purposes.",
       "definition_fr": "Tronçon de gaine assurant la distribution d'air (CVC).",
       "psets_common": [
-        "Pset_DuctSegmentTypeCommon"
+        "Pset_DuctSegmentOccurrence",
+        "Pset_DuctSegmentPHistory",
+        "Pset_DuctSegmentTypeCommon",
+        "Qto_DuctSegmentBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -5195,7 +5238,10 @@
       "definition_en": "A segment of a pipe system, distributing fluids (water, gas...).",
       "definition_fr": "Tronçon de canalisation assurant le transport d'un fluide (eau, gaz...).",
       "psets_common": [
-        "Pset_PipeSegmentTypeCommon"
+        "Pset_PipeSegmentOccurrence",
+        "Pset_PipeSegmentPHistory",
+        "Pset_PipeSegmentTypeCommon",
+        "Qto_PipeSegmentBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -5351,7 +5397,8 @@
       "definition_en": "A sanitary terminal is a construction component used for personal hygiene, e.g. sink, toilet, bath.",
       "definition_fr": "Appareil d'hygiène ou d'usage sanitaire (lavabo, WC, baignoire...).",
       "psets_common": [
-        "Pset_SanitaryTerminalTypeCommon"
+        "Pset_SanitaryTerminalTypeCommon",
+        "Qto_SanitaryTerminalBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -5620,7 +5667,8 @@
       "definition_en": "A segment of a system for carrying cables, e.g. cable tray or conduit.",
       "definition_fr": "Tronçon de système de cheminement de câbles (chemin de câbles, goulotte, conduit électrique).",
       "psets_common": [
-        "Pset_CableCarrierSegmentTypeCommon"
+        "Pset_CableCarrierSegmentTypeCommon",
+        "Qto_CableCarrierSegmentBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -5819,7 +5867,8 @@
       "definition_en": "A light fixture (or luminaire) is a piece of equipment that houses a light source.",
       "definition_fr": "Appareil d'éclairage abritant une ou plusieurs sources lumineuses.",
       "psets_common": [
-        "Pset_LightFixtureTypeCommon"
+        "Pset_LightFixtureTypeCommon",
+        "Qto_LightFixtureBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -5930,7 +5979,10 @@
       "definition_en": "An air terminal is a construction element that typically covers an air distribution outlet or inlet, e.g. a diffuser or grille.",
       "definition_fr": "Élément terminal d'un réseau aéraulique : diffuseur, grille de soufflage ou de reprise.",
       "psets_common": [
-        "Pset_AirTerminalTypeCommon"
+        "Pset_AirTerminalOccurrence",
+        "Pset_AirTerminalPHistory",
+        "Pset_AirTerminalTypeCommon",
+        "Qto_AirTerminalBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -6061,7 +6113,9 @@
       "definition_en": "A space heater is a device used to warm the air in an occupied space using heated water, steam or electricity, e.g. a radiator.",
       "definition_fr": "Appareil de chauffage d'un espace occupé (radiateur, convecteur).",
       "psets_common": [
-        "Pset_SpaceHeaterTypeCommon"
+        "Pset_SpaceHeaterPHistory",
+        "Pset_SpaceHeaterTypeCommon",
+        "Qto_SpaceHeaterBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -6364,7 +6418,17 @@
       "definition_en": "A space represents an area or volume bounded actually or theoretically, used for the containment or delimitation of physical elements.",
       "definition_fr": "Zone ou volume délimité, réel ou théorique, utilisé pour contenir ou délimiter des éléments physiques (pièce, local).",
       "psets_common": [
-        "Pset_SpaceCommon"
+        "Pset_SpaceAirHandlingDimensioning",
+        "Pset_SpaceCommon",
+        "Pset_SpaceCoveringRequirements",
+        "Pset_SpaceFireSafetyRequirements",
+        "Pset_SpaceHVACDesign",
+        "Pset_SpaceLightingDesign",
+        "Pset_SpaceOccupancyRequirements",
+        "Pset_SpaceThermalLoad",
+        "Pset_SpaceThermalLoadPHistory",
+        "Pset_SpaceThermalPHistory",
+        "Qto_SpaceBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -6540,7 +6604,8 @@
       "definition_en": "A building storey represents a (nearly) horizontal aggregation of spaces that are vertically bound.",
       "definition_fr": "Regroupement (quasi) horizontal d'espaces situés à un même niveau vertical.",
       "psets_common": [
-        "Pset_BuildingStoreyCommon"
+        "Pset_BuildingStoreyCommon",
+        "Qto_BuildingStoreyBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -6595,7 +6660,10 @@
       "definition_en": "A building represents a structure that provides shelter for its occupants or contents.",
       "definition_fr": "Structure abritant des occupants ou des biens.",
       "psets_common": [
-        "Pset_BuildingCommon"
+        "Pset_BuildingCommon",
+        "Pset_BuildingUse",
+        "Pset_BuildingUseAdjacent",
+        "Qto_BuildingBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -6649,7 +6717,9 @@
       "definition_en": "A site is defined as a designated area of land on which the project construction is to be completed.",
       "definition_fr": "Zone de terrain désignée sur laquelle le projet de construction est réalisé.",
       "psets_common": [
-        "Pset_SiteCommon"
+        "Pset_SiteCommon",
+        "Pset_SiteWeather",
+        "Qto_SiteBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -6706,7 +6776,12 @@
       "definition_en": "A kerb (curb) is a raised border along the edge of a road or pavement, introduced in IFC4.3 for infrastructure projects. The enumeration currently defines no specific kerb types.",
       "definition_fr": "Bordure surélevée en limite de chaussée ou de trottoir. Classe introduite en IFC4.3 ; aucun type spécifique n'est actuellement défini (uniquement USERDEFINED/NOTDEFINED).",
       "psets_common": [
-        "Pset_KerbCommon"
+        "Pset_KerbCommon",
+        "Pset_KerbStone",
+        "Pset_OnSiteCastKerb",
+        "Pset_PrecastKerbStone",
+        "Pset_RadiiKerbStone",
+        "Qto_KerbBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -6761,7 +6836,9 @@
       "definition_en": "A pavement is the durable surface material laid down on a road, path or similar area, introduced in IFC4.3.",
       "definition_fr": "Structure de surface durable d'une chaussée, d'un chemin ou d'une aire similaire. Classe introduite en IFC4.3.",
       "psets_common": [
-        "Pset_PavementCommon"
+        "Pset_PavementCommon",
+        "Pset_PavementSurfaceCommon",
+        "Qto_PavementBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -6850,7 +6927,7 @@
       "definition_en": "A rail is a special section bar ensuring the guidance of the wheel of rolling stock or other heavy machinery, introduced in IFC4.3.",
       "definition_fr": "Barre profilée assurant le guidage des roues d'un matériel roulant. Classe introduite en IFC4.3.",
       "psets_common": [
-        "Pset_RailCommon"
+        "Qto_RailBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -7241,7 +7318,12 @@
       "definition_en": "An active device that conveys information or instructions to users, by means of an audio, visual signal, or a combination of both — e.g. a railway signal frame or a traffic light unit.",
       "definition_fr": "Dispositif actif transmettant une information ou une instruction (signal visuel, sonore ou mixte) — ex. un signal ferroviaire ou un feu de circulation.",
       "psets_common": [
-        "Pset_SignalCommon"
+        "Pset_RailwaySignalAspect",
+        "Pset_RailwaySignalOccurrence",
+        "Pset_RailwaySignalSighting",
+        "Pset_RailwaySignalType",
+        "Pset_SignalFrame",
+        "Qto_SignalBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -7348,7 +7430,7 @@
       "definition_en": "The resulting void from modification of existing terrain or road structure by excavation or other means of removing material.",
       "definition_fr": "Vide résultant de la modification d'un terrain ou d'une structure routière existante par excavation ou tout autre moyen d'enlèvement de matériau.",
       "psets_common": [
-        "Pset_EarthworksCutCommon"
+        "Qto_EarthworksCutBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -7589,7 +7671,7 @@
       "definition_en": "An earthworks element created by earthwork activities to build a subgrade or to raise the level of the ground in general.",
       "definition_fr": "Élément de terrassement créé pour constituer une plateforme support ou rehausser le niveau du terrain.",
       "psets_common": [
-        "Pset_EarthworksFillCommon"
+        "Qto_EarthworksFillBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -7784,7 +7866,10 @@
       "definition_en": "A built element whose length greatly exceeds its thickness, usually a single material laid on site on top of another built element — a graded granular material, distinct from earthworks (soil-based).",
       "definition_fr": "Élément dont la longueur dépasse largement l'épaisseur, généralement d'un seul matériau granulaire mis en œuvre sur un autre élément — distinct du terrassement (matériau du sol en place).",
       "psets_common": [
-        "Pset_CourseCommon"
+        "Pset_BoundedCourseCommon",
+        "Pset_CourseApplicationConditions",
+        "Pset_CourseCommon",
+        "Qto_CourseBaseQuantities"
       ],
       "class_synonyms": {
         "fr": [
@@ -8022,8 +8107,7 @@
       "definition_en": "Defines a position at a particular offset along an alignment curve — used for stations, mileposts, events or physical landmarks along a linear referencing system.",
       "definition_fr": "Définit une position à une distance donnée le long d'un alignement — station, point kilométrique, événement ou repère physique au sein d'un système de référencement linéaire.",
       "psets_common": [
-        "Pset_Stationing",
-        "Pset_LinearReferencingMethod"
+        "Pset_ReferentCommon"
       ],
       "class_synonyms": {
         "fr": [
@@ -8287,7 +8371,7 @@
       "definition_en": "A route built on land to allow travel from one location to another (highways, streets, cycle/foot paths), excluding railways. As a Facility, provides the basic project structure element for a road project.",
       "definition_fr": "Voie de circulation aménagée sur terrain (autoroute, rue, piste cyclable, cheminement piéton), à l'exclusion des voies ferrées. Élément de base de la hiérarchie spatiale d'un projet routier.",
       "psets_common": [
-        "Pset_RoadCommon"
+        "Pset_RoadDesignCriteriaCommon"
       ],
       "class_synonyms": {
         "fr": [
