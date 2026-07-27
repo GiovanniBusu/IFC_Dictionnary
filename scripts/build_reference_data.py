@@ -4,19 +4,33 @@ Génère data/ifc_reference.json à partir du référentiel curé ci-dessous.
 
 Ce script correspond à l'étape de constitution MANUELLE du référentiel
 (section 9.1 des livrables). Il couvre un sous-ensemble représentatif du
-schéma IFC4X3_ADD2 (~41 classes / familles), choisi pour illustrer toutes
+schéma IFC4X3_ADD2 (54 classes / familles), choisi pour illustrer toutes
 les situations demandées : structure, architecture, CVC/plomberie/électricité,
-mobilier, éléments spatiaux et génie civil (nouveautés IFC4.3), y compris des
-cas de dépréciation (IfcWallStandardCase, IfcWall.STANDARD/POLYGONAL,
-IfcFooting.CAISSON_FOUNDATION, IfcSpace.INTERNAL/EXTERNAL) et de
-renommage/ajout en 4.3.
+mobilier, éléments spatiaux, un volet infrastructure/ferroviaire développé
+(alignement, route, voie ferrée, pont, terrassements...), et génie civil
+(nouveautés IFC4.3), y compris des cas de dépréciation (IfcWallStandardCase,
+IfcWall.STANDARD/POLYGONAL, IfcFooting.CAISSON_FOUNDATION,
+IfcSpace.INTERNAL/EXTERNAL) et de renommage/ajout en 4.3.
 
 Les valeurs PredefinedType et leurs définitions anglaises officielles ont
-été vérifiées auprès du dépôt source buildingSMART/IFC4.3.x-development
-(docs/schemas/**/Types/*.md) plutôt que reconstituées de mémoire, après
-qu'une première version de ce fichier s'est révélée contenir des valeurs
-inventées mais plausibles (ex. IfcMember.STIFFENING_MEMBER au lieu de la
-valeur officielle STIFFENING_RIB, IfcCovering.SCREED au lieu de TOPPING).
+été vérifiées en deux passes :
+1. Auprès du dépôt source buildingSMART/IFC4.3.x-development
+   (docs/schemas/**/Types/*.md), après qu'une première version de ce fichier
+   s'est révélée contenir des valeurs inventées mais plausibles (ex.
+   IfcMember.STIFFENING_MEMBER au lieu de la valeur officielle
+   STIFFENING_RIB, IfcCovering.SCREED au lieu de TOPPING).
+2. Par comparaison systématique avec un export officiel de la buildingSMART
+   Data Dictionary (bSDD, dictionnaire IFC 4.3, fourni par l'utilisateur),
+   qui a permis de corriger 5 dernières divergences : IfcMember.MEMBER
+   (valeur générique manquante), IfcSignal.NON_PHYSICAL_SIGNAL (retiré,
+   absent de la version publiée bien que présent dans le dépôt de
+   développement), IfcEarthworksFill.SUBGRADEBED (manquant),
+   IfcRailwayPart.DILATATIONTRACK -> DILATIONTRACK (orthographe officielle),
+   IfcBridgePart.SURFACESTRUCTURE (manquant). Après cette passe, les 54
+   classes du référentiel correspondent exactement à bSDD (à l'exception
+   d'IfcWallStandardCase, classe historique dépréciée volontairement
+   conservée pour la traçabilité IFC2x3, absente du dictionnaire bSDD
+   IFC4.3 par construction).
 
 Pour étendre la couverture à l'intégralité du schéma IFC4X3 (toutes les
 sous-classes de IfcElement / IfcElementType / IfcSpatialElement, ~1500
@@ -297,6 +311,10 @@ DATA.append(entry(
     {"fr": ["membrure", "élément linéaire", "barre"], "en": ["member"],
      "it": ["asta", "elemento lineare"], "de": ["Bauteilstab"]},
     [
+        pt("MEMBER", "4.0", "A linear element within a girder or truss with no further meaning.",
+           "Élément linéaire générique au sein d'une poutre ou d'une ferme, sans qualification plus précise.",
+           {"fr": ["élément linéaire générique"], "en": ["generic member"], "it": ["asta generica"],
+            "de": ["Allgemeiner Bauteilstab"]}),
         pt("STIFFENING_RIB", "4.0",
            "Local reinforcement of the flange or web of a girder, added to prevent buckling or increase local stiffness.",
            "Raidissage local de la membrure ou de l'âme d'une poutre, destiné à "
@@ -1765,10 +1783,6 @@ DATA.append(entry(
            "Signal mixte, à la fois visuel et sonore.",
            {"fr": ["signal mixte"], "en": ["mixed signal"], "it": ["segnale misto"],
             "de": ["Gemischtes Signal"]}, new_in_43=True),
-        pt("NON_PHYSICAL_SIGNAL", "4.3", "A virtual or fictitious signal, e.g. in a railway signalling system a signal not physically sent to the train.",
-           "Signal virtuel ou fictif, ex. un signal d'un système de signalisation ferroviaire non envoyé physiquement au train.",
-           {"fr": ["signal virtuel", "signal non physique"], "en": ["non-physical signal"], "it": ["segnale virtuale"],
-            "de": ["Virtuelles Signal"]}, new_in_43=True),
     ],
     notes_fr="",
     version_notes="Nouveau en IFC4.3.",
@@ -1860,6 +1874,10 @@ DATA.append(entry(
            "Remblai de talus, adossé à la structure routière.",
            {"fr": ["remblai de talus"], "en": ["slope fill"], "it": ["riempimento di scarpata"],
             "de": ["Böschungsauffüllung"]}, new_in_43=True),
+        pt("SUBGRADEBED", "4.3", "Upper part of the soil, natural or constructed, that supports the loads transmitted by the overlying structure of a road, runway, or similar hard surface.",
+           "Assise de plateforme : partie supérieure du sol, naturelle ou constituée, supportant les charges transmises par la structure routière.",
+           {"fr": ["assise de plateforme"], "en": ["subgrade bed"], "it": ["strato di sottofondo"],
+            "de": ["Planumsschicht"]}, new_in_43=True),
     ],
     notes_fr="",
     version_notes="Nouveau en IFC4.3 (extension infrastructure).",
@@ -2174,7 +2192,7 @@ DATA.append(entry(
            "Zone d'appareil de voie (aiguillage).",
            {"fr": ["zone d'aiguillage"], "en": ["turnout track"], "it": ["zona di scambio"],
             "de": ["Weichenbereich"]}, new_in_43=True),
-        pt("DILATATIONTRACK", "4.3", "A spatial structure element used at points where expansions or movements of tracks need to be accommodated (e.g. near a bridge).",
+        pt("DILATIONTRACK", "4.3", "A spatial structure element used at points where expansions or movements of tracks need to be accommodated (e.g. near a bridge).",
            "Zone de joint de dilatation de voie, où les mouvements de la voie doivent être absorbés.",
            {"fr": ["zone de joint de dilatation"], "en": ["dilatation track"], "it": ["zona di dilatazione"],
             "de": ["Dilatationsbereich"]}, new_in_43=True),
@@ -2305,6 +2323,10 @@ DATA.append(entry(
            "Superstructure : partie du pont qui franchit l'obstacle et transmet les charges à l'infrastructure.",
            {"fr": ["superstructure (partie haute)"], "en": ["superstructure"], "it": ["sovrastruttura"],
             "de": ["Überbau"]}, new_in_43=True),
+        pt("SURFACESTRUCTURE", "4.3", "A structural part of the bridge represented as a surface (planar) structural element, as distinct from the substructure/superstructure grouping.",
+           "Élément structurel de pont représenté comme une structure surfacique (planaire), par opposition au regroupement infrastructure/superstructure.",
+           {"fr": ["structure surfacique"], "en": ["surface structure"], "it": ["struttura superficiale"],
+            "de": ["Flächentragwerk"]}, new_in_43=True),
     ],
     notes_fr="",
     version_notes="Nouveau en IFC4.3 (extension infrastructure — ouvrages d'art).",

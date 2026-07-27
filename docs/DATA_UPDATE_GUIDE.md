@@ -2,7 +2,7 @@
 
 Ce document explique comment maintenir et étendre `data/ifc_reference.json`
 lors d'une future révision du schéma IFC (ex. IFC4.4), et comment passer du
-sous-ensemble curé actuel (54 classes / ~338 PredefinedType) à une couverture
+sous-ensemble curé actuel (54 classes / ~340 PredefinedType) à une couverture
 exhaustive du schéma.
 
 ## 1. État actuel

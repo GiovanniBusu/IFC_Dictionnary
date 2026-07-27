@@ -46,7 +46,7 @@ test ambigus couverts).
 ### Couverture des données
 
 Le référentiel actuel (`data/ifc_reference.json`, généré par
-`scripts/build_reference_data.py`) couvre **54 classes IFC / ~338
+`scripts/build_reference_data.py`) couvre **54 classes IFC / ~340
 PredefinedType**, sélectionnées pour représenter toutes les situations
 demandées : structure porteuse, second œuvre/architecture, CVC/plomberie/
 électricité, mobilier, accessoires et pièces d'assemblage (`IfcDiscreteAccessory`,
@@ -147,7 +147,7 @@ vocabulaire régional suisse).
 
 ## Limites connues
 
-- Couverture de données partielle (40/~1500 classes), documentée ci-dessus.
+- Couverture de données partielle (54/~1500 classes), documentée ci-dessus.
 - Le matching flou (`difflib`, sans dépendance externe) peut occasionnellement
   faire remonter un faux positif sur un mot court ; voir
   `docs/DATA_UPDATE_GUIDE.md` section 5.

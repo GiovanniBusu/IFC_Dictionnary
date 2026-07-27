@@ -853,6 +853,28 @@
       },
       "predefined_types": [
         {
+          "value": "MEMBER",
+          "since": "4.0",
+          "deprecated_since": null,
+          "new_in_43": false,
+          "description_en": "A linear element within a girder or truss with no further meaning.",
+          "description_fr": "Élément linéaire générique au sein d'une poutre ou d'une ferme, sans qualification plus précise.",
+          "synonyms": {
+            "fr": [
+              "élément linéaire générique"
+            ],
+            "en": [
+              "generic member"
+            ],
+            "it": [
+              "asta generica"
+            ],
+            "de": [
+              "Allgemeiner Bauteilstab"
+            ]
+          }
+        },
+        {
           "value": "STIFFENING_RIB",
           "since": "4.0",
           "deprecated_since": null,
@@ -7298,29 +7320,6 @@
               "Gemischtes Signal"
             ]
           }
-        },
-        {
-          "value": "NON_PHYSICAL_SIGNAL",
-          "since": "4.3",
-          "deprecated_since": null,
-          "new_in_43": true,
-          "description_en": "A virtual or fictitious signal, e.g. in a railway signalling system a signal not physically sent to the train.",
-          "description_fr": "Signal virtuel ou fictif, ex. un signal d'un système de signalisation ferroviaire non envoyé physiquement au train.",
-          "synonyms": {
-            "fr": [
-              "signal virtuel",
-              "signal non physique"
-            ],
-            "en": [
-              "non-physical signal"
-            ],
-            "it": [
-              "segnale virtuale"
-            ],
-            "de": [
-              "Virtuelles Signal"
-            ]
-          }
         }
       ],
       "notes_fr": "",
@@ -7733,6 +7732,28 @@
             ],
             "de": [
               "Böschungsauffüllung"
+            ]
+          }
+        },
+        {
+          "value": "SUBGRADEBED",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "Upper part of the soil, natural or constructed, that supports the loads transmitted by the overlying structure of a road, runway, or similar hard surface.",
+          "description_fr": "Assise de plateforme : partie supérieure du sol, naturelle ou constituée, supportant les charges transmises par la structure routière.",
+          "synonyms": {
+            "fr": [
+              "assise de plateforme"
+            ],
+            "en": [
+              "subgrade bed"
+            ],
+            "it": [
+              "strato di sottofondo"
+            ],
+            "de": [
+              "Planumsschicht"
             ]
           }
         }
@@ -9019,7 +9040,7 @@
           }
         },
         {
-          "value": "DILATATIONTRACK",
+          "value": "DILATIONTRACK",
           "since": "4.3",
           "deprecated_since": null,
           "new_in_43": true,
@@ -9604,6 +9625,28 @@
             ],
             "de": [
               "Überbau"
+            ]
+          }
+        },
+        {
+          "value": "SURFACESTRUCTURE",
+          "since": "4.3",
+          "deprecated_since": null,
+          "new_in_43": true,
+          "description_en": "A structural part of the bridge represented as a surface (planar) structural element, as distinct from the substructure/superstructure grouping.",
+          "description_fr": "Élément structurel de pont représenté comme une structure surfacique (planaire), par opposition au regroupement infrastructure/superstructure.",
+          "synonyms": {
+            "fr": [
+              "structure surfacique"
+            ],
+            "en": [
+              "surface structure"
+            ],
+            "it": [
+              "struttura superficiale"
+            ],
+            "de": [
+              "Flächentragwerk"
             ]
           }
         }

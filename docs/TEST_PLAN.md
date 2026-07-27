@@ -45,7 +45,7 @@ Vérifie le contrat HTTP de l'API : `/health`, `/search` (y compris validation
 
 - Pas de test de performance automatisé pour la contrainte « < 300 ms
   perçus » (section 8) : à valider en conditions réelles une fois déployé,
-  le volume de données actuel (54 classes, ~338 PredefinedType) rend la
+  le volume de données actuel (54 classes, ~340 PredefinedType) rend la
   recherche largement infra-milliseconde en local.
 - Pas de test end-to-end frontend automatisé (Playwright) : la validation a
   été faite manuellement en lançant l'application (voir captures dans le
