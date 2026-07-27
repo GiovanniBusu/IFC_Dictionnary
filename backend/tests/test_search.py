@@ -309,8 +309,22 @@ def test_gibberish_query_returns_no_suggestion(reference):
 
 
 def test_forced_language_overrides_detection(reference):
-    result = search("stiffener", forced_language="fr", reference=reference)
+    # "Aussteifung" existe en allemand ET en français (comme synonyme
+    # partagé) : forcer "fr" doit restreindre la recherche et l'accepter.
+    result = search("raidisseur", forced_language="fr", reference=reference)
     assert result["detected_language"] == "fr"
+    assert result["language_confident"] is True
+    assert result["forced_language_had_no_match"] is False
+
+
+def test_forced_language_falls_back_when_no_match_in_that_language(reference):
+    # "stiffener" n'existe qu'en anglais : forcer "fr" ne doit pas renvoyer
+    # un résultat vide (trop strict), mais retomber sur une recherche
+    # toutes langues, tout en signalant explicitement le repli.
+    result = search("stiffener", forced_language="fr", reference=reference)
+    assert result["suggestion"] is not None
+    assert result["forced_language_had_no_match"] is True
+    assert result["detected_language"] == "en"
     assert result["language_confident"] is True
 
 

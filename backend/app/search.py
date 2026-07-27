@@ -1,11 +1,17 @@
 """Moteur de recherche : correspondance texte libre -> classe(s) IFC.
 
 Algorithme (cf. section 5 du cahier des charges) :
- 1. détection de la langue de la requête
- 2. recherche exacte dans la table de synonymes de la langue détectée
- 3. à défaut, recherche floue (similarité de chaînes) toutes langues
-    confondues, avec une pénalité si la langue du terme trouvé diffère de
-    la langue détectée
+ 1. détection heuristique de la langue de la requête (utilisée comme
+    repli d'affichage et comme bonus de tri interne, jamais comme seul
+    juge de ce qui est un « bon » résultat — cf. point 7)
+ 2. recherche exacte dans la table de synonymes ; si une langue est
+    forcée par l'utilisateur, la recherche est RESTREINTE à cette seule
+    langue (et non plus une recherche toutes langues avec simple bonus,
+    qui rendait le forçage quasiment sans effet)
+ 3. à défaut de correspondance exacte, recherche floue (similarité de
+    chaînes, tolérante aux fautes de frappe/orthographe) dans le même
+    périmètre de langues, avec une pénalité si la langue du terme trouvé
+    diffère de la langue de référence pour le tri
  4. recherche « libre » : en complément de la requête entière, chaque mot
     significatif de la requête est aussi recherché individuellement (avec
     une pénalité), afin de gérer les descriptions vulgarisées à la manière
@@ -14,11 +20,23 @@ Algorithme (cf. section 5 du cahier des charges) :
  5. scoring : proximité lexicale + spécificité (un match au niveau
     PredefinedType est plus spécifique qu'un simple synonyme de classe ;
     une expression de plusieurs mots est plus spécifique qu'un mot
-    générique)
+    générique). L'atténuation appliquée aux mots courts contenus par
+    coïncidence dans un synonyme composé (« wall » dans « curtain wall
+    panel ») ne s'applique QUE si le mot ne couvre qu'une petite fraction
+    du terme trouvé, afin de ne pas pénaliser une faute de frappe ou une
+    troncature légitime (« poutr » -> « poutre »)
  6. tri des candidats ; le meilleur devient la suggestion principale, les
     3 à 5 suivants (au-dessus d'un seuil) deviennent les alternatives
- 7. génération de la justification en français par gabarit de phrase
- 8. si la suggestion principale ne pointe pas vers un PredefinedType précis
+ 7. si une langue est forcée et qu'AUCUNE correspondance n'existe dans
+    cette langue, repli explicite sur une recherche toutes langues
+    confondues plutôt que de renvoyer un résultat vide (ce serait
+    contraire à la tolérance recherchée) ; ce repli est signalé via
+    `forced_language_had_no_match` pour rester transparent. La langue
+    affichée (`detected_language`) est alors dérivée a posteriori de la
+    langue du terme qui a effectivement gagné (fait vérifiable), et non
+    plus d'une supposition faite avant la recherche
+ 8. génération de la justification en français par gabarit de phrase
+ 9. si la suggestion principale ne pointe pas vers un PredefinedType précis
     (correspondance générique sur le nom de la classe), la liste complète
     des PredefinedType de cette classe est jointe au résultat pour
     permettre à l'utilisateur de choisir lui-même (section 3.2.1)
@@ -48,6 +66,7 @@ EXACT_MATCH_BONUS = 0.35
 
 SHORT_WORD_CONTAINMENT_DAMPING = 0.85
 SHORT_WORD_THRESHOLD = 5
+SHORT_WORD_RATIO_THRESHOLD = 0.6
 
 
 def _string_similarity(a: str, b: str) -> float:
@@ -55,17 +74,18 @@ def _string_similarity(a: str, b: str) -> float:
         return 1.0
     if len(a) >= 3 and len(b) >= 3 and (a in b or b in a):
         shorter, longer = sorted([a, b], key=len)
-        score = 0.80 + 0.15 * (len(shorter) / len(longer))
-        if len(shorter) <= SHORT_WORD_THRESHOLD:
+        ratio = len(shorter) / len(longer)
+        score = 0.80 + 0.15 * ratio
+        if len(shorter) <= SHORT_WORD_THRESHOLD and ratio < SHORT_WORD_RATIO_THRESHOLD:
             # Un mot générique court (« wall », « mur », « beam »...) se
             # retrouve, par pure coïncidence lexicale, à l'intérieur de
             # nombreux synonymes composés appartenant à d'AUTRES classes
             # (ex. « curtain wall panel » -> IfcPlate, « wall plate » ->
-            # IfcMember). On atténue ce cas pour ne pas polluer les
-            # résultats d'une classe non liée, sans pénaliser les
-            # correspondances partielles sur des mots plus longs et
-            # spécifiques (ex. « traversa » dans « traversa di
-            # irrigidimento »).
+            # IfcMember) : il ne représente alors qu'une PETITE fraction du
+            # terme trouvé (ratio faible). On atténue seulement ce cas-là.
+            # Un mot court tronqué ou avec une faute de frappe (« poutr » ->
+            # « poutre », « murr » -> « mur ») couvre au contraire la quasi-
+            # totalité du terme (ratio élevé) et ne doit PAS être pénalisé.
             score *= SHORT_WORD_CONTAINMENT_DAMPING
         return score
     return SequenceMatcher(None, a, b).ratio()
@@ -79,14 +99,21 @@ def _specificity_bonus(level: str, term: str) -> float:
 
 
 def _collect_candidates(query_norm: str, reference: IfcReference, detected_lang: str,
-                         candidates: dict | None = None, damping: float = 1.0):
+                         candidates: dict | None = None, damping: float = 1.0,
+                         languages: tuple[str, ...] | None = None):
     """Alimente (et retourne) un dict {(class, predefined_type): meilleur score,
     match info}, en fusionnant avec les candidats déjà trouvés le cas échéant
     (utilisé pour combiner un score sur la requête entière et des scores sur
-    des mots individuels de la requête, cf. `_token_candidates`)."""
-    candidates = {} if candidates is None else candidates
+    des mots individuels de la requête, cf. `_token_candidates`).
 
-    for lang in reference.index:
+    `languages` restreint la recherche à un sous-ensemble de langues (utilisé
+    quand l'utilisateur force une langue : section 6 du cahier des charges).
+    Par défaut (None), toutes les langues du référentiel sont parcourues, ce
+    qui permet la tolérance aux requêtes multilingues/mixtes."""
+    candidates = {} if candidates is None else candidates
+    search_languages = languages if languages is not None else tuple(reference.index)
+
+    for lang in search_languages:
         lang_bonus = 0.05 if lang == detected_lang else 0.0
         for term_norm, matches in reference.index[lang].items():
             sim = _string_similarity(query_norm, term_norm)
@@ -219,41 +246,83 @@ def _build_result(entry: dict, predefined_type: str | None, match_info: dict, qu
     }
 
 
-def search(query: str, forced_language: str | None = None, reference: IfcReference | None = None):
-    reference = reference or get_reference()
-    query = query.strip()
-    if not query:
-        return {"query": query, "detected_language": None, "language_confident": False,
-                "suggestion": None, "alternatives": []}
-
-    guess = detect_language(query, reference)
-    detected_lang = forced_language or guess.language
-
-    query_norm = normalize(query)
-    candidates = _collect_candidates(query_norm, reference, detected_lang)
+def _rank_results(query: str, query_norm: str, reference: IfcReference,
+                   bonus_target_lang: str, languages: tuple[str, ...] | None):
+    candidates = _collect_candidates(query_norm, reference, bonus_target_lang, languages=languages)
     for token in _significant_tokens(query_norm):
-        _collect_candidates(token, reference, detected_lang, candidates,
-                             damping=TOKEN_MATCH_DAMPING)
-
+        _collect_candidates(token, reference, bonus_target_lang, candidates,
+                             damping=TOKEN_MATCH_DAMPING, languages=languages)
     ranked = sorted(candidates.items(), key=lambda kv: kv[1]["raw_score"], reverse=True)
-
     results = []
     for (ifc_class, predefined_type), match_info in ranked:
         entry = reference.get_class(ifc_class)
         if not entry:
             continue
         results.append(_build_result(entry, predefined_type, match_info, query))
-
     suggestion = results[0] if results else None
-    alternatives = [
-        r for r in results[1:]
-        if r["score"] >= MIN_ALTERNATIVE_SCORE
-    ][:MAX_ALTERNATIVES]
+    alternatives = [r for r in results[1:] if r["score"] >= MIN_ALTERNATIVE_SCORE][:MAX_ALTERNATIVES]
+    return suggestion, alternatives
+
+
+def search(query: str, forced_language: str | None = None, reference: IfcReference | None = None):
+    reference = reference or get_reference()
+    query = query.strip()
+    if not query:
+        return {"query": query, "detected_language": None, "language_confident": False,
+                "suggestion": None, "alternatives": [], "forced_language_had_no_match": False}
+
+    guess = detect_language(query, reference)
+    query_norm = normalize(query)
+    forced_language_had_no_match = False
+
+    if forced_language:
+        # La recherche est d'abord restreinte à la seule langue forcée (et
+        # non plus « toutes les langues avec un simple bonus de 0.05 pour
+        # celle-ci ») : sans cette restriction, forcer une langue n'avait
+        # presque aucun effet, un match exact dans une AUTRE langue (ex.
+        # « Aussteifung » en allemand) l'emportant toujours sur le bonus.
+        suggestion, alternatives = _rank_results(
+            query, query_norm, reference, forced_language, languages=(forced_language,)
+        )
+        if suggestion is None:
+            # Repli : rien dans la langue forcée (faute de frappe sur le
+            # sélecteur, ou terme d'une autre langue) -> on retombe sur une
+            # recherche toutes langues plutôt que de laisser l'utilisateur
+            # face à un « aucun résultat » silencieux ; le repli est signalé
+            # explicitement pour rester transparent sur ce qui s'est passé.
+            suggestion, alternatives = _rank_results(
+                query, query_norm, reference, guess.language, languages=None
+            )
+            forced_language_had_no_match = True
+    else:
+        suggestion, alternatives = _rank_results(
+            query, query_norm, reference, guess.language, languages=None
+        )
+
+    if forced_language and not forced_language_had_no_match:
+        # La langue affichée est alors littéralement celle demandée par
+        # l'utilisateur : pas une supposition, un fait.
+        detected_lang_out = forced_language
+        confident_out = True
+    elif suggestion:
+        # La langue affichée est celle du synonyme qui a effectivement
+        # produit la meilleure correspondance (fait vérifiable), plutôt
+        # qu'une supposition heuristique faite AVANT la recherche : le badge
+        # « détecté : X » est ainsi toujours exact par construction.
+        detected_lang_out = suggestion["matched_language"]
+        confident_out = True
+    else:
+        # Aucune correspondance, dans aucune langue : on affiche la
+        # meilleure estimation heuristique à titre indicatif, explicitement
+        # marquée incertaine.
+        detected_lang_out = guess.language
+        confident_out = False
 
     return {
         "query": query,
-        "detected_language": detected_lang,
-        "language_confident": guess.confident if not forced_language else True,
+        "detected_language": detected_lang_out,
+        "language_confident": confident_out,
         "suggestion": suggestion,
         "alternatives": alternatives,
+        "forced_language_had_no_match": forced_language_had_no_match,
     }

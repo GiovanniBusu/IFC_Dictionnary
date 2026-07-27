@@ -86,6 +86,13 @@ export default function SearchPage() {
         </label>
       </div>
 
+      {!loading && result?.forced_language_had_no_match && (
+        <div className="notes" style={{ marginTop: "0.7rem" }}>
+          Aucune correspondance trouvée en {LANGUAGE_LABELS[forcedLang as Language]} pour «{" "}
+          {query} ». Résultat affiché toutes langues confondues à la place.
+        </div>
+      )}
+
       {loading && <div className="loading">Recherche en cours…</div>}
       {error && <div className="error-state">Erreur : {error}</div>}
 

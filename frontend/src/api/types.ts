@@ -43,6 +43,10 @@ export interface SearchResponse {
   language_confident: boolean;
   suggestion: SearchResult | null;
   alternatives: SearchResult[];
+  /** true si une langue a été forcée mais qu'aucune correspondance n'a été
+   * trouvée dans cette langue : le résultat affiché retombe alors sur une
+   * recherche toutes langues confondues. */
+  forced_language_had_no_match: boolean;
 }
 
 export interface PredefinedType {
