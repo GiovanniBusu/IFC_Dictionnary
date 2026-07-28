@@ -15,15 +15,41 @@ LANGUAGES = ("fr", "en", "it", "de")
 # les réutiliser, sous peine de collision avec une future définition
 # officielle et d'échec de validation IDS. Cf. discussions buildingSMART
 # (forums.buildingsmart.org, "Are there rules for Custom Pset naming
-# conventions?").
-CUSTOM_PSET_GUIDANCE = (
-    "Si aucun des Psets officiels ci-dessus ne couvre la propriété recherchée, "
-    "créez un Pset personnalisé SANS utiliser les préfixes « Pset_ » ou « Qto_ » "
-    "(réservés aux définitions officielles buildingSMART) : leur réutilisation "
-    "provoque des collisions et des échecs de validation IDS. Nommez-le plutôt "
-    "avec un préfixe propre à votre organisation ou projet, par exemple "
-    "« VotreOrg_NomDuPset »."
-)
+# conventions?"). Traduit dans les 4 langues d'affichage (le texte
+# explicatif change de langue, jamais les préfixes IFC eux-mêmes).
+CUSTOM_PSET_GUIDANCE = {
+    "fr": (
+        "Si aucun des Psets officiels ci-dessus ne couvre la propriété recherchée, "
+        "créez un Pset personnalisé SANS utiliser les préfixes « Pset_ » ou « Qto_ » "
+        "(réservés aux définitions officielles buildingSMART) : leur réutilisation "
+        "provoque des collisions et des échecs de validation IDS. Nommez-le plutôt "
+        "avec un préfixe propre à votre organisation ou projet, par exemple "
+        "« VotreOrg_NomDuPset »."
+    ),
+    "en": (
+        "If none of the official Psets above cover the property you need, create a "
+        "custom Pset WITHOUT using the \"Pset_\" or \"Qto_\" prefixes (reserved for "
+        "official buildingSMART definitions): reusing them causes collisions and IDS "
+        "validation failures. Instead name it with a prefix specific to your "
+        "organisation or project, e.g. \"YourOrg_PsetName\"."
+    ),
+    "it": (
+        "Se nessuno dei Pset ufficiali sopra copre la proprietà cercata, create un "
+        "Pset personalizzato SENZA utilizzare i prefissi «Pset_» o «Qto_» (riservati "
+        "alle definizioni ufficiali buildingSMART): il loro riutilizzo provoca "
+        "collisioni ed errori di validazione IDS. Nominatelo invece con un prefisso "
+        "specifico della vostra organizzazione o progetto, ad es. «VostraOrg_NomePset»."
+    ),
+    "de": (
+        "Wenn keiner der offiziellen Psets oben die gesuchte Eigenschaft abdeckt, "
+        "erstellen Sie ein benutzerdefiniertes Pset OHNE die Präfixe „Pset_“ oder "
+        "„Qto_“ zu verwenden (diese sind offiziellen buildingSMART-Definitionen "
+        "vorbehalten): ihre Wiederverwendung führt zu Kollisionen und IDS-"
+        "Validierungsfehlern. Benennen Sie es stattdessen mit einem Präfix, das "
+        "spezifisch für Ihre Organisation oder Ihr Projekt ist, z. B. "
+        "„IhreOrg_PsetName“."
+    ),
+}
 
 
 def normalize(text: str) -> str:
@@ -41,6 +67,9 @@ class IfcReference:
         self.schema_version = raw["schema_version"]
         self.classes = raw["classes"]
         self.by_class = {c["class"]: c for c in self.classes}
+        # Traductions des segments de category_path (utilisé pour localiser
+        # le fil d'Ariane/l'arborescence quel que soit la langue d'affichage).
+        self.category_labels = raw.get("category_labels", {})
         # index[lang][normalized_term] -> list of match dicts
         self.index = {lang: {} for lang in LANGUAGES}
         self._build_index()
@@ -78,6 +107,15 @@ class IfcReference:
 
     def get_class(self, ifc_class: str):
         return self.by_class.get(ifc_class)
+
+    def localize_category_path(self, category_path: list[str], lang: str) -> list[str]:
+        """Traduit un category_path (toujours stocké en français dans les
+        données, langue d'autorité) vers la langue d'affichage demandée.
+        Ne touche jamais aux identifiants IFC eux-mêmes (classe/PredefinedType),
+        qui restent toujours en anglais."""
+        if lang == "fr":
+            return list(category_path)
+        return [self.category_labels.get(seg, {}).get(lang, seg) for seg in category_path]
 
 
 @lru_cache(maxsize=1)

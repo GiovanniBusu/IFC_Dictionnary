@@ -9,7 +9,7 @@ export interface VersionInfo {
 
 export interface AvailablePredefinedType {
   value: string;
-  description_fr: string;
+  description: string;
   since: string;
   new_in_43: boolean;
   deprecated_since: string | null;
@@ -17,18 +17,21 @@ export interface AvailablePredefinedType {
 
 export interface SearchResult {
   class: string;
-  class_fr: string;
+  /** Libellé de classe dans la langue d'affichage demandée (output_lang). */
+  class_label: string;
   predefined_type: string | null;
   score: number;
   matched_term: string;
   matched_language: Language;
   match_level: "class_name" | "class" | "predefined_type";
+  /** Fil d'Ariane traduit dans la langue d'affichage ; les identifiants IFC
+   * eux-mêmes (dans hierarchy_path) restent toujours en anglais. */
   category_path: string[];
   hierarchy_path: string[];
   version_info: VersionInfo;
-  justification_fr: string;
-  alternative_reason_fr: string;
-  notes_fr: string;
+  justification: string;
+  alternative_reason: string;
+  notes: string;
   /** Peuplé uniquement quand predefined_type est null (correspondance
    * générique sur la classe) : liste complète des PredefinedType existants,
    * pour que l'utilisateur puisse choisir lui-même. */
@@ -41,6 +44,8 @@ export interface SearchResponse {
   query: string;
   detected_language: Language | null;
   language_confident: boolean;
+  /** Langue d'affichage effectivement utilisée pour ce résultat. */
+  output_language: Language;
   suggestion: SearchResult | null;
   alternatives: SearchResult[];
   /** true si une langue a été forcée mais qu'aucune correspondance n'a été
@@ -55,24 +60,27 @@ export interface PredefinedType {
   deprecated_since: string | null;
   new_in_43: boolean;
   description_en: string;
-  description_fr: string;
+  /** Description dans la langue d'affichage demandée (output_lang). */
+  description: string;
   synonyms: Record<Language, string[]>;
 }
 
 export interface ClassDetail {
   class: string;
-  class_fr: string;
+  class_label: string;
   parent: string;
   parent_known: boolean;
   children: string[];
   category_path: string[];
   ifc_versions: { introduced: string; current: string; deprecated: string | null };
+  /** Version anglaise originale (bSDD), toujours disponible quelle que soit
+   * la langue d'affichage — utilisée pour le panneau "version originale". */
   definition_en: string;
-  definition_fr: string;
+  definition: string;
   psets_common: string[];
   class_synonyms: Record<Language, string[]>;
   predefined_types: PredefinedType[];
-  notes_fr: string;
+  notes: string;
   version_notes: string;
   custom_pset_guidance: string;
 }
@@ -81,7 +89,7 @@ export interface TreeNodeData {
   type: "category" | "class" | "predefined_type";
   name: string;
   ifc_class?: string;
-  class_fr?: string;
+  class_label?: string;
   predefined_type?: string;
   children: TreeNodeData[];
 }

@@ -347,3 +347,46 @@ def test_wall_psets_include_quantities_and_reinforcement(reference):
     assert set(entry["psets_common"]) == {
         "Pset_WallCommon", "Qto_WallBaseQuantities", "Pset_ReinforcementBarPitchOfWall",
     }
+
+
+# ---------------------------------------------------------------------------
+# Langue d'affichage (output_lang) : indépendante de la langue de recherche.
+# Les identifiants IFC/PredefinedType ne sont jamais traduits.
+# ---------------------------------------------------------------------------
+
+def test_output_lang_translates_explanatory_text_not_ifc_identifiers(reference):
+    result = search("raidisseur", reference=reference, output_lang="en")
+    suggestion = result["suggestion"]
+    assert suggestion["class"] == "IfcMember"
+    assert suggestion["predefined_type"] == "STIFFENING_RIB"
+    assert suggestion["class_label"] == "Member"
+    assert "hierarchical position" in suggestion["justification"].lower()
+    assert "buckling" in suggestion["justification"].lower()
+    assert "Pset_" in suggestion["custom_pset_guidance"]
+    assert "Qto_" in suggestion["custom_pset_guidance"]
+
+
+def test_output_lang_independent_from_search_language(reference):
+    # Chercher en italien mais afficher en allemand : les deux réglages ne
+    # doivent pas interférer l'un avec l'autre.
+    result = search("irrigidimento", forced_language="it", output_lang="de", reference=reference)
+    suggestion = result["suggestion"]
+    assert suggestion["class"] == "IfcMember"
+    assert suggestion["predefined_type"] == "STIFFENING_RIB"
+    assert suggestion["matched_language"] == "it"
+    assert "Versteifung" in suggestion["justification"] or "versteif" in suggestion["justification"].lower()
+
+
+def test_output_lang_defaults_to_french(reference):
+    result = search("raidisseur", reference=reference)
+    assert result["output_language"] == "fr"
+    assert "raidisseur" in result["suggestion"]["justification"].lower()
+
+
+def test_category_path_localized_but_class_name_stays_english(reference):
+    result = search("wall", forced_language="en", output_lang="de", reference=reference)
+    suggestion = result["suggestion"]
+    assert suggestion["class"] == "IfcWall"
+    assert "Wand" in suggestion["category_path"] or "Wände" in suggestion["category_path"]
+    # hierarchy_path leaf is always the raw IFC class/PredefinedType, untranslated
+    assert suggestion["hierarchy_path"][-1] == "IfcWall"

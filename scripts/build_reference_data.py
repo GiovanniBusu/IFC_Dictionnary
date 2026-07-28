@@ -41,6 +41,15 @@ traductions/synonymes métier de ce fichier avec le nouveau squelette.
 import json
 from pathlib import Path
 
+from i18n_content import (
+    CATEGORY_LABELS,
+    CLASS_DEFINITIONS,
+    CLASS_LABELS,
+    CLASS_NOTES,
+    CLASS_VERSION_NOTES,
+    PDT_DESCRIPTIONS,
+)
+
 OUT_PATH = Path(__file__).resolve().parent.parent / "data" / "ifc_reference.json"
 
 PHYS = "Élément physique"
@@ -2343,11 +2352,38 @@ def build_children_index(data):
     return data
 
 
+def apply_i18n(data):
+    """Ajoute la structure multilingue (EN/IT/DE) issue de i18n_content.py en
+    complément des champs `_fr`/`_en` existants (non modifiés, pour ne pas
+    casser les frontends déjà en place) : voir "langue d'affichage" — la
+    langue de recherche/schéma IFC lui-même reste toujours l'anglais."""
+    for d in data:
+        cls = d["class"]
+        d["class_label"] = {"fr": d["class_fr"], **CLASS_LABELS[cls]}
+        d["definition"] = {
+            "fr": d["definition_fr"], "en": d["definition_en"],
+            **CLASS_DEFINITIONS[cls],
+        }
+        notes = CLASS_NOTES.get(cls, {"en": "", "it": "", "de": ""})
+        d["notes"] = {"fr": d.get("notes_fr", ""), **notes}
+        vnotes = CLASS_VERSION_NOTES.get(cls, {"en": "", "it": "", "de": ""})
+        d["version_notes_i18n"] = {"fr": d.get("version_notes", ""), **vnotes}
+        for p in d["predefined_types"]:
+            key = (cls, p["value"])
+            p["description"] = {
+                "fr": p["description_fr"], "en": p["description_en"],
+                **PDT_DESCRIPTIONS[key],
+            }
+    return data
+
+
 def main():
     data = build_children_index(DATA)
+    data = apply_i18n(data)
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
-        json.dump({"schema_version": "IFC4X3_ADD2", "classes": data}, f,
+        json.dump({"schema_version": "IFC4X3_ADD2", "classes": data,
+                    "category_labels": CATEGORY_LABELS}, f,
                    ensure_ascii=False, indent=2)
     print(f"Écrit {len(data)} classes dans {OUT_PATH}")
 

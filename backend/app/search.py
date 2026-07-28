@@ -35,7 +35,16 @@ Algorithme (cf. section 5 du cahier des charges) :
     affichée (`detected_language`) est alors dérivée a posteriori de la
     langue du terme qui a effectivement gagné (fait vérifiable), et non
     plus d'une supposition faite avant la recherche
- 8. génération de la justification en français par gabarit de phrase
+ 8. génération de la justification par gabarit de phrase, dans la langue
+    d'AFFICHAGE demandée (`output_lang`, indépendante de la langue de
+    recherche ci-dessus) : deux réglages distincts, l'un pour "dans quelle
+    langue chercher", l'autre pour "dans quelle langue afficher le résultat"
+    (justification, définition, notes, description des PredefinedType).
+    Les identifiants IFC/bSDD eux-mêmes (nom de classe, valeur
+    PredefinedType, nom de Pset) ne sont eux JAMAIS traduits — le BIM/IFC
+    est un schéma anglais — seul le texte explicatif qui les accompagne
+    change de langue (contenu traduit une fois pour toutes dans
+    data/ifc_reference.json, cf. scripts/i18n_content.py)
  9. si la suggestion principale ne pointe pas vers un PredefinedType précis
     (correspondance générique sur le nom de la classe), la liste complète
     des PredefinedType de cette classe est jointe au résultat pour
@@ -151,19 +160,55 @@ def _significant_tokens(query_norm: str) -> list[str]:
     return [w for w in words if len(w) >= MIN_TOKEN_LENGTH and w not in ALL_STOPWORDS]
 
 
-def _hierarchy_path(entry: dict, predefined_type: str | None) -> list[str]:
-    path = list(entry["category_path"])
+# Gabarits de phrase localisés (section « langue d'affichage ») : seul ce
+# texte change de langue, jamais les identifiants IFC (classe, PredefinedType,
+# Pset) qui restent toujours en anglais, ni les données de contenu (traduites
+# une fois pour toutes dans data/ifc_reference.json, cf. scripts/i18n_content.py).
+SENTENCE_TEMPLATES = {
+    "fr": {
+        "justification": "« {query} » se rapproche du terme référencé « {matched_term} », "
+                          "associé à {class_label} ({label}). {description} Position hiérarchique : {path}.",
+        "new_in_43": " Ce type est une nouveauté d'IFC4.3.",
+        "deprecated": " Attention : déprécié depuis IFC{version}.",
+        "relevant_if": "Pertinent si : {base}",
+    },
+    "en": {
+        "justification": "“{query}” is close to the referenced term “{matched_term}”, "
+                          "associated with {class_label} ({label}). {description} Hierarchical position: {path}.",
+        "new_in_43": " This type is new in IFC4.3.",
+        "deprecated": " Warning: deprecated since IFC{version}.",
+        "relevant_if": "Relevant if: {base}",
+    },
+    "it": {
+        "justification": "«{query}» si avvicina al termine di riferimento «{matched_term}», "
+                          "associato a {class_label} ({label}). {description} Posizione gerarchica: {path}.",
+        "new_in_43": " Questo tipo è una novità di IFC4.3.",
+        "deprecated": " Attenzione: deprecato dalla IFC{version}.",
+        "relevant_if": "Pertinente se: {base}",
+    },
+    "de": {
+        "justification": "„{query}“ ähnelt dem referenzierten Begriff „{matched_term}“, "
+                          "zugeordnet zu {class_label} ({label}). {description} Hierarchische Position: {path}.",
+        "new_in_43": " Dieser Typ ist neu in IFC4.3.",
+        "deprecated": " Achtung: veraltet seit IFC{version}.",
+        "relevant_if": "Relevant, wenn: {base}",
+    },
+}
+
+
+def _hierarchy_path(entry: dict, predefined_type: str | None, lang: str, reference: IfcReference) -> list[str]:
+    path = reference.localize_category_path(entry["category_path"], lang)
     leaf = entry["class"] + (f".{predefined_type}" if predefined_type else "")
     path.append(leaf)
     return path
 
 
-def _version_info(entry: dict, pdt: dict | None) -> dict:
+def _version_info(entry: dict, pdt: dict | None, lang: str) -> dict:
     info = {
         "min_version": entry["ifc_versions"]["introduced"],
         "deprecated": entry["ifc_versions"]["deprecated"],
         "new_in_43": False,
-        "version_notes": entry.get("version_notes", ""),
+        "version_notes": entry.get("version_notes_i18n", {}).get(lang, entry.get("version_notes", "")),
     }
     if pdt:
         info["min_version"] = pdt["since"]
@@ -172,37 +217,41 @@ def _version_info(entry: dict, pdt: dict | None) -> dict:
     return info
 
 
-def _justification(entry: dict, pdt: dict | None, query: str, matched_term: str) -> str:
-    class_fr = entry["class_fr"]
+def _justification(entry: dict, pdt: dict | None, query: str, matched_term: str,
+                    lang: str, reference: IfcReference) -> str:
+    tpl = SENTENCE_TEMPLATES[lang]
+    class_label = entry["class_label"][lang]
     class_name = entry["class"]
     label = class_name + (f".{pdt['value']}" if pdt else "")
-    description = pdt["description_fr"] if pdt else entry["definition_fr"]
-    path = " → ".join(_hierarchy_path(entry, pdt["value"] if pdt else None))
+    description = pdt["description"][lang] if pdt else entry["definition"][lang]
+    path = " → ".join(_hierarchy_path(entry, pdt["value"] if pdt else None, lang, reference))
 
-    sentence = (
-        f"« {query} » se rapproche du terme référencé « {matched_term} », associé à "
-        f"{class_fr} ({label}). {description} Position hiérarchique : {path}."
+    sentence = tpl["justification"].format(
+        query=query, matched_term=matched_term, class_label=class_label,
+        label=label, description=description, path=path,
     )
-    version = _version_info(entry, pdt)
+    version = _version_info(entry, pdt, lang)
     if version["new_in_43"]:
-        sentence += " Ce type est une nouveauté d'IFC4.3."
+        sentence += tpl["new_in_43"]
     if version["deprecated"]:
-        sentence += f" Attention : déprécié depuis IFC{version['deprecated']}."
+        sentence += tpl["deprecated"].format(version=version["deprecated"])
     return sentence
 
 
-def _alternative_reason(entry: dict, pdt: dict | None) -> str:
-    if pdt and pdt.get("description_fr"):
-        base = pdt["description_fr"]
+def _alternative_reason(entry: dict, pdt: dict | None, lang: str) -> str:
+    tpl = SENTENCE_TEMPLATES[lang]
+    if pdt and pdt.get("description", {}).get(lang):
+        base = pdt["description"][lang]
     else:
-        base = entry["definition_fr"]
-    reason = f"Pertinent si : {base}"
-    if entry.get("notes_fr"):
-        reason += f" {entry['notes_fr']}"
+        base = entry["definition"][lang]
+    reason = tpl["relevant_if"].format(base=base)
+    notes = entry.get("notes", {}).get(lang)
+    if notes:
+        reason += f" {notes}"
     return reason
 
 
-def _available_predefined_types(entry: dict) -> list[dict]:
+def _available_predefined_types(entry: dict, lang: str) -> list[dict]:
     """Liste complète des PredefinedType d'une classe, pour un affichage
     direct quand la requête ne pointe pas vers un type précis (ex.
     recherche générique « mur »/« wall ») — section 3.2.1 du cahier des
@@ -210,7 +259,7 @@ def _available_predefined_types(entry: dict) -> list[dict]:
     return [
         {
             "value": p["value"],
-            "description_fr": p["description_fr"],
+            "description": p["description"][lang],
             "since": p["since"],
             "new_in_43": bool(p.get("new_in_43")),
             "deprecated_since": p.get("deprecated_since"),
@@ -220,34 +269,35 @@ def _available_predefined_types(entry: dict) -> list[dict]:
     ]
 
 
-def _build_result(entry: dict, predefined_type: str | None, match_info: dict, query: str):
+def _build_result(entry: dict, predefined_type: str | None, match_info: dict, query: str,
+                   lang: str, reference: IfcReference):
     pdt = None
     if predefined_type:
         pdt = next((p for p in entry["predefined_types"] if p["value"] == predefined_type), None)
     return {
         "class": entry["class"],
-        "class_fr": entry["class_fr"],
+        "class_label": entry["class_label"][lang],
         "predefined_type": predefined_type,
         "score": round(match_info["score"], 3),
         "matched_term": match_info["matched_term"],
         "matched_language": match_info["matched_lang"],
         "match_level": match_info["level"],
-        "category_path": entry["category_path"],
-        "hierarchy_path": _hierarchy_path(entry, predefined_type),
-        "version_info": _version_info(entry, pdt),
-        "justification_fr": _justification(entry, pdt, query, match_info["matched_term"]),
-        "alternative_reason_fr": _alternative_reason(entry, pdt),
-        "notes_fr": entry.get("notes_fr", ""),
+        "category_path": reference.localize_category_path(entry["category_path"], lang),
+        "hierarchy_path": _hierarchy_path(entry, predefined_type, lang, reference),
+        "version_info": _version_info(entry, pdt, lang),
+        "justification": _justification(entry, pdt, query, match_info["matched_term"], lang, reference),
+        "alternative_reason": _alternative_reason(entry, pdt, lang),
+        "notes": entry.get("notes", {}).get(lang, ""),
         "available_predefined_types": (
-            _available_predefined_types(entry) if predefined_type is None else []
+            _available_predefined_types(entry, lang) if predefined_type is None else []
         ),
         "psets_common": entry.get("psets_common", []),
-        "custom_pset_guidance": CUSTOM_PSET_GUIDANCE,
+        "custom_pset_guidance": CUSTOM_PSET_GUIDANCE[lang],
     }
 
 
 def _rank_results(query: str, query_norm: str, reference: IfcReference,
-                   bonus_target_lang: str, languages: tuple[str, ...] | None):
+                   bonus_target_lang: str, languages: tuple[str, ...] | None, output_lang: str):
     candidates = _collect_candidates(query_norm, reference, bonus_target_lang, languages=languages)
     for token in _significant_tokens(query_norm):
         _collect_candidates(token, reference, bonus_target_lang, candidates,
@@ -258,13 +308,18 @@ def _rank_results(query: str, query_norm: str, reference: IfcReference,
         entry = reference.get_class(ifc_class)
         if not entry:
             continue
-        results.append(_build_result(entry, predefined_type, match_info, query))
+        results.append(_build_result(entry, predefined_type, match_info, query, output_lang, reference))
     suggestion = results[0] if results else None
     alternatives = [r for r in results[1:] if r["score"] >= MIN_ALTERNATIVE_SCORE][:MAX_ALTERNATIVES]
     return suggestion, alternatives
 
 
-def search(query: str, forced_language: str | None = None, reference: IfcReference | None = None):
+def search(query: str, forced_language: str | None = None, reference: IfcReference | None = None,
+           output_lang: str = "fr"):
+    """`forced_language` restreint la LANGUE DE RECHERCHE (dans quelle langue
+    chercher le terme tapé) ; `output_lang` choisit la LANGUE D'AFFICHAGE du
+    résultat (dans quelle langue afficher l'explicatif) — deux réglages
+    indépendants, cf. section « langue d'affichage »."""
     reference = reference or get_reference()
     query = query.strip()
     if not query:
@@ -282,7 +337,7 @@ def search(query: str, forced_language: str | None = None, reference: IfcReferen
         # presque aucun effet, un match exact dans une AUTRE langue (ex.
         # « Aussteifung » en allemand) l'emportant toujours sur le bonus.
         suggestion, alternatives = _rank_results(
-            query, query_norm, reference, forced_language, languages=(forced_language,)
+            query, query_norm, reference, forced_language, languages=(forced_language,), output_lang=output_lang
         )
         if suggestion is None:
             # Repli : rien dans la langue forcée (faute de frappe sur le
@@ -291,12 +346,12 @@ def search(query: str, forced_language: str | None = None, reference: IfcReferen
             # face à un « aucun résultat » silencieux ; le repli est signalé
             # explicitement pour rester transparent sur ce qui s'est passé.
             suggestion, alternatives = _rank_results(
-                query, query_norm, reference, guess.language, languages=None
+                query, query_norm, reference, guess.language, languages=None, output_lang=output_lang
             )
             forced_language_had_no_match = True
     else:
         suggestion, alternatives = _rank_results(
-            query, query_norm, reference, guess.language, languages=None
+            query, query_norm, reference, guess.language, languages=None, output_lang=output_lang
         )
 
     if forced_language and not forced_language_had_no_match:
@@ -322,6 +377,7 @@ def search(query: str, forced_language: str | None = None, reference: IfcReferen
         "query": query,
         "detected_language": detected_lang_out,
         "language_confident": confident_out,
+        "output_language": output_lang,
         "suggestion": suggestion,
         "alternatives": alternatives,
         "forced_language_had_no_match": forced_language_had_no_match,

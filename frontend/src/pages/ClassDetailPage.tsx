@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getClassDetail } from "../api/client";
 import type { ClassDetail, Language } from "../api/types";
+import { useOutputLanguage } from "../outputLanguage";
+import { UI_STRINGS } from "../uiStrings";
 
 const LANGUAGE_LABELS: Record<Language, string> = {
   fr: "Français",
@@ -15,15 +17,17 @@ export default function ClassDetailPage() {
   const [detail, setDetail] = useState<ClassDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showEnglish, setShowEnglish] = useState(false);
+  const { outputLang } = useOutputLanguage();
+  const t = UI_STRINGS[outputLang];
 
   useEffect(() => {
     if (!ifcClass) return;
     setDetail(null);
     setError(null);
-    getClassDetail(ifcClass)
+    getClassDetail(ifcClass, outputLang)
       .then(setDetail)
       .catch((err: Error) => setError(err.message));
-  }, [ifcClass]);
+  }, [ifcClass, outputLang]);
 
   if (error) return <div className="error-state">Erreur : {error}</div>;
   if (!detail) return <div className="loading">Chargement…</div>;
@@ -43,34 +47,38 @@ export default function ClassDetailPage() {
       </div>
 
       <h1 className="mono">{detail.class}</h1>
-      <p style={{ color: "var(--text-muted)" }}>{detail.class_fr}</p>
+      <p style={{ color: "var(--text-muted)" }}>{detail.class_label}</p>
 
       <div className="card">
-        <h3>Définition</h3>
+        <h3>{t.definition}</h3>
         <div className="definition-block">
-          <div className="definition-block__label">Français</div>
-          <p style={{ margin: 0 }}>{detail.definition_fr}</p>
+          <div className="definition-block__label">{LANGUAGE_LABELS[outputLang]}</div>
+          <p style={{ margin: 0 }}>{detail.definition}</p>
         </div>
-        <button
-          className="alternatives-toggle"
-          onClick={() => setShowEnglish((v) => !v)}
-          aria-expanded={showEnglish}
-        >
-          <span>Version originale anglaise (buildingSMART)</span>
-          <span>{showEnglish ? "▾" : "▸"}</span>
-        </button>
-        {showEnglish && (
-          <div className="definition-block" style={{ marginTop: "0.5rem" }}>
-            <div className="definition-block__label">English</div>
-            <p style={{ margin: 0 }}>{detail.definition_en}</p>
-          </div>
+        {outputLang !== "en" && (
+          <>
+            <button
+              className="alternatives-toggle"
+              onClick={() => setShowEnglish((v) => !v)}
+              aria-expanded={showEnglish}
+            >
+              <span>{t.originalEnglish}</span>
+              <span>{showEnglish ? "▾" : "▸"}</span>
+            </button>
+            {showEnglish && (
+              <div className="definition-block" style={{ marginTop: "0.5rem" }}>
+                <div className="definition-block__label">English</div>
+                <p style={{ margin: 0 }}>{detail.definition_en}</p>
+              </div>
+            )}
+          </>
         )}
       </div>
 
       <div className="card">
-        <h3>Position dans la hiérarchie</h3>
+        <h3>{t.hierarchyPosition}</h3>
         <p>
-          Classe parente :{" "}
+          {t.parentClass} :{" "}
           {detail.parent_known ? (
             <Link to={`/classe/${detail.parent}`} className="mono">
               {detail.parent}
@@ -81,7 +89,7 @@ export default function ClassDetailPage() {
         </p>
         {detail.children.length > 0 && (
           <p>
-            Classes filles référencées :{" "}
+            {t.childClasses} :{" "}
             {detail.children.map((c, i) => (
               <span key={c}>
                 <Link to={`/classe/${c}`} className="mono">
@@ -96,14 +104,14 @@ export default function ClassDetailPage() {
 
       {detail.predefined_types.length > 0 && (
         <div className="card">
-          <h3>Types prédéfinis (PredefinedType)</h3>
+          <h3>{t.predefinedTypesTitle}</h3>
           <table className="pdt-table">
             <thead>
               <tr>
-                <th>Valeur</th>
-                <th>Depuis</th>
-                <th>Description (FR)</th>
-                <th>Synonymes</th>
+                <th>{t.colValue}</th>
+                <th>{t.colSince}</th>
+                <th>{t.colDescription}</th>
+                <th>{t.colSynonyms}</th>
               </tr>
             </thead>
             <tbody>
@@ -113,17 +121,17 @@ export default function ClassDetailPage() {
                     {pdt.value}
                     {pdt.new_in_43 && (
                       <div className="badge badge--accent" style={{ marginTop: "0.25rem" }}>
-                        Nouveau en 4.3
+                        {t.newIn43}
                       </div>
                     )}
                     {pdt.deprecated_since && (
                       <div className="badge badge--warning" style={{ marginTop: "0.25rem" }}>
-                        Déprécié {pdt.deprecated_since}
+                        {t.deprecated} {pdt.deprecated_since}
                       </div>
                     )}
                   </td>
                   <td>IFC {pdt.since}</td>
-                  <td>{pdt.description_fr}</td>
+                  <td>{pdt.description}</td>
                   <td>
                     {(Object.keys(pdt.synonyms) as Language[]).map((lang) =>
                       pdt.synonyms[lang].length ? (
@@ -151,7 +159,7 @@ export default function ClassDetailPage() {
 
       {detail.psets_common.length > 0 && (
         <div className="card">
-          <h3>Quel Pset utiliser ?</h3>
+          <h3>{t.whichPset}</h3>
           <div className="synonym-list">
             {detail.psets_common.map((p) => (
               <span className="synonym-chip mono" key={p}>
@@ -166,17 +174,17 @@ export default function ClassDetailPage() {
       )}
 
       <div className="card">
-        <h3>Historique de version</h3>
+        <h3>{t.versionHistory}</h3>
         <p>
-          Introduit en IFC{detail.ifc_versions.introduced}, version courante IFC
+          {t.introducedIn}{detail.ifc_versions.introduced}, {t.currentVersion}
           {detail.ifc_versions.current}.
           {detail.ifc_versions.deprecated &&
-            ` Déprécié depuis IFC${detail.ifc_versions.deprecated}.`}
+            ` ${t.deprecatedSince}${detail.ifc_versions.deprecated}.`}
         </p>
         {detail.version_notes && <p style={{ color: "var(--text-muted)" }}>{detail.version_notes}</p>}
       </div>
 
-      {detail.notes_fr && <div className="notes">{detail.notes_fr}</div>}
+      {detail.notes && <div className="notes">{detail.notes}</div>}
     </section>
   );
 }

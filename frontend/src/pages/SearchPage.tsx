@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { search } from "../api/client";
 import type { Language, SearchResponse } from "../api/types";
 import ResultCard from "../components/ResultCard";
+import { useOutputLanguage } from "../outputLanguage";
 
 const LANGUAGE_LABELS: Record<Language, string> = {
   fr: "français",
@@ -19,6 +20,7 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showAlternatives, setShowAlternatives] = useState(true);
+  const { outputLang } = useOutputLanguage();
 
   useEffect(() => {
     const trimmed = query.trim();
@@ -29,7 +31,7 @@ export default function SearchPage() {
     }
     setLoading(true);
     const handle = setTimeout(() => {
-      search(trimmed, forcedLang || undefined)
+      search(trimmed, forcedLang || undefined, outputLang)
         .then((res) => {
           setResult(res);
           setError(null);
@@ -38,7 +40,7 @@ export default function SearchPage() {
         .finally(() => setLoading(false));
     }, DEBOUNCE_MS);
     return () => clearTimeout(handle);
-  }, [query, forcedLang]);
+  }, [query, forcedLang, outputLang]);
 
   return (
     <section>

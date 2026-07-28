@@ -13,16 +13,23 @@ async function getJson<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-export function search(query: string, lang?: Language): Promise<SearchResponse> {
+export function search(query: string, lang?: Language, outputLang?: Language): Promise<SearchResponse> {
   const params = new URLSearchParams({ q: query });
   if (lang) params.set("lang", lang);
+  if (outputLang) params.set("output_lang", outputLang);
   return getJson(`/search?${params.toString()}`);
 }
 
-export function getClassDetail(ifcClass: string): Promise<ClassDetail> {
-  return getJson(`/class/${encodeURIComponent(ifcClass)}`);
+export function getClassDetail(ifcClass: string, outputLang?: Language): Promise<ClassDetail> {
+  const params = new URLSearchParams();
+  if (outputLang) params.set("output_lang", outputLang);
+  const qs = params.toString();
+  return getJson(`/class/${encodeURIComponent(ifcClass)}${qs ? `?${qs}` : ""}`);
 }
 
-export function getTree(): Promise<TreeNodeData> {
-  return getJson(`/tree`);
+export function getTree(outputLang?: Language): Promise<TreeNodeData> {
+  const params = new URLSearchParams();
+  if (outputLang) params.set("output_lang", outputLang);
+  const qs = params.toString();
+  return getJson(`/tree${qs ? `?${qs}` : ""}`);
 }

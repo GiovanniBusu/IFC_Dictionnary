@@ -3,20 +3,22 @@ import { Link } from "react-router-dom";
 import { getClassDetail, getTree } from "../api/client";
 import type { ClassDetail, TreeNodeData } from "../api/types";
 import TreeNode from "../components/TreeNode";
+import { useOutputLanguage } from "../outputLanguage";
 
 export default function TreePage() {
   const [tree, setTree] = useState<TreeNodeData | null>(null);
   const [selected, setSelected] = useState<ClassDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { outputLang } = useOutputLanguage();
 
   useEffect(() => {
-    getTree()
+    getTree(outputLang)
       .then(setTree)
       .catch((err: Error) => setError(err.message));
-  }, []);
+  }, [outputLang]);
 
   const handleSelectClass = (ifcClass: string) => {
-    getClassDetail(ifcClass)
+    getClassDetail(ifcClass, outputLang)
       .then(setSelected)
       .catch((err: Error) => setError(err.message));
   };
@@ -59,9 +61,9 @@ export default function TreePage() {
               </div>
               <div className="card__class-name">{selected.class}</div>
               <div style={{ color: "var(--text-muted)", marginBottom: "0.5rem" }}>
-                {selected.class_fr}
+                {selected.class_label}
               </div>
-              <p>{selected.definition_fr}</p>
+              <p>{selected.definition}</p>
               <p>
                 <Link to={`/classe/${selected.class}`}>Voir la fiche détaillée →</Link>
               </p>

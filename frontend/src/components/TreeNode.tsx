@@ -13,7 +13,7 @@ export default function TreeNode({ node, depth, onSelectClass, defaultOpen = fal
   const hasChildren = node.children.length > 0;
 
   const label =
-    node.type === "class" && node.class_fr ? `${node.name} — ${node.class_fr}` : node.name;
+    node.type === "class" && node.class_label ? `${node.name} — ${node.class_label}` : node.name;
 
   return (
     <div className="tree-node">

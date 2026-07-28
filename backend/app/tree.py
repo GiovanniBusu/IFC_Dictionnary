@@ -9,12 +9,21 @@ def _new_category_node(name: str) -> dict:
     return {"type": "category", "name": name, "children": {}}
 
 
-def build_tree(reference: IfcReference) -> dict:
-    root = _new_category_node("Classification IFC4X3")
+ROOT_LABELS = {
+    "fr": "Classification IFC4X3",
+    "en": "IFC4X3 classification",
+    "it": "Classificazione IFC4X3",
+    "de": "IFC4X3-Klassifikation",
+}
+
+
+def build_tree(reference: IfcReference, output_lang: str = "fr") -> dict:
+    root = _new_category_node(ROOT_LABELS.get(output_lang, ROOT_LABELS["fr"]))
 
     for entry in reference.classes:
         node = root
-        for level_name in entry["category_path"]:
+        localized_path = reference.localize_category_path(entry["category_path"], output_lang)
+        for level_name in localized_path:
             node["children"].setdefault(level_name, _new_category_node(level_name))
             node = node["children"][level_name]
 
@@ -22,7 +31,7 @@ def build_tree(reference: IfcReference) -> dict:
             "type": "class",
             "name": entry["class"],
             "ifc_class": entry["class"],
-            "class_fr": entry["class_fr"],
+            "class_label": entry["class_label"][output_lang],
             "children": {
                 pdt["value"]: {
                     "type": "predefined_type",
