@@ -81,10 +81,12 @@ export default function ClassDetailPage() {
       <div className="card">
         <h3>{t.definition}</h3>
         <div className="definition-block">
-          <div className="definition-block__label">{LANGUAGE_LABELS[outputLang]}</div>
-          <p style={{ margin: 0 }}>{detail.definition}</p>
+          <div className="definition-block__label">
+            {detail.curated ? LANGUAGE_LABELS[outputLang] : LANGUAGE_LABELS.en}
+          </div>
+          <p style={{ margin: 0 }}>{detail.curated ? detail.definition : detail.definition_en}</p>
         </div>
-        {outputLang !== "en" && (
+        {detail.curated && outputLang !== "en" && (
           <>
             <button
               className="alternatives-toggle"
