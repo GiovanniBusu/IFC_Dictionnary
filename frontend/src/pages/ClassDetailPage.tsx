@@ -47,7 +47,36 @@ export default function ClassDetailPage() {
       </div>
 
       <h1 className="mono">{detail.class}</h1>
-      <p style={{ color: "var(--text-muted)" }}>{detail.class_label}</p>
+      <p style={{ color: "var(--text-muted)" }}>
+        {detail.class_label}
+        {!detail.curated && (
+          <span
+            className="badge"
+            style={{ marginLeft: "0.6rem" }}
+            title={t.notCuratedHint}
+          >
+            {t.notCurated}
+          </span>
+        )}
+      </p>
+
+      <div className="card">
+        <h3>{t.ifcSchemaPath}</h3>
+        <p style={{ fontSize: "0.82rem", color: "var(--text-muted)", marginBottom: "0.5rem" }}>
+          {t.ifcSchemaPathHint}
+        </p>
+        <div className="crumbs mono" style={{ fontSize: "0.92rem" }}>
+          {[...detail.ifc_root_path].reverse().map((seg) => (
+            <span key={seg} style={{ display: "inline-flex", gap: "0.3rem" }}>
+              <Link to={`/classe/${seg}`} className="mono">
+                {seg}
+              </Link>
+              <span className="breadcrumb__sep">→</span>
+            </span>
+          ))}
+          <span className="mono" style={{ fontWeight: 700 }}>{detail.class}</span>
+        </div>
+      </div>
 
       <div className="card">
         <h3>{t.definition}</h3>

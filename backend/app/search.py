@@ -284,6 +284,8 @@ def _build_result(entry: dict, predefined_type: str | None, match_info: dict, qu
         "match_level": match_info["level"],
         "category_path": reference.localize_category_path(entry["category_path"], lang),
         "hierarchy_path": _hierarchy_path(entry, predefined_type, lang, reference),
+        "ifc_root_path": entry.get("ifc_root_path", []),
+        "curated": bool(entry.get("curated", True)),
         "version_info": _version_info(entry, pdt, lang),
         "justification": _justification(entry, pdt, query, match_info["matched_term"], lang, reference),
         "alternative_reason": _alternative_reason(entry, pdt, lang),

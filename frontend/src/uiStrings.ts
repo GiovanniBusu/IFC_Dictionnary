@@ -29,6 +29,10 @@ export const UI_STRINGS: Record<Language, Record<string, string>> = {
     introducedIn: "Introduit en IFC",
     currentVersion: "version courante IFC",
     deprecatedSince: "Déprécié depuis IFC",
+    ifcSchemaPath: "Position dans le schéma IFC",
+    ifcSchemaPathHint: "Chemin réel de super-types du schéma EXPRESS, depuis IfcRoot jusqu'à cette classe (distinct de la catégorisation ci-dessus).",
+    notCurated: "non curée",
+    notCuratedHint: "Entrée générée automatiquement depuis le schéma IFC4.3 officiel : définition anglaise fiable, mais pas encore de synonymes multilingues ni de notes de désambiguïsation soignées.",
   },
   en: {
     availableTypesFor: "Available PredefinedType values for",
@@ -55,6 +59,10 @@ export const UI_STRINGS: Record<Language, Record<string, string>> = {
     introducedIn: "Introduced in IFC",
     currentVersion: "current version IFC",
     deprecatedSince: "Deprecated since IFC",
+    ifcSchemaPath: "Position in the IFC schema",
+    ifcSchemaPathHint: "Real supertype path of the EXPRESS schema, from IfcRoot down to this class (distinct from the categorisation above).",
+    notCurated: "not curated",
+    notCuratedHint: "Entry generated automatically from the official IFC4.3 schema: reliable English definition, but not yet reviewed with multilingual synonyms or disambiguation notes.",
   },
   it: {
     availableTypesFor: "Valori PredefinedType disponibili per",
@@ -81,6 +89,10 @@ export const UI_STRINGS: Record<Language, Record<string, string>> = {
     introducedIn: "Introdotto in IFC",
     currentVersion: "versione corrente IFC",
     deprecatedSince: "Deprecato dalla IFC",
+    ifcSchemaPath: "Posizione nello schema IFC",
+    ifcSchemaPathHint: "Percorso reale dei super-tipi dello schema EXPRESS, da IfcRoot fino a questa classe (distinto dalla categorizzazione sopra).",
+    notCurated: "non curata",
+    notCuratedHint: "Voce generata automaticamente dallo schema IFC4.3 ufficiale: definizione inglese affidabile, ma senza ancora sinonimi multilingue o note di disambiguazione curate.",
   },
   de: {
     availableTypesFor: "Verfügbare PredefinedType-Werte für",
@@ -107,5 +119,9 @@ export const UI_STRINGS: Record<Language, Record<string, string>> = {
     introducedIn: "Eingeführt in IFC",
     currentVersion: "aktuelle Version IFC",
     deprecatedSince: "Veraltet seit IFC",
+    ifcSchemaPath: "Position im IFC-Schema",
+    ifcSchemaPathHint: "Tatsächlicher Supertyp-Pfad des EXPRESS-Schemas, von IfcRoot bis zu dieser Klasse (unterscheidet sich von der obigen Kategorisierung).",
+    notCurated: "nicht kuratiert",
+    notCuratedHint: "Automatisch aus dem offiziellen IFC4.3-Schema generierter Eintrag: zuverlässige englische Definition, aber noch ohne mehrsprachige Synonyme oder sorgfältige Abgrenzungshinweise.",
   },
 };

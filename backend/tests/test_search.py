@@ -390,3 +390,58 @@ def test_category_path_localized_but_class_name_stays_english(reference):
     assert "Wand" in suggestion["category_path"] or "Wände" in suggestion["category_path"]
     # hierarchy_path leaf is always the raw IFC class/PredefinedType, untranslated
     assert suggestion["hierarchy_path"][-1] == "IfcWall"
+
+
+# ---------------------------------------------------------------------------
+# Couverture du schéma complet (872 entités IFC4.3) au-delà des 54 classes
+# curées à la main, via scripts/build_schema_skeleton.py : chemin de racines
+# IfcRoot, et quelques synonymes FR ciblés corrigeant des trous signalés
+# (ex. "géométrie horizontale" ne trouvait rien faute de couvrir
+# IfcAlignmentHorizontal, absent du sous-ensemble curé).
+# ---------------------------------------------------------------------------
+
+def test_full_schema_coverage_includes_872_entities(reference):
+    assert len(reference.classes) == 872
+
+
+def test_curated_classes_still_marked_curated(reference):
+    entry = reference.get_class("IfcWall")
+    assert entry["curated"] is True
+
+
+def test_skeleton_entity_marked_not_curated(reference):
+    entry = reference.get_class("IfcAlignmentHorizontal")
+    assert entry["curated"] is False
+
+
+def test_ifc_root_path_matches_real_express_hierarchy(reference):
+    entry = reference.get_class("IfcAlignmentHorizontal")
+    assert entry["ifc_root_path"] == [
+        "IfcLinearElement", "IfcProduct", "IfcObject", "IfcObjectDefinition", "IfcRoot",
+    ]
+    # curated classes get the same real schema path too, not just skeleton ones
+    wall = reference.get_class("IfcWall")
+    assert wall["ifc_root_path"][-1] == "IfcRoot"
+    assert "IfcElement" in wall["ifc_root_path"]
+
+
+def test_search_result_exposes_ifc_root_path_and_curated_flag(reference):
+    result = search("IfcAlignmentHorizontal", reference=reference)
+    suggestion = result["suggestion"]
+    assert suggestion["ifc_root_path"][-1] == "IfcRoot"
+    assert suggestion["curated"] is False
+
+
+def test_horizontal_geometry_french_query_finds_alignment_horizontal(reference):
+    # Cas précis signalé : "géométrie horizontale" ne retournait rien avant
+    # l'ajout du squelette de schéma complet + synonymes ciblés.
+    result = search("géométrie horizontale", reference=reference)
+    assert result["suggestion"]["class"] == "IfcAlignmentHorizontal"
+    assert result["suggestion"]["score"] >= 0.9
+
+
+def test_vertical_and_cant_alignment_geometry_findable_in_french(reference):
+    vertical = search("profil en long", reference=reference)
+    assert vertical["suggestion"]["class"] == "IfcAlignmentVertical"
+    cant = search("dévers", reference=reference)
+    assert cant["suggestion"]["class"] == "IfcAlignmentCant"

@@ -28,6 +28,14 @@ export interface SearchResult {
    * eux-mêmes (dans hierarchy_path) restent toujours en anglais. */
   category_path: string[];
   hierarchy_path: string[];
+  /** Vrai chemin de super-types du schéma EXPRESS IFC jusqu'à IfcRoot
+   * (ex. IfcAlignmentHorizontal -> IfcLinearElement -> IfcProduct -> ... ->
+   * IfcRoot) — distinct de category_path qui est une catégorisation UX. */
+  ifc_root_path: string[];
+  /** false pour une entité générée automatiquement depuis le schéma complet
+   * (872 classes IFC4.3), sans la curation fine (synonymes multilingues,
+   * notes de désambiguïsation) des classes historiquement curées à la main. */
+  curated: boolean;
   version_info: VersionInfo;
   justification: string;
   alternative_reason: string;
@@ -72,6 +80,10 @@ export interface ClassDetail {
   parent_known: boolean;
   children: string[];
   category_path: string[];
+  ifc_root_path: string[];
+  ifc_subtypes: string[];
+  is_abstract: boolean;
+  curated: boolean;
   ifc_versions: { introduced: string; current: string; deprecated: string | null };
   /** Version anglaise originale (bSDD), toujours disponible quelle que soit
    * la langue d'affichage — utilisée pour le panneau "version originale". */

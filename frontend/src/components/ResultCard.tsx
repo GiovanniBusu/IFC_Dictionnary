@@ -26,6 +26,15 @@ export default function ResultCard({ result, variant }: Props) {
           </div>
           <div style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
             {result.class_label}
+            {!result.curated && (
+              <span
+                className="badge"
+                style={{ marginLeft: "0.5rem", fontSize: "0.72rem" }}
+                title={t.notCuratedHint}
+              >
+                {t.notCurated}
+              </span>
+            )}
           </div>
         </div>
         <VersionBadges info={result.version_info} />
