@@ -77,11 +77,26 @@ SHORT_WORD_CONTAINMENT_DAMPING = 0.85
 SHORT_WORD_THRESHOLD = 5
 SHORT_WORD_RATIO_THRESHOLD = 0.6
 
+# Un rapprochement purement flou (ni égalité, ni l'un contenu dans l'autre)
+# entre deux mots courts est souvent une coïncidence orthographique plutôt
+# qu'une faute de frappe plausible — surtout d'une langue à l'autre (ex.
+# l'anglais « lift » glisse vers le français « lit » : 3 lettres communes
+# sur 4, au-dessus du seuil normal). On tolère cette coïncidence au sein
+# d'UNE MÊME langue (fautes de frappe réelles), mais on exige un bien
+# meilleur score pour accepter un rapprochement flou entre deux langues
+# différentes, où une survenue fortuite est nettement plus probable que
+# l'utilisateur ait réellement voulu taper un mot d'une autre langue.
+FUZZY_CUTOFF_CROSS_LANGUAGE = 0.92
+
+
+def _is_containment_match(a: str, b: str) -> bool:
+    return len(a) >= 3 and len(b) >= 3 and (a in b or b in a)
+
 
 def _string_similarity(a: str, b: str) -> float:
     if a == b:
         return 1.0
-    if len(a) >= 3 and len(b) >= 3 and (a in b or b in a):
+    if _is_containment_match(a, b):
         shorter, longer = sorted([a, b], key=len)
         ratio = len(shorter) / len(longer)
         score = 0.80 + 0.15 * ratio
@@ -109,7 +124,8 @@ def _specificity_bonus(level: str, term: str) -> float:
 
 def _collect_candidates(query_norm: str, reference: IfcReference, detected_lang: str,
                          candidates: dict | None = None, damping: float = 1.0,
-                         languages: tuple[str, ...] | None = None):
+                         languages: tuple[str, ...] | None = None, apply_exact_bonus: bool = True,
+                         lang_confident: bool = True):
     """Alimente (et retourne) un dict {(class, predefined_type): meilleur score,
     match info}, en fusionnant avec les candidats déjà trouvés le cas échéant
     (utilisé pour combiner un score sur la requête entière et des scores sur
@@ -118,7 +134,15 @@ def _collect_candidates(query_norm: str, reference: IfcReference, detected_lang:
     `languages` restreint la recherche à un sous-ensemble de langues (utilisé
     quand l'utilisateur force une langue : section 6 du cahier des charges).
     Par défaut (None), toutes les langues du référentiel sont parcourues, ce
-    qui permet la tolérance aux requêtes multilingues/mixtes."""
+    qui permet la tolérance aux requêtes multilingues/mixtes.
+
+    `apply_exact_bonus` est désactivé pour les recherches au niveau d'un mot
+    isolé de la requête (`_significant_tokens`) : un mot technique générique
+    partagé par de nombreuses classes (ex. « transition », présent sur
+    plusieurs types de raccords MEP) ne doit pas, en coïncidant exactement
+    avec UN mot pris isolément dans une longue description libre, l'emporter
+    sur une correspondance de phrase complète dûment curatée (ex. « dalle de
+    transition » pour IfcSlab.APPROACH_SLAB)."""
     candidates = {} if candidates is None else candidates
     search_languages = languages if languages is not None else tuple(reference.index)
 
@@ -128,7 +152,25 @@ def _collect_candidates(query_norm: str, reference: IfcReference, detected_lang:
             sim = _string_similarity(query_norm, term_norm)
             if sim < FUZZY_CUTOFF:
                 continue
-            exact_bonus = EXACT_MATCH_BONUS if query_norm == term_norm else 0.0
+            if ((lang != detected_lang or not lang_confident)
+                    and not _is_containment_match(query_norm, term_norm)
+                    and sim < FUZZY_CUTOFF_CROSS_LANGUAGE):
+                # Rapprochement purement flou (SequenceMatcher) avec un terme
+                # d'une AUTRE langue que celle détectée/forcée : exiger un
+                # score nettement plus élevé pour écarter les coïncidences
+                # orthographiques inter-langues (ex. « lift » (en) vs « lit »
+                # (fr) = 0.80, bien au-dessus de FUZZY_CUTOFF mais une pure
+                # coïncidence). Les correspondances par confinement (l'un des
+                # deux mots contenu dans l'autre) restent inchangées : elles
+                # sont déjà naturellement plus fiables. Quand la langue
+                # détectée elle-même n'est qu'un repli par défaut sans aucun
+                # indice réel (`lang_confident=False`, ex. « lift » seul, qui
+                # ne contient aucun indice FR/EN/IT/DE), on applique le même
+                # seuil strict à TOUTES les langues : rien ne justifie de
+                # favoriser la langue de repli par défaut (le français) par
+                # rapport aux autres dans ce cas.
+                continue
+            exact_bonus = EXACT_MATCH_BONUS if (apply_exact_bonus and query_norm == term_norm) else 0.0
             for m in matches:
                 base = sim * m["weight"]
                 # Score de tri non plafonné (préserve l'ordre entre un match
@@ -298,13 +340,40 @@ def _build_result(entry: dict, predefined_type: str | None, match_info: dict, qu
     }
 
 
+def _dedupe_type_occurrence(ranked: list, reference: IfcReference) -> list:
+    """De nombreuses classes IFC existent en paire Occurrence/Type
+    (IfcXxx / IfcXxxType) qui partagent exactement la même énumération
+    PredefinedType (ex. IfcDuctFitting et IfcDuctFittingType ont toutes
+    deux la valeur TRANSITION) : une correspondance sur un synonyme de
+    PredefinedType produit alors un score strictement identique pour les
+    deux classes. Sans filtrage, ces doublons quasi-identiques peuvent à
+    eux seuls remplir toute la liste d'alternatives et masquer des
+    candidats réellement différents. On ne garde que la classe
+    d'occurrence (ce que l'utilisateur décrit dans le monde réel), sauf si
+    la classe Type est la seule des deux présente dans les résultats."""
+    scores = {key: info["raw_score"] for key, info in ranked}
+    filtered = []
+    for (ifc_class, predefined_type), match_info in ranked:
+        if ifc_class.endswith("Type"):
+            occurrence_class = ifc_class[:-4]
+            occurrence_key = (occurrence_class, predefined_type)
+            if occurrence_key in scores and scores[occurrence_key] >= match_info["raw_score"]:
+                continue
+        filtered.append(((ifc_class, predefined_type), match_info))
+    return filtered
+
+
 def _rank_results(query: str, query_norm: str, reference: IfcReference,
-                   bonus_target_lang: str, languages: tuple[str, ...] | None, output_lang: str):
-    candidates = _collect_candidates(query_norm, reference, bonus_target_lang, languages=languages)
+                   bonus_target_lang: str, languages: tuple[str, ...] | None, output_lang: str,
+                   lang_confident: bool = True):
+    candidates = _collect_candidates(query_norm, reference, bonus_target_lang, languages=languages,
+                                      lang_confident=lang_confident)
     for token in _significant_tokens(query_norm):
         _collect_candidates(token, reference, bonus_target_lang, candidates,
-                             damping=TOKEN_MATCH_DAMPING, languages=languages)
+                             damping=TOKEN_MATCH_DAMPING, languages=languages, apply_exact_bonus=False,
+                             lang_confident=lang_confident)
     ranked = sorted(candidates.items(), key=lambda kv: kv[1]["raw_score"], reverse=True)
+    ranked = _dedupe_type_occurrence(ranked, reference)
     results = []
     for (ifc_class, predefined_type), match_info in ranked:
         entry = reference.get_class(ifc_class)
@@ -348,12 +417,14 @@ def search(query: str, forced_language: str | None = None, reference: IfcReferen
             # face à un « aucun résultat » silencieux ; le repli est signalé
             # explicitement pour rester transparent sur ce qui s'est passé.
             suggestion, alternatives = _rank_results(
-                query, query_norm, reference, guess.language, languages=None, output_lang=output_lang
+                query, query_norm, reference, guess.language, languages=None, output_lang=output_lang,
+                lang_confident=guess.confident
             )
             forced_language_had_no_match = True
     else:
         suggestion, alternatives = _rank_results(
-            query, query_norm, reference, guess.language, languages=None, output_lang=output_lang
+            query, query_norm, reference, guess.language, languages=None, output_lang=output_lang,
+            lang_confident=guess.confident
         )
 
     if forced_language and not forced_language_had_no_match:

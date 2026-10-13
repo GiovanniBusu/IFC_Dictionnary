@@ -2126,7 +2126,7 @@ DATA.append(entry(
             "de": ["Bahnübergang"]}, new_in_43=True),
         pt("PEDESTRIAN_CROSSING", "4.3", "Designated level crossing over a road for pedestrians.",
            "Passage piéton, traversée aménagée pour les piétons.",
-           {"fr": ["passage piéton"], "en": ["pedestrian crossing"], "it": ["attraversamento pedonale"],
+           {"fr": ["passage piéton"], "en": ["pedestrian crossing", "crosswalk"], "it": ["attraversamento pedonale"],
             "de": ["Fußgängerüberweg"]}, new_in_43=True),
         pt("BICYCLECROSSING", "4.3", "Designated level crossing over a road for cyclists.",
            "Traversée cyclable aménagée.",

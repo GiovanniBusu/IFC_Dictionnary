@@ -445,3 +445,52 @@ def test_vertical_and_cant_alignment_geometry_findable_in_french(reference):
     assert vertical["suggestion"]["class"] == "IfcAlignmentVertical"
     cant = search("dévers", reference=reference)
     assert cant["suggestion"]["class"] == "IfcAlignmentCant"
+
+
+def test_drainage_and_drain_find_drainage_predefined_type(reference):
+    # Cas précis signalé : "Drainage"/"drain" ne retournaient rien ou un
+    # résultat faux, les valeurs de PredefinedType des 818 entités squelette
+    # n'ayant initialement AUCUN synonyme (cf. enum_value_synonyms).
+    drainage = search("drainage", reference=reference, output_lang="en")
+    assert top_class_pdt(drainage) == ("IfcDistributionCircuit", "DRAINAGE")
+    drain = search("drain", reference=reference, output_lang="en")
+    assert top_class_pdt(drain) == ("IfcDistributionCircuit", "DRAINAGE")
+
+
+def test_roofdrain_findable_via_wordninja_segmentation(reference):
+    # "ROOFDRAIN" (sans séparateur dans le schéma) doit rester trouvable en
+    # langage naturel ("roof drain"), pas seulement sous sa forme brute.
+    result = search("roof drain", reference=reference, output_lang="en")
+    assert result["suggestion"]["predefined_type"] == "ROOFDRAIN"
+
+
+def test_manhole_and_sump_skeleton_predefined_types_findable(reference):
+    manhole = search("manhole", reference=reference, output_lang="en")
+    assert top_class_pdt(manhole) == ("IfcDistributionChamberElement", "MANHOLE")
+    sump = search("sump", reference=reference, output_lang="en")
+    assert sump["suggestion"]["predefined_type"] == "SUMP"
+
+
+def test_type_occurrence_pairs_deduplicated_in_alternatives(reference):
+    # IfcDuctFitting / IfcDuctFittingType partagent exactement la même
+    # énumération PredefinedType : sans dédoublonnage, les deux apparaissent
+    # avec un score strictement identique et polluent les alternatives.
+    result = search("transition duct fitting", reference=reference, output_lang="en")
+    all_classes = [result["suggestion"]["class"]] + [a["class"] for a in result["alternatives"]]
+    assert not ("IfcDuctFitting" in all_classes and "IfcDuctFittingType" in all_classes)
+
+
+def test_lift_finds_elevator_not_french_bed(reference):
+    # "lift" (terme anglais britannique pour ascenseur) glissait, par pure
+    # coïncidence orthographique flagrante, vers le français "lit" (= bed).
+    result = search("lift", reference=reference, output_lang="en")
+    assert top_class_pdt(result) == ("IfcTransportElement", "ELEVATOR")
+
+
+def test_socket_crosswalk_smoke_detector_vocabulary_gaps_fixed(reference):
+    socket = search("socket", reference=reference, output_lang="en")
+    assert top_class_pdt(socket) == ("IfcOutlet", "POWEROUTLET")
+    crosswalk = search("crosswalk", reference=reference, output_lang="en")
+    assert top_class_pdt(crosswalk) == ("IfcRoadPart", "PEDESTRIAN_CROSSING")
+    smoke_detector = search("smoke detector", reference=reference, output_lang="en")
+    assert top_class_pdt(smoke_detector) == ("IfcSensor", "SMOKESENSOR")

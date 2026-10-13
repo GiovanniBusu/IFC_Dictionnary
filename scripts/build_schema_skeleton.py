@@ -54,6 +54,19 @@ except ImportError:
         "et relancer ce script avec ce même interpréteur."
     )
 
+try:
+    import wordninja
+except ImportError:
+    wordninja = None
+    print(
+        "ATTENTION : module `wordninja` introuvable — les valeurs de "
+        "PredefinedType composées sans séparateur (ex. ROOFDRAIN) ne seront "
+        "indexées que sous leur forme brute non segmentée (ex. « roofdrain » "
+        "au lieu de « roof drain »), ce qui dégrade la recherche en langage "
+        "naturel mais préserve la correspondance exacte au terme IFC officiel.",
+        file=sys.stderr,
+    )
+
 
 # ---------------------------------------------------------------------------
 # Micro-curation ciblée : quelques classes du schéma complet sont de toute
@@ -97,7 +110,20 @@ EXTRA_SYNONYMS = {
         "de": ["Überhöhungssegment"],
     },
 }
-
+# ---------------------------------------------------------------------------
+# Micro-curation ciblée, niveau PredefinedType cette fois : quelques valeurs
+# d'énumération sont recherchées dans la vie courante avec un vocabulaire très
+# éloigné de leur libellé EXPRESS (ex. « lift » pour ELEVATOR, un terme
+# britannique courant que ni la forme brute « elevator » ni sa segmentation
+# wordninja ne couvrent). Clé = (nom de classe EXPRESS, valeur d'énumération).
+# Ajouté à la liste anglaise produite par `enum_value_synonyms` plutôt que de
+# la remplacer.
+# ---------------------------------------------------------------------------
+EXTRA_ENUM_SYNONYMS = {
+    ("IfcTransportElement", "ELEVATOR"): ["lift"],
+    ("IfcOutlet", "POWEROUTLET"): ["socket", "power socket"],
+    ("IfcSensor", "SMOKESENSOR"): ["smoke detector"],
+}
 
 
 # ---------------------------------------------------------------------------
@@ -240,6 +266,30 @@ def split_camel_label(ifc_class):
     return s.strip()
 
 
+def enum_value_synonyms(value):
+    """Transforme une valeur d'énumération EXPRESS (ex. "ROOFDRAIN",
+    "T_BEAM") en synonymes de recherche anglais lisibles. Sans ceci, une
+    valeur de PredefinedType squelette n'est indexée sous AUCUN terme
+    propre — seul le nom de la classe (ex. IfcWasteTerminal) reste
+    cherchable, pas "roof drain" ni même "roofdrain" tel que pourrait le
+    taper un utilisateur cherchant un terme technique IFC exact.
+
+    Retourne 1 ou 2 synonymes :
+    - la forme brute (minuscules, « _ » -> espace) : couvre une recherche
+      au plus près du terme officiel IFC (ex. "drainage" pour DRAINAGE) ;
+    - si `wordninja` est disponible et que la forme segmentée diffère
+      (ex. "roof drain" pour ROOFDRAIN, sans séparateur dans le schéma),
+      elle est ajoutée aussi, pour couvrir une recherche en langage naturel
+      multi-mots."""
+    raw = value.replace("_", " ").lower()
+    synonyms = [raw]
+    if wordninja and " " not in raw and len(raw) > 4:
+        segmented = " ".join(wordninja.split(raw))
+        if segmented != raw and len(segmented.split()) <= 4:
+            synonyms.append(segmented)
+    return synonyms
+
+
 # ---------------------------------------------------------------------------
 # Hiérarchie EXPRESS
 # ---------------------------------------------------------------------------
@@ -265,7 +315,7 @@ def predefined_type_enum(decl):
     return None
 
 
-def build_predefined_types(enum, enum_md_index):
+def build_predefined_types(enum, enum_md_index, class_name=None):
     if enum is None:
         return []
     enum_name = enum.name()
@@ -278,6 +328,7 @@ def build_predefined_types(enum, enum_md_index):
             continue
         since = enum_literal_introduced(enum_name, value)
         doc = doc_items.get(value, {})
+        en_synonyms = enum_value_synonyms(value) + EXTRA_ENUM_SYNONYMS.get((class_name, value), [])
         out.append({
             "value": value,
             "since": since,
@@ -285,7 +336,7 @@ def build_predefined_types(enum, enum_md_index):
             "new_in_43": since == "4.3",
             "description_en": doc.get("description", ""),
             "description_fr": doc.get("description", ""),
-            "synonyms": {"fr": [], "en": [], "it": [], "de": []},
+            "synonyms": {"fr": [], "en": en_synonyms, "it": [], "de": []},
             "description": {
                 "fr": doc.get("description", ""), "en": doc.get("description", ""),
                 "it": doc.get("description", ""), "de": doc.get("description", ""),
@@ -334,7 +385,7 @@ def main():
         since = introduced_version(name)
         label = split_camel_label(name)
         enum = predefined_type_enum(decl)
-        predefined_types = build_predefined_types(enum, enum_md)
+        predefined_types = build_predefined_types(enum, enum_md, class_name=name)
         psets = sorted(set(psets_for(name, pset_index)))
 
         entry = {
